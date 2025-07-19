@@ -26,13 +26,13 @@ def test_tread_export():
     tread = Tread(tread_params)
     
     # Test STEP export
-    tread._export_step()
+    tread.export_step()
     
     # Test STL export
-    tread._export_stl()
-    
+    tread.export_stl()
+
     # Test DXF export
-    tread._export_dxf()
-    
+    tread.export_dxf_top_view()
+
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks

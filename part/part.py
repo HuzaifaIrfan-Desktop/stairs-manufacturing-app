@@ -1,20 +1,46 @@
 import cadquery as cq
+from utils.math import inch_to_mm
 
 from models.part.part_params import PartParams
 
+import os
+
 class Part:
     def __init__(self, part_params: PartParams):
+        print(f"Creating Part with params: {part_params}")
         self.part_params = part_params
+
+        self.part_output_dir = f'output/{self.part_params.job_name}/part/'
+        
+        # Ensure the output directory exists
+        os.makedirs(self.part_output_dir, exist_ok=True)
 
         self.cq_part = self._build()
 
-    
-    def _build(self)-> cq.Workplane:
+    def _build(self) -> cq.Workplane:
         # Create a simple part based on the parameters
         return (
             cq.Workplane("XY")
-            .box(self.part_params.length, self.part_params.width, self.part_params.height)
+            .box(inch_to_mm(1), inch_to_mm(1), inch_to_mm(1))  # Placeholder dimensions
         )
 
-    def get(self)-> cq.Workplane:
+
+    def get(self) -> cq.Workplane:
         return self.cq_part
+    
+    def export_step(self) -> None:
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}.step'
+        # Export the part to a file STEP
+        cq.exporters.export(self.cq_part, file_path, 'STEP')
+
+    
+    def export_stl(self) -> None:
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}.stl'
+        # Export the part to a file STL
+        cq.exporters.export(self.cq_part, file_path, 'STL')
+
+    def export_dxf_top_view(self) -> None:
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}.dxf'
+        # Get a 2D projection for DXF
+        top_view = self.cq_part.faces(">Z").wires()
+        cq.exporters.export(top_view, file_path, 'DXF')
