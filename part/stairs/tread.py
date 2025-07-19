@@ -26,6 +26,7 @@ class Tread(Part):
     def _build(self) -> cq.Workplane:
         # Create a simple tread part
         return (
-            cq.Workplane("XY")
-            .box(inch_to_mm(self.tread_params.tread_length), inch_to_mm(self.tread_params.tread_depth), inch_to_mm(self.tread_params.tread_thickness))
-        )
+                    cq.Workplane("XZ")
+                    .rect(inch_to_mm(self.tread_params.tread_depth), inch_to_mm(self.tread_params.tread_thickness))
+                    .extrude(inch_to_mm(self.tread_params.tread_length))
+                )
