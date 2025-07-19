@@ -3,13 +3,9 @@ Wooden Stairs Computer Aided Manufacturing App - QT Based Desktop App, Drawings 
 
 
 ## Conda Environment Setup
-### Windows
+
 ```sh
-mamba create --name stairs_app_env --file windows-environment.yml
-```
-### Linux
-```sh
-mamba create --name stairs_app_env --file linux-environment.yml
+mamba create --name stairs_app_env --file environment.yml
 ```
 
 [New ENV Setup](env.md)
@@ -18,14 +14,14 @@ mamba create --name stairs_app_env --file linux-environment.yml
 conda activate stairs_app_env
 ```
 
-## Build
-
-```sh
-pyinstaller windows-app.spec
-```
-
 ## Run
 
 ```sh
 python main.py
+```
+
+## Build
+
+```sh
+pyinstaller windows-app.spec
 ```
