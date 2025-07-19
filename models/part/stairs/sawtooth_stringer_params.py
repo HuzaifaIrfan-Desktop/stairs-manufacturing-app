@@ -19,3 +19,9 @@ class SawtoothStringerParams(PartParams):
 
     angle_of_stringer: float
     stringer_placement_from_top: float
+
+    bottom_stringer_depth: float
+    back_stringer_reverse_height: float
+
+    kicker_height: float
+    kicker_depth: float

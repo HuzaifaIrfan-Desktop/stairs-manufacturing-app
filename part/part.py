@@ -7,7 +7,7 @@ import os
 
 class Part:
     def __init__(self, part_params: PartParams):
-        print(f"Creating Part with params: {part_params}")
+        # print(f"Creating Part with params: {part_params}")
         self.part_params = part_params
 
         self.part_output_dir = f'output/{self.part_params.job_name}/part/'
