@@ -1,0 +1,4 @@
+from models.calculator.calculator_output_results import CalculatorOutputResults
+
+class StraightClosedRisersSawtoothStringerStairsCalculatorOutputResults(CalculatorOutputResults):
+    pass
