@@ -26,7 +26,7 @@ class Riser(Part):
     def _build(self) -> cq.Workplane:
         # Create a simple riser part
         return (
-            cq.Workplane("XZ")
+            cq.Workplane("YZ")
             .rect(inch_to_mm(self.riser_params.riser_thickness), inch_to_mm(self.riser_params.riser_height))
             .extrude(inch_to_mm(self.riser_params.riser_length))
         )

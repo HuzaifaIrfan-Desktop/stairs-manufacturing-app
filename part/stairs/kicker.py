@@ -17,15 +17,15 @@ class Kicker(Part):
 
 
     def calculate_area(self) -> float:
-        return self.kicker_params.kicker_depth * self.kicker_params.kicker_height
+        return self.kicker_params.kicker_length * self.kicker_params.kicker_height
 
     def calculate_volume(self) -> float:
-        return self.calculate_area() * self.kicker_params.kicker_length
+        return self.calculate_area() * self.kicker_params.kicker_depth
 
     def _build(self) -> cq.Workplane:
         # Create a simple kicker part
         return (
-            cq.Workplane("XZ")
+            cq.Workplane("YZ")
             .rect(inch_to_mm(self.kicker_params.kicker_depth), inch_to_mm(self.kicker_params.kicker_height))
             .extrude(inch_to_mm(self.kicker_params.kicker_length))
         )

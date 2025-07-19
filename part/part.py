@@ -40,7 +40,21 @@ class Part:
         cq.exporters.export(self.cq_part, file_path, 'STL')
 
     def export_dxf_top_view(self) -> None:
-        file_path = f'{self.part_output_dir}/{self.part_params.part_name}.dxf'
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}_top.dxf'
         # Get a 2D projection for DXF
         top_view = self.cq_part.faces(">Z").wires()
         cq.exporters.export(top_view, file_path, 'DXF')
+
+    
+    def export_dxf_front_view(self) -> None:
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}_front.dxf'
+        # Get a 2D projection for DXF
+        front_view = self.cq_part.faces(">Y").wires()
+        cq.exporters.export(front_view, file_path, 'DXF')
+
+
+    def export_dxf_right_view(self) -> None:
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}_right.dxf'
+        # Get a 2D projection for DXF
+        right_view = self.cq_part.faces(">X").wires()
+        cq.exporters.export(right_view, file_path, 'DXF')

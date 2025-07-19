@@ -47,7 +47,8 @@ class SawtoothStringer(Part):
             current_y += inch_to_mm(self.stringer_params.first_step_rise_height)
             points.append((current_x, current_y))
         
-        for i in range(self.stringer_params.number_of_stringer_run):
+        # one minus because the last run will be added after the loop
+        for i in range(self.stringer_params.number_of_stringer_run-1):
             current_x += inch_to_mm(self.stringer_params.step_run_depth)
             points.append((current_x, current_y))
             current_y += inch_to_mm(self.stringer_params.step_rise_height)
@@ -60,7 +61,7 @@ class SawtoothStringer(Part):
         points.append((current_x, current_y))
 
         stringer_part=(
-            cq.Workplane("XZ").polyline(points).close().extrude(inch_to_mm(self.stringer_params.stringer_thickness))
+            cq.Workplane("YZ").polyline(points).close().extrude(inch_to_mm(self.stringer_params.stringer_thickness))
         )
         return stringer_part
     
