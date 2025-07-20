@@ -9,7 +9,7 @@ from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
 from models.part.stairs.riser_params import RiserParams
 from models.part.stairs.tread_params import TreadParams
 
-class StraightClosedRisersSawtoothStringerStairsAssemblyParams(AssemblyParams):
+class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
     
     kicker_params: KickerParams = Field(..., description="Parameters for the kicker")
     sawtooth_stringer_params: SawtoothStringerParams = Field(..., description="Parameters for the sawtooth stringer")
@@ -18,4 +18,3 @@ class StraightClosedRisersSawtoothStringerStairsAssemblyParams(AssemblyParams):
     
     first_riser_params: RiserParams = Field(..., description="Parameters for the first riser")
     last_tread_params: TreadParams = Field(..., description="Parameters for the last tread")
-    last_riser_params: RiserParams = Field(..., description="Parameters for the last riser")
