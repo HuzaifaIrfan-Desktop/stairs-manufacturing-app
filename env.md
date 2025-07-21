@@ -24,6 +24,11 @@ mamba install -c conda-forge PyInstaller
 ```
 
 
+```sh
+pip install pymupdf
+```
+
+
 ## Export Conda Env Setup
 
 ```sh

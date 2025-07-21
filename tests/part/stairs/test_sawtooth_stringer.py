@@ -18,11 +18,10 @@ def test_sawtooth_stringer_build():
     assert cq_part.val().Volume() > 0  # Ensure the part has a non-zero volume
 
 def test_sawtooth_stringer_export():
-    stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer", stringer_length=50.0, stringer_thickness=1.5, stringer_width=11.5,
-                                              first_step_rise_height=6.13, last_step_run_depth=10.5,
-                                              step_rise_height=7.63, step_run_depth=10.5,
-                                              number_of_stringer_rise=12, number_of_stringer_run=12,
-                                              stringer_placement_from_top=0.1)
+    stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer", stringer_thickness=1.5, stringer_width=11.5,
+                                              first_step_rise_height=6.13, last_step_run_depth=11.5,
+                                              step_rise_height=7.63, step_run_depth=11.5,number_of_stringer_run=15,
+                                              stringer_placement_from_top=9.13)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
 
     # Test STEP export

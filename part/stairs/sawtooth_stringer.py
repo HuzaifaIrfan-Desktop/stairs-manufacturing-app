@@ -2,7 +2,7 @@
 
 import cadquery as cq
 from utils.math import inch_to_mm
-
+from drawings.dimensioned_dxf_exporter import DimensionedDXFExporter
 
 from logger import part_logger
 part_logger.info("Loading SawtoothStringer class from part.stairs.sawtooth_stringer module")
@@ -94,6 +94,8 @@ class SawtoothStringer(Part):
         # Get a 2D projection for DXF
         right_view = cq_part.faces(">X").wires()
         cq.exporters.export(right_view, dxf_file_path, 'DXF')
+
+        DimensionedDXFExporter(dxf_file_path).export()
 
 
         return dxf_file_path
