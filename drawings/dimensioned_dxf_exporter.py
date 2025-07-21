@@ -17,13 +17,15 @@ import pathlib
 from utils.math import inch_to_mm, mm_to_inch
 
 class DimensionedDXFExporter:
-    def __init__(self, dxf_file_path:str):
+    def __init__(self, dxf_file_path:str, text_scale: float = 1.0):
         self.file_path = dxf_file_path
-        self.output_dir = pathlib.Path(self.file_path).parent
+        self.output_dir = f"{pathlib.Path(self.file_path).parent}/drawings"
         self.file_stem = pathlib.Path(self.file_path).stem
         self.doc = ezdxf.new('R2018', setup=True)
         self.msp = self.doc.modelspace()
         self.doc.units = IN
+
+        self.text_scale = text_scale
 
         print(f"DimensionedDXFExporter initialized with {self.file_path}")
         if not os.path.exists(self.output_dir):
@@ -90,16 +92,28 @@ class DimensionedDXFExporter:
                 dimstyle='Standard',
                 text=dimension_value,
                 override={
-                    'dimtxt': 35.0, # Text height (default is 2.5)
-                    'dimgap': 20.0,
-                    'dimdle': 20.0,
-                    'dimasz': 20.0,  # Arrow size (default is 2.5)
+                    'dimtxt': 5.0*self.text_scale, # Text height (default is 2.5)
+                    'dimgap': 5.0*self.text_scale,
+                    'dimdle': 5.0*self.text_scale,
+                    'dimasz': 5.0*self.text_scale,  # Arrow size (default is 2.5)
                     'dimblk': '',    # Use simple arrowheads instead of blocks
-                    'dimexo': 20.0,  # Extension line offset (default is 1.25)
-                    'dimexe': 20.0,  # Extension line extension (default is 1.25)
-                    "dimdec": 2,
-                    # "dimpost": '<>"',
-                    # "dimlfac": 1/25.4  # Conversion factor from mm to inches
+                    'dimexo': 5.0*self.text_scale,  # Extension line offset (default is 1.25)
+                    # Extension line extension (default is 1.25)
+                    "dimdec": 2,  # Number of decimal places
+                    "dimtix": 1,  # Force user text (suppresses measurement)
+                    "dimtad": 1,  # Text above dimension line
+                    "dimjust": 0, # Horizontal justification (0=centered)
+                    "dimclrd": 0, # Dimension line color (0=BYBLOCK)
+                    "dimclre": 0, # Extension line color (0=BYBLOCK)
+                    "dimclrt": 0, # Text color (0=BYBLOCK)
+                    "dimse1": 0,  # Suppress first extension line (0=off)
+                    "dimse2": 0,  # Suppress second extension line (0=off)
+                    "dimsoxd": 0, # Suppress outside dimension lines (0=off)
+                    "dimtofl": 1, # Force line inside extension lines (1=on)
+                    "dimtoh": 0,  # Text outside horizontal (0=off)
+                    "dimtsz": 0,  # Tick size (0=arrowheads)
+                    "dimlfac": 1.0, # Scale factor for dimension measurement   # Conversion factor from mm to inches
+                    "dimpost": '<>"',
                 },
                 angle=direction.angle_deg
             ) 

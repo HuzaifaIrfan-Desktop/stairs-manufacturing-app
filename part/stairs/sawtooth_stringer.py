@@ -71,6 +71,15 @@ class SawtoothStringer(Part):
         return stringer_part
     
 
+
+    def export_dxf_right_view(self) -> str:
+        file_path = super().export_dxf_right_view()
+
+        DimensionedDXFExporter(file_path, text_scale=7.0).export()
+
+        return file_path
+
+        
     def export_cam(self) -> str:
 
         cq_part = self.get()
@@ -95,7 +104,6 @@ class SawtoothStringer(Part):
         right_view = cq_part.faces(">X").wires()
         cq.exporters.export(right_view, dxf_file_path, 'DXF')
 
-        DimensionedDXFExporter(dxf_file_path).export()
-
+        DimensionedDXFExporter(dxf_file_path, text_scale=7.0).export()
 
         return dxf_file_path

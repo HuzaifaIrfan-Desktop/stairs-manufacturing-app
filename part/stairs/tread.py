@@ -3,7 +3,7 @@
 import cadquery as cq
 from utils.math import inch_to_mm
 
-
+from drawings.dimensioned_dxf_exporter import DimensionedDXFExporter
 from logger import part_logger
 part_logger.info("Loading Tread class from part.stairs.tread module")
 
@@ -40,3 +40,13 @@ class Tread(Part):
             .close()
             .extrude(inch_to_mm(self.tread_params.tread_length))
         )
+
+
+    def export_dxf_right_view(self) -> str:
+        file_path = super().export_dxf_right_view()
+
+        DimensionedDXFExporter(file_path, text_scale=1.0).export()
+
+        return file_path
+
+        

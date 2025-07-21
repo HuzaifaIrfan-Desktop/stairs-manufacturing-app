@@ -65,5 +65,5 @@ class Part:
         # Get a 2D projection for DXF
         right_view = self.cq_part.faces(">X").wires()
         cq.exporters.export(right_view, file_path, 'DXF')
-        DimensionedDXFExporter(file_path).export()
+        
         return file_path
