@@ -28,6 +28,12 @@ class Kicker(Part):
         # Create a simple kicker part
         return (
             cq.Workplane("YZ")
-            .rect(inch_to_mm(self.kicker_params.kicker_depth), inch_to_mm(self.kicker_params.kicker_height))
+            .polyline([
+                (0, 0),
+                (inch_to_mm(self.kicker_params.kicker_depth), 0),
+                (inch_to_mm(self.kicker_params.kicker_depth), inch_to_mm(self.kicker_params.kicker_height)),
+                (0, inch_to_mm(self.kicker_params.kicker_height))
+            ])
+            .close()
             .extrude(inch_to_mm(self.kicker_params.kicker_length))
         )

@@ -30,7 +30,13 @@ class Tread(Part):
     def _build(self) -> cq.Workplane:
         # Create a simple tread part
         return (
-                    cq.Workplane("YZ")
-                    .rect(inch_to_mm(self.tread_params.tread_depth), inch_to_mm(self.tread_params.tread_thickness))
-                    .extrude(inch_to_mm(self.tread_params.tread_length))
-                )
+            cq.Workplane("YZ")
+            .polyline([
+                (0, 0),
+                (0, inch_to_mm(self.tread_params.tread_thickness)),
+                (inch_to_mm(self.tread_params.tread_depth), inch_to_mm(self.tread_params.tread_thickness)),
+                (inch_to_mm(self.tread_params.tread_depth), 0)
+            ])
+            .close()
+            .extrude(inch_to_mm(self.tread_params.tread_length))
+        )

@@ -30,6 +30,12 @@ class Riser(Part):
         # Create a simple riser part
         return (
             cq.Workplane("YZ")
-            .rect(inch_to_mm(self.riser_params.riser_thickness), inch_to_mm(self.riser_params.riser_height))
+            .polyline([
+                (0, 0),
+                (0, inch_to_mm(self.riser_params.riser_height)),
+                (inch_to_mm(self.riser_params.riser_thickness), inch_to_mm(self.riser_params.riser_height)),
+                (inch_to_mm(self.riser_params.riser_thickness), 0)
+            ])
+            .close()
             .extrude(inch_to_mm(self.riser_params.riser_length))
         )
