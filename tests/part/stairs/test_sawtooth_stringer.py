@@ -9,7 +9,7 @@ def test_sawtooth_stringer_build():
                                               first_step_rise_height=0.2, last_step_run_depth=0.3,
                                               step_rise_height=0.18, step_run_depth=0.25,
                                               number_of_stringer_rise=10, number_of_stringer_run=12,
-                                              angle_of_stringer=30, stringer_placement_from_top=0.1,
+                                              stringer_placement_from_top=0.1,
                                               bottom_stringer_depth=0.3, back_stringer_reverse_height=0.3,
                                               kicker_height=0.4, kicker_depth=0.5)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
@@ -22,7 +22,7 @@ def test_sawtooth_stringer_export():
                                               first_step_rise_height=6.13, last_step_run_depth=10.5,
                                               step_rise_height=7.63, step_run_depth=10.5,
                                               number_of_stringer_rise=12, number_of_stringer_run=12,
-                                              angle_of_stringer=30, stringer_placement_from_top=0.1)
+                                              stringer_placement_from_top=0.1)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
 
     # Test STEP export

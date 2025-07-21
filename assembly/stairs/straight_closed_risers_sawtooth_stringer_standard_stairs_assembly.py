@@ -71,21 +71,44 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
     def _assemble(self):
         # Logic to assemble the components based on the parameters
         
-
-        sawtooth_stringer = self.sawtooth_stringer.get().val()
-        kicker =  self.kicker.get().val()
+        compound = []
 
         first_riser = self.first_riser.get().val()
-        last_tread = self.last_tread.get().val()
-        last_riser = self.last_riser.get().val()
+        compound.append(first_riser)
+        y_offset = inch_to_mm(self.first_riser_params.riser_thickness)
 
-        # riser = self.riser.get().val()
-        # tread =  self.tread.get().val()
+        if self.kicker_params.kicker_depth > 0 and self.kicker_params.kicker_height > 0 and self.kicker_params.kicker_length > 0:
+            kicker =  self.kicker.get().val().translate((0, y_offset, 0))
+            compound.append(kicker)
 
+        sawtooth_stringer = self.sawtooth_stringer.get().val().translate((0, y_offset, 0))
+        compound.append(sawtooth_stringer)
+
+        second_stringer_x_offset = inch_to_mm(self.tread_params.tread_length) - inch_to_mm(self.sawtooth_stringer_params.stringer_thickness)
+        second_sawtooth_stringer = self.sawtooth_stringer.get().val().translate((second_stringer_x_offset, y_offset, 0))
+        compound.append(second_sawtooth_stringer)
+
+        z_offset = inch_to_mm(self.sawtooth_stringer_params.first_step_rise_height)
+
+
+        y_offset = y_offset + inch_to_mm(self.sawtooth_stringer_params.step_run_depth) - inch_to_mm(self.riser_params.riser_thickness)
+        tread_y_offset = y_offset - inch_to_mm(self.tread_params.tread_depth)
+        tread =  self.tread.get().val().translate((0, tread_y_offset, z_offset))
+        compound.append(tread)
+        riser = self.riser.get().val().translate((0, y_offset, z_offset))
+        compound.append(riser)
+        z_offset += inch_to_mm(self.sawtooth_stringer_params.step_rise_height)
+
+
+
+        # last_tread = self.last_tread.get().val().translate((0, y_offset, z_offset))
+        # last_riser = self.last_riser.get().val().translate((0, y_offset, z_offset))
+        # compound.append(last_tread)
+        # compound.append(last_riser)
 
         # box1 = cq.Workplane("XY").box(10, 10, 10).val()
         # box2 = cq.Workplane("XY").box(10, 10, 10).val().translate((15, 0, 0))  # offset after creation
 
-        compound = cq.Compound.makeCompound([sawtooth_stringer, kicker, first_riser, last_tread, last_riser])
+        compound = cq.Compound.makeCompound(compound)
         self.cq_assembly = cq.Workplane(obj=compound)
 

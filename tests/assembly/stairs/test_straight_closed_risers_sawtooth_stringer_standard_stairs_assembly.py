@@ -19,7 +19,7 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
     kicker_params = KickerParams(
         job_name=job_name,
         part_name="test_kicker",
-        kicker_height=4,
+        kicker_height=1,
         kicker_depth=1,
         kicker_length=36
     )
@@ -41,11 +41,11 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         number_of_stringer_rise=12,
         number_of_stringer_run=12,
 
-        angle_of_stringer=30,
         stringer_placement_from_top=5,
 
-
-
+        kicker_height=1,
+        kicker_depth=1,
+        
 
     )
 
