@@ -1,5 +1,9 @@
+from pydantic import BaseModel, Field, model_validator
 
-from pydantic import Field
+from models.material.lumber import Lumber
+from models.material.plywood import Plywood, plywood_1
+from typing import Union as union
+from models.material.material import Material
 from models.part.part_params import PartParams
 
 class KickerParams(PartParams):

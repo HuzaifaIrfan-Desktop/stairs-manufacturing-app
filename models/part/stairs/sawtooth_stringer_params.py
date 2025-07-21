@@ -43,11 +43,6 @@ class SawtoothStringerParams(PartParams):
     def compute_bounds(self) -> 'SawtoothStringerParams':
 
 
-
-        # The angle of the stringer (hypotenuse)
-        angle_rad = math.atan2(self.step_rise_height, self.step_run_depth)
-
-
         def calculate_x(theta1_rad, w, r_f):
             """
             Calculate X using the formula:
@@ -89,11 +84,6 @@ class SawtoothStringerParams(PartParams):
             Y = r_f + n * r_i - tan_theta1 * term_inside
             return Y
 
-        bottom_stringer_depth = calculate_x(angle_rad, self.stringer_width, self.first_step_rise_height)
-        back_stringer_reverse_height = calculate_y(angle_rad, self.first_step_rise_height, 0, self.step_rise_height, self.last_step_run_depth, bottom_stringer_depth)
-
-
-
 
         def calculate_w_min(theta1_rad, r_u, r_f, X):
             """
@@ -115,24 +105,31 @@ class SawtoothStringerParams(PartParams):
             w_min = numerator / denominator
             return w_min
 
+        # The angle of the stringer (hypotenuse)
+        angle_rad = math.atan2(self.step_rise_height, self.step_run_depth)
+
+        bottom_stringer_depth = calculate_x(angle_rad, self.stringer_width, self.first_step_rise_height)
+        back_stringer_reverse_height = calculate_y(angle_rad, self.first_step_rise_height, 0, self.step_rise_height, self.last_step_run_depth, bottom_stringer_depth)
+
+
         w_min = calculate_w_min(angle_rad, self.step_run_depth, self.first_step_rise_height, bottom_stringer_depth)
 
 
-        object.__setattr__(self, 'angle_of_stringer_rad', angle_rad)
+        self.angle_of_stringer_rad= angle_rad
 
-        object.__setattr__(self, 'bottom_stringer_depth', bottom_stringer_depth)
-        object.__setattr__(self, 'back_stringer_reverse_height', back_stringer_reverse_height)
-        object.__setattr__(self, 'stringer_width_min', w_min)
+        self.bottom_stringer_depth = bottom_stringer_depth
+        self.back_stringer_reverse_height = back_stringer_reverse_height
+        self.stringer_width_min = w_min
 
-        number_of_stringer_rise = self.number_of_stringer_run
-        object.__setattr__(self, 'number_of_stringer_rise', number_of_stringer_rise)
 
-        stringer_total_rise = self.first_step_rise_height + (self.number_of_stringer_rise - 1) * self.step_rise_height
-        object.__setattr__(self, 'stringer_total_rise', stringer_total_rise)
-        stringer_total_run = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.step_run_depth
-        object.__setattr__(self, 'stringer_total_run', stringer_total_run)
-        stringer_length = math.sqrt(stringer_total_rise**2 + stringer_total_run**2)
-        object.__setattr__(self, 'stringer_length', stringer_length)
+        self.number_of_stringer_rise = self.number_of_stringer_run
+
+
+        self.stringer_total_rise = self.first_step_rise_height + (self.number_of_stringer_rise - 1) * self.step_rise_height
+
+        self.stringer_total_run  = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.step_run_depth
+
+        self.stringer_length = math.sqrt(self.stringer_total_rise**2 + self.stringer_total_run**2)
 
         return self
 

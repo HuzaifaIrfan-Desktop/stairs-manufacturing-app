@@ -19,7 +19,7 @@ def test_sawtooth_stringer_build():
 
 def test_sawtooth_stringer_export():
     stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer", stringer_thickness=1.5, stringer_width=11.5,
-                                              first_step_rise_height=6.13, last_step_run_depth=11.5,
+                                              first_step_rise_height=6.63, last_step_run_depth=11.5,
                                               step_rise_height=7.63, step_run_depth=11.5,number_of_stringer_run=15,
                                               stringer_placement_from_top=9.13)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)

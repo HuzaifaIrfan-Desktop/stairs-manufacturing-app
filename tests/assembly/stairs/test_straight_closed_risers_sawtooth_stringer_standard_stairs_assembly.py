@@ -54,7 +54,6 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         job_name=job_name,
         part_name="test_riser",
         riser_height=7,
-        riser_thickness=1,
         riser_length=36
     )
 
@@ -62,7 +61,6 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         job_name=job_name,
         part_name="test_tread",
         tread_depth=10,
-        tread_thickness=1,
         tread_length=36
     )
 
@@ -70,14 +68,12 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         job_name=job_name,
         part_name="test_first_riser",
         riser_height=7,
-        riser_thickness=1,
         riser_length=36
     )
     last_tread_params = TreadParams(
         job_name=job_name,
         part_name="test_last_tread",
         tread_depth=10,
-        tread_thickness=1,
         tread_length=36
     )
 
@@ -85,7 +81,6 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         job_name=job_name,
         part_name="test_last_riser",
         riser_height=7,
-        riser_thickness=1,
         riser_length=36
     )
 

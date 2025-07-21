@@ -4,24 +4,24 @@ from part.stairs.tread import Tread
 from models.part.stairs.tread_params import TreadParams
 
 def test_tread_area():
-    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=1.0, tread_depth=0.3, tread_thickness=0.05)
+    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=36.75, tread_depth=11.5)
     tread = Tread(tread_params)
-    assert tread.calculate_area() == 1.0 * 0.3
+    assert tread.calculate_area() == 36.75 * 11.5
 
 def test_tread_volume():
-    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=1.0, tread_depth=0.3, tread_thickness=0.05)
+    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=36.75, tread_depth=11.5)
     tread = Tread(tread_params)
-    assert tread.calculate_volume() == 1.0 * 0.3 * 0.05
+    assert tread.calculate_volume() == 36.75 * 11.5 * 1
 
 def test_tread_build():
-    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=1.0, tread_depth=0.3, tread_thickness=0.05)
+    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=36.75, tread_depth=11.5)
     tread = Tread(tread_params)
     cq_part = tread.get()
     assert cq_part is not None
     assert cq_part.val().Volume() > 0  # Ensure the part has a non-zero volume
 
 def test_tread_export():
-    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=1.0, tread_depth=0.3, tread_thickness=0.05)
+    tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=36.75, tread_depth=11.5)
     tread = Tread(tread_params)
     
     # Test STEP export

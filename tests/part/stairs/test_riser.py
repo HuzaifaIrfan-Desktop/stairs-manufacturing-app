@@ -5,26 +5,26 @@ from part.stairs.riser import Riser
 from models.part.stairs.riser_params import RiserParams
 
 def test_riser_area():
-    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=1.0, riser_height=0.3, riser_thickness=0.05)
+    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=36.75, riser_height=7.625)
     riser = Riser(riser_params)
-    assert riser.calculate_area() == 1.0 * 0.3
+    assert riser.calculate_area() == 36.75 * 7.625
 
 def test_riser_volume():
-    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=1.0, riser_height=0.3, riser_thickness=0.05)
+    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=36.75, riser_height=7.625)
     riser = Riser(riser_params)
-    assert riser.calculate_volume() == 1.0 * 0.3 * 0.05
+    assert riser.calculate_volume() == 36.75 * 7.625 * 0.375
 
 
 
 def test_riser_build():
-    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=1.0, riser_height=0.3, riser_thickness=0.05)
+    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=36.75, riser_height=7.625)
     riser = Riser(riser_params)
     cq_part = riser.get()
     assert cq_part is not None
     assert cq_part.val().Volume() > 0  # Ensure the part has a non-zero volume
 
 def test_riser_export():
-    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=1.0, riser_height=0.3, riser_thickness=0.05)
+    riser_params = RiserParams(job_name="test_job", part_name="test_riser", riser_length=36.75, riser_height=7.625)
     riser = Riser(riser_params)
 
     # Test STEP export
