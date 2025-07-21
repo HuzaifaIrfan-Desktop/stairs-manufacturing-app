@@ -3,13 +3,15 @@
 import cadquery as cq
 from utils.math import inch_to_mm
 
+from logger import part_logger
+part_logger.info("Loading Kicker class from part.stairs.kicker module")
 
 from part.part import Part
 from models.part.stairs.kicker_params import KickerParams
 
 class Kicker(Part):
     def __init__(self, kicker_params: KickerParams):
-        print(f"Creating Kicker with params: {kicker_params}")
+        part_logger.info(f"Creating Kicker with params: {kicker_params}")
         self.kicker_params = kicker_params
         # _build is run by parent class Part and it uses self.kicker_params
         # to create the part, so we call super().__init__ here

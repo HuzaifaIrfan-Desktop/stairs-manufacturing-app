@@ -10,7 +10,6 @@ def test_tread_area():
 
 def test_tread_volume():
     tread_params = TreadParams(job_name="test_job", part_name="test_tread", tread_length=1.0, tread_depth=0.3, tread_thickness=0.05)
-    print(tread_params)
     tread = Tread(tread_params)
     assert tread.calculate_volume() == 1.0 * 0.3 * 0.05
 

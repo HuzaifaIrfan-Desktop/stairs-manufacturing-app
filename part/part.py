@@ -1,13 +1,17 @@
 import cadquery as cq
 from utils.math import inch_to_mm
 
+from logger import part_logger
+part_logger.info("Loading Part class from part.part module")
+
+
 from models.part.part_params import PartParams
 
 import os
 
 class Part:
     def __init__(self, part_params: PartParams):
-        # print(f"Creating Part with params: {part_params}")
+        # part_logger.info(f"Creating Part with params: {part_params}")
         self.part_params = part_params
 
         self.part_output_dir = os.path.join(os.getcwd(), f'output/{self.part_params.job_name}/part/')

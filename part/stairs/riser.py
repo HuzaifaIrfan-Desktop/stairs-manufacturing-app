@@ -3,6 +3,9 @@
 import cadquery as cq
 from utils.math import inch_to_mm
 
+from logger import part_logger
+part_logger.info("Loading Riser class from part.stairs.riser module")
+
 
 from part.part import Part
 from models.part.stairs.riser_params import RiserParams
@@ -10,7 +13,7 @@ from models.part.stairs.riser_params import RiserParams
 
 class Riser(Part):
     def __init__(self, riser_params: RiserParams):
-        print(f"Creating Riser with params: {riser_params}")
+        part_logger.info(f"Creating Riser with params: {riser_params}")
         self.riser_params = riser_params
         # _build is run by parent class Part and it uses self.riser_params
         # to create the part, so we call super().__init__ here

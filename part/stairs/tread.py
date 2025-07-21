@@ -4,13 +4,17 @@ import cadquery as cq
 from utils.math import inch_to_mm
 
 
+from logger import part_logger
+part_logger.info("Loading Tread class from part.stairs.tread module")
+
+
 from part.part import Part
 from models.part.stairs.tread_params import TreadParams
 
 
 class Tread(Part):
     def __init__(self, tread_params: TreadParams):
-        print(f"Creating Tread with params: {tread_params}")
+        part_logger.info(f"Creating Tread with params: {tread_params}")
         self.tread_params = tread_params
         # _build is run by parent class Part and it uses self.tread_params
         # to create the part, so we call super().__init__ here

@@ -4,13 +4,17 @@ import cadquery as cq
 from utils.math import inch_to_mm
 
 
+from logger import part_logger
+part_logger.info("Loading SawtoothStringer class from part.stairs.sawtooth_stringer module")
+
+
 from part.part import Part
 from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
 
 
 class SawtoothStringer(Part):
     def __init__(self, stringer_params: SawtoothStringerParams):
-        print(f"Creating SawtoothStringer with params: {stringer_params}")
+        part_logger.info(f"Creating SawtoothStringer with params: {stringer_params}")
         self.stringer_params = stringer_params
         # _build is run by parent class Part and it uses self.stringer_params
         # to create the part, so we call super().__init__ here
