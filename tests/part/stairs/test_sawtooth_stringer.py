@@ -5,20 +5,19 @@ from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
 
 
 def test_sawtooth_stringer_build():
-    stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer", stringer_length=1.0, stringer_thickness=0.3, stringer_width=0.05,
-                                              first_step_rise_height=0.2, last_step_run_depth=0.3,
-                                              step_rise_height=0.18, step_run_depth=0.25,
-                                              number_of_stringer_rise=10, number_of_stringer_run=12,
-                                              stringer_placement_from_top=0.1,
-                                              bottom_stringer_depth=0.3, back_stringer_reverse_height=0.3,
-                                              kicker_height=0.4, kicker_depth=0.5)
+    stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer",
+                                              first_step_rise_height=6.63, last_step_run_depth=11.5,
+                                              step_rise_height=7.63, step_run_depth=11.5,
+                                              number_of_stringer_run=12,
+                                              stringer_placement_from_top=1.0,
+                                              kicker_height=1.0, kicker_depth=1.0)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
     cq_part = stringer.get()
     assert cq_part is not None
     assert cq_part.val().Volume() > 0  # Ensure the part has a non-zero volume
 
 def test_sawtooth_stringer_export():
-    stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer", stringer_thickness=1.5, stringer_width=11.5,
+    stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer",
                                               first_step_rise_height=6.63, last_step_run_depth=11.5,
                                               step_rise_height=7.63, step_run_depth=11.5,number_of_stringer_run=15,
                                               stringer_placement_from_top=9.13)

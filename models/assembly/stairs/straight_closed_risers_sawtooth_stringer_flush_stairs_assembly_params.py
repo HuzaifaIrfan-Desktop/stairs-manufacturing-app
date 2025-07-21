@@ -1,6 +1,6 @@
 
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from models.assembly.assembly_params import AssemblyParams
 
@@ -11,10 +11,10 @@ from models.part.stairs.tread_params import TreadParams
 
 class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
     
-    kicker_params: KickerParams = Field(..., description="Parameters for the kicker")
-    sawtooth_stringer_params: SawtoothStringerParams = Field(..., description="Parameters for the sawtooth stringer")
-    riser_params: RiserParams = Field(..., description="Parameters for the risers")
-    tread_params: TreadParams = Field(..., description="Parameters for the treads")
-    
-    first_riser_params: RiserParams = Field(..., description="Parameters for the first riser")
-    last_tread_params: TreadParams = Field(..., description="Parameters for the last tread")
+    kicker_params: KickerParams = Field(init=False, default=None, validate_default=False, description="Parameters for the kicker")
+    sawtooth_stringer_params: SawtoothStringerParams = Field(init=False, default=None, validate_default=False, description="Parameters for the sawtooth stringer")
+    riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the risers")
+    tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the treads")
+
+    first_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the first riser")
+    last_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the last tread")

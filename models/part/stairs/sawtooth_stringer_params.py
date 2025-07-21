@@ -2,15 +2,14 @@
 from models.part.part_params import PartParams
 
 import math
-
+from models.material.lumber import Lumber,lumber_2x12
 
 from pydantic import BaseModel, Field, model_validator
 
 
 class SawtoothStringerParams(PartParams):
-    
-    stringer_width: float
-    stringer_thickness: float
+    stringer_width: float = Field(init=False, default=None, validate_default=False)
+    stringer_thickness: float = Field(init=False, default=None, validate_default=False)
 
     stringer_length: float = Field(init=False, default=None, validate_default=False)
 
@@ -37,6 +36,8 @@ class SawtoothStringerParams(PartParams):
 
     kicker_height: float = Field(default=0.0)
     kicker_depth: float = Field(default=0.0)
+
+    material: Lumber = Field(default=lumber_2x12, description="Material of the stringer, e.g., Lumber, etc.")
 
 
     @model_validator(mode='after')
@@ -105,31 +106,29 @@ class SawtoothStringerParams(PartParams):
             w_min = numerator / denominator
             return w_min
 
+
+        # stringer width and thickness from material
+        self.stringer_width = self.material.width
+        self.stringer_thickness = self.material.thickness
+
+
         # The angle of the stringer (hypotenuse)
-        angle_rad = math.atan2(self.step_rise_height, self.step_run_depth)
-
-        bottom_stringer_depth = calculate_x(angle_rad, self.stringer_width, self.first_step_rise_height)
-        back_stringer_reverse_height = calculate_y(angle_rad, self.first_step_rise_height, 0, self.step_rise_height, self.last_step_run_depth, bottom_stringer_depth)
-
-
-        w_min = calculate_w_min(angle_rad, self.step_run_depth, self.first_step_rise_height, bottom_stringer_depth)
-
-
-        self.angle_of_stringer_rad= angle_rad
-
-        self.bottom_stringer_depth = bottom_stringer_depth
-        self.back_stringer_reverse_height = back_stringer_reverse_height
-        self.stringer_width_min = w_min
+        self.angle_of_stringer_rad = math.atan2(self.step_rise_height, self.step_run_depth)
 
 
         self.number_of_stringer_rise = self.number_of_stringer_run
-
 
         self.stringer_total_rise = self.first_step_rise_height + (self.number_of_stringer_rise - 1) * self.step_rise_height
 
         self.stringer_total_run  = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.step_run_depth
 
         self.stringer_length = math.sqrt(self.stringer_total_rise**2 + self.stringer_total_run**2)
+
+        self.bottom_stringer_depth = calculate_x(self.angle_of_stringer_rad, self.stringer_width, self.first_step_rise_height)
+        self.back_stringer_reverse_height = calculate_y(self.angle_of_stringer_rad, self.first_step_rise_height, 0, self.step_rise_height, self.last_step_run_depth, self.bottom_stringer_depth)
+
+        self.stringer_width_min = calculate_w_min(self.angle_of_stringer_rad, self.step_run_depth, self.first_step_rise_height, self.bottom_stringer_depth)
+
 
         return self
 
