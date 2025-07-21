@@ -12,7 +12,10 @@ class SawtoothStringerParams(PartParams):
     stringer_width: float
     stringer_thickness: float
 
-    stringer_length: float
+    stringer_length: float = Field(init=False, default=None, validate_default=False)
+
+    stringer_total_rise: float = Field(init=False, default=None, validate_default=False)
+    stringer_total_run: float = Field(init=False, default=None, validate_default=False)
 
     first_step_rise_height: float
     last_step_run_depth: float
@@ -123,6 +126,14 @@ class SawtoothStringerParams(PartParams):
 
         number_of_stringer_rise = self.number_of_stringer_run
         object.__setattr__(self, 'number_of_stringer_rise', number_of_stringer_rise)
+
+        stringer_total_rise = self.first_step_rise_height + (self.number_of_stringer_rise - 1) * self.step_rise_height
+        object.__setattr__(self, 'stringer_total_rise', stringer_total_rise)
+        stringer_total_run = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.step_run_depth
+        object.__setattr__(self, 'stringer_total_run', stringer_total_run)
+        stringer_length = math.sqrt(stringer_total_rise**2 + stringer_total_run**2)
+        object.__setattr__(self, 'stringer_length', stringer_length)
+
         return self
 
     # def __init__(self, **data):

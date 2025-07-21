@@ -34,5 +34,7 @@ def test_sawtooth_stringer_export():
     # Test DXF export
     stringer.export_dxf_right_view()
 
+    stringer.export_cam()
+
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks
