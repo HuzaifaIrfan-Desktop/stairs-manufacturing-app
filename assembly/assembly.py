@@ -31,6 +31,16 @@ class Assembly:
     def get(self) -> cq.Workplane:
         return self.cq_assembly
 
+    def get_assembly_params(self) -> AssemblyParams:
+        return self.assembly_params
+
+    def export_assembly_params(self) -> str:
+        # Export the assembly parameters to a file
+        file_path = f'{self.assembly_output_dir}/{self.assembly_params.assembly_name}_params.json'
+        with open(file_path, 'w') as f:
+            f.write(self.assembly_params.model_dump_json(indent=4))
+        return file_path
+    
     def export_step(self) -> str:
         file_path = f'{self.assembly_output_dir}/{self.assembly_params.assembly_name}.step'
         # Export the part to a file STEP

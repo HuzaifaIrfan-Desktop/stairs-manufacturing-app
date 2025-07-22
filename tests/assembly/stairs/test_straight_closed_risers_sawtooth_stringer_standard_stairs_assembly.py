@@ -27,6 +27,8 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
 
     assert assembly is not None
     assert assembly.get() is not None
+    assert assembly.get_assembly_params() is not None
+    assert assembly.export_assembly_params() is not None
     assert assembly.export_step() is not None
     assert assembly.export_stl() is not None
     assert assembly.export_dxf_top_view() is not None

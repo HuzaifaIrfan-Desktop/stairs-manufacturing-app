@@ -25,6 +25,7 @@ def test_kicker_export():
     kicker_params = KickerParams(job_name="test_job", part_name="test_kicker", kicker_length=36.75, kicker_height=1, kicker_depth=1)
     kicker = Kicker(kicker_params)
 
+    kicker.export_part_params()
     # Test STEP export
     kicker.export_step()
 
@@ -33,6 +34,8 @@ def test_kicker_export():
 
     # Test DXF export
     kicker.export_dxf_right_view()
+
+    kicker.export_drawing()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks

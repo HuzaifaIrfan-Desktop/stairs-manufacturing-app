@@ -153,7 +153,7 @@ class DimensionedDXFExporter:
             fp.write(pdf_bytes)
 
         # 6. get the PNG rendering as bytes
-        png_bytes = backend.get_pixmap_bytes(page, fmt="png", dpi=96)
+        png_bytes = backend.get_pixmap_bytes(page, fmt="png", dpi=300)
         with open(png_file_path, "wb") as fp:
             fp.write(png_bytes)
 

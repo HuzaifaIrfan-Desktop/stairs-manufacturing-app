@@ -2,7 +2,7 @@
 
 import cadquery as cq
 from utils.math import inch_to_mm
-from drawings.dimensioned_dxf_exporter import DimensionedDXFExporter
+from drawing.dimensioned_dxf_exporter import DimensionedDXFExporter
 
 from logger import part_logger
 part_logger.info("Loading SawtoothStringer class from part.stairs.sawtooth_stringer module")
@@ -72,14 +72,7 @@ class SawtoothStringer(Part):
     
 
 
-    def export_dxf_right_view(self) -> str:
-        file_path = super().export_dxf_right_view()
-
-        DimensionedDXFExporter(file_path, text_scale=7.0).export()
-
-        return file_path
-
-        
+       
     def export_cam(self) -> str:
 
         cq_part = self.get()
@@ -104,6 +97,16 @@ class SawtoothStringer(Part):
         right_view = cq_part.faces(">X").wires()
         cq.exporters.export(right_view, dxf_file_path, 'DXF')
 
-        DimensionedDXFExporter(dxf_file_path, text_scale=7.0).export()
+        self.export_drawing_from_dxf(dxf_file_path, text_scale=7.0)
 
         return dxf_file_path
+    
+    def export_drawing(self) -> str:
+        file_path = self.export_dxf_right_view()
+
+        self.export_drawing_from_dxf(file_path, text_scale=7.0)
+
+        return file_path
+
+        
+        

@@ -1,5 +1,6 @@
 import cadquery as cq
-from drawings.dimensioned_dxf_exporter import DimensionedDXFExporter
+from drawing.dimensioned_dxf_exporter import DimensionedDXFExporter
+from drawing.drawing import Drawing
 from utils.math import inch_to_mm
 
 from logger import part_logger
@@ -29,9 +30,18 @@ class Part:
             .box(inch_to_mm(1), inch_to_mm(1), inch_to_mm(1))  # Placeholder dimensions
         )
 
-
     def get(self) -> cq.Workplane:
         return self.cq_part
+    
+    def get_part_params(self) -> PartParams:
+        return self.part_params
+
+    def export_part_params(self) -> str:
+        # Export the part parameters to a file
+        file_path = f'{self.part_output_dir}/{self.part_params.part_name}_params.json'
+        with open(file_path, 'w') as f:
+            f.write(self.part_params.model_dump_json(indent=4))
+        return file_path
     
     def export_step(self) -> str:
         file_path = f'{self.part_output_dir}/{self.part_params.part_name}.step'
@@ -67,3 +77,19 @@ class Part:
         cq.exporters.export(right_view, file_path, 'DXF')
         
         return file_path
+
+
+    def export_drawing_from_dxf(self, dxf_file_path: str, text_scale: float = 1.0) -> str:
+        drawing_pdf_file_path = Drawing(job_name=self.part_params.job_name, part_name=self.part_params.part_name, dxf_file_path=dxf_file_path, text_scale=text_scale).export()
+
+        return drawing_pdf_file_path
+
+
+    def export_drawing(self) -> str:
+        file_path = self.export_dxf_right_view()
+
+        self.export_drawing_from_dxf(file_path, text_scale=1.0)
+
+        return file_path
+
+        

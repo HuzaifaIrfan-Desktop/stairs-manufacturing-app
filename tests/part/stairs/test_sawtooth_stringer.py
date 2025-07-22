@@ -23,6 +23,8 @@ def test_sawtooth_stringer_export():
                                               stringer_placement_from_top=9.13)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
 
+    stringer.export_part_params()
+
     # Test STEP export
     stringer.export_step()
 
@@ -33,6 +35,8 @@ def test_sawtooth_stringer_export():
     stringer.export_dxf_right_view()
 
     stringer.export_cam()
+
+    stringer.export_drawing()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks
