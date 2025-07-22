@@ -127,7 +127,12 @@ class SawtoothStringerParams(PartParams):
         self.back_stringer_reverse_height = calculate_y(self.angle_of_stringer_rad, self.first_step_rise_height, 0, self.step_rise_height, self.last_step_run_depth, self.bottom_stringer_depth)
 
         self.stringer_width_min = calculate_w_min(self.angle_of_stringer_rad, self.step_run_depth, self.first_step_rise_height, self.bottom_stringer_depth)
-
+        
+        
+        if self.kicker_height >= self.first_step_rise_height:
+            raise ValueError("kicker_height must be less than first_step_rise_height")
+        if self.kicker_depth >= self.bottom_stringer_depth:
+            raise ValueError("kicker_depth must be less than bottom_stringer_depth")
 
         return self
 
@@ -135,9 +140,6 @@ class SawtoothStringerParams(PartParams):
     #     super().__init__(**data)
 
 
-    def __post_init__(self):
-        if self.kicker_height >= self.first_step_rise_height:
-            raise ValueError("kicker_height must be less than first_step_rise_height")
-        if self.kicker_depth >= self.bottom_stringer_depth:
-            raise ValueError("kicker_depth must be less than bottom_stringer_depth")
+
+
    

@@ -44,7 +44,7 @@ class Drawing:
         # Example edit: Change all text elements to uppercase
         ns = {'svg': 'http://www.w3.org/2000/svg'}
         for text_elem in root.findall('.//svg:tspan', ns):
-            print(f"Editing text: {text_elem.text}")
+            # print(f"Editing text: {text_elem.text}")
 
             if text_elem.text == "Drawing Title 1":
                 text_elem.text = f"{self.part_name}"
@@ -66,7 +66,7 @@ class Drawing:
         # Convert to PDF
         cairosvg.svg2pdf(url=temp_svg, write_to=self.template_pdf_file_path)
 
-        print(f"Edited SVG saved as PDF: {self.template_pdf_file_path}")
+        # print(f"Edited SVG saved as PDF: {self.template_pdf_file_path}")
 
 
     def scale_embed_png_to_template(self):
@@ -120,7 +120,7 @@ class Drawing:
 
         # Save to output PDF
         template_pdf.save(self.drawing_pdf_file_path)
-        print(f"Embedded PNG into PDF and saved to: {self.drawing_pdf_file_path}")
+        # print(f"Embedded PNG into PDF and saved to: {self.drawing_pdf_file_path}")
 
 
     def export(self) -> str:

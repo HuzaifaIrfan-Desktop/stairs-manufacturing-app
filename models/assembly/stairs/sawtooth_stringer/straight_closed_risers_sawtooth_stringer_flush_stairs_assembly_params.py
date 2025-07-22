@@ -1,5 +1,6 @@
 
 
+import math
 from pydantic import BaseModel, Field, model_validator
 
 from models.assembly.assembly_params import AssemblyParams
@@ -106,13 +107,13 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
                 part_name="sawtooth_stringer",
 
                 first_step_rise_height=self.first_riser_params.riser_height,
-                last_step_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth,
+                last_step_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth-self.riser_params.riser_thickness,
 
                 step_rise_height=self.riser_params.riser_height,
-                step_run_depth=self.tread_params.tread_depth - self.tread_overhang_nosing_depth,
+                step_run_depth=self.tread_params.tread_depth - self.tread_overhang_nosing_depth ,
 
 
-                number_of_stringer_run=self.number_of_steps_risers - 1,
+                number_of_stringer_run=self.number_of_steps_risers,
 
                 kicker_height=self.kicker_params.kicker_height,
                 kicker_depth=self.kicker_params.kicker_depth,
@@ -122,12 +123,14 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
             )
 
 
+
+
+        if abs(self.sawtooth_stringer_params.stringer_total_rise - (self.total_rise_height - self.last_tread_params.tread_thickness)) > 0.1:
+
+                print( f"stringer_total_rise {self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}")
+                raise ValueError(
+                    f"sawtooth_stringer_params.stringer_total_rise must be within 0.1 of total_rise_height - last_tread_params.tread_thickness "
+                    f"{self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}"
+                )
+
         return self
-
-
-
-    def __post_init__(self):
-        if self.sawtooth_stringer_params.stringer_total_rise != self.total_rise_height- self.last_tread_params.tread_thickness:
-            raise ValueError(f"sawtooth_stringer_params.stringer_total_rise must be equal to total_rise_height - last_tread_params.tread_thickness { self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}")
-
-   

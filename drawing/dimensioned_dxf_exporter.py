@@ -30,7 +30,7 @@ class DimensionedDXFExporter:
 
         self.text_scale = text_scale
 
-        print(f"DimensionedDXFExporter initialized with {self.file_path}")
+        # print(f"DimensionedDXFExporter initialized with {self.file_path}")
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
@@ -47,30 +47,30 @@ class DimensionedDXFExporter:
         else:
             raise FileNotFoundError(f"DXF file not found: {dxf_file_path}")
         
-        # list blocks in the DXF file
-        blocks = self.doc.blocks
-        print("Blocks in the DXF file:")
-        for block_name in blocks:
-            print(f" - {block_name}")
+        # # list blocks in the DXF file
+        # blocks = self.doc.blocks
+        # print("Blocks in the DXF file:")
+        # for block_name in blocks:
+        #     print(f" - {block_name}")
 
-        # list entities in the modelspace
-        entities = self.msp.query('*')
-        print("Entities in the modelspace:")
-        for entity in entities:
-            print(f" - {entity.dxftype()} at {entity.dxf.insert if hasattr(entity.dxf, 'insert') else 'N/A'}")
-        # list layers in the DXF file
-        layers = self.doc.layers
-        print("Layers in the DXF file:")
-        for layer in layers:
-            print(f" - {layer}: color={layer.color}")
+        # # list entities in the modelspace
+        # entities = self.msp.query('*')
+        # print("Entities in the modelspace:")
+        # for entity in entities:
+        #     print(f" - {entity.dxftype()} at {entity.dxf.insert if hasattr(entity.dxf, 'insert') else 'N/A'}")
+        # # list layers in the DXF file
+        # layers = self.doc.layers
+        # print("Layers in the DXF file:")
+        # for layer in layers:
+        #     print(f" - {layer}: color={layer.color}")
 
         #list all LINEs in the DXF file
         lines = self.msp.query('LINE')
-        print("Lines in the modelspace:")
+        # print("Lines in the modelspace:")
         for line in lines:
             start = line.dxf.start
             end = line.dxf.end
-            print(f" - LINE from {start} to {end}")
+            # print(f" - LINE from {start} to {end}")
         
         # add dimensions to lines
         for line in lines:
@@ -79,13 +79,13 @@ class DimensionedDXFExporter:
             # Calculate dimension line offset
             direction = end - start
             if direction.magnitude == 0:
-                print(f"Skipping dimension for zero-length line from {start} to {end}")
+                # print(f"Skipping dimension for zero-length line from {start} to {end}")
                 continue
             offset_dir = direction.orthogonal().normalize() 
             dim_line_pos = (start + end) * 0.5 + offset_dir
 
             dimension_value= f'{mm_to_inch((end - start).magnitude)}"'
-            print(f"Adding dimension from {start} to {end} at {dim_line_pos} with value {dimension_value}")
+            # print(f"Adding dimension from {start} to {end} at {dim_line_pos} with value {dimension_value}")
 
             # Add the dimension
             dim = self.msp.add_linear_dim(
@@ -160,7 +160,7 @@ class DimensionedDXFExporter:
         with open(png_file_path, "wb") as fp:
             fp.write(png_bytes)
 
-        print(f"PDF and PNG exported successfully to {self.output_dir}")
+        # print(f"PDF and PNG exported successfully to {self.output_dir}")
 
         return pdf_file_path, png_file_path
 

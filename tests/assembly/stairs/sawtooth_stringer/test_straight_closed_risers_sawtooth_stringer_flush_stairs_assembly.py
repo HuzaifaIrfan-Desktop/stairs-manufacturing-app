@@ -1,8 +1,8 @@
 
 
-from assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly import StraightClosedRisersSawtoothStringerStandardStairsAssembly
+from assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_flush_stairs_assembly import StraightClosedRisersSawtoothStringerFlushStairsAssembly
 
-from models.assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params import StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams   
+from models.assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_flush_stairs_assembly_params import StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams   
 
 from models.part.stairs.kicker_params import KickerParams
 from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
@@ -11,31 +11,30 @@ from models.part.stairs.tread_params import TreadParams
 
 from models.material.plywood import plywood_1
 
-def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
+def test_straight_closed_risers_sawtooth_stringer_flush_stairs_assembly():
 
-    job_name = "test_assembly_job"
+    job_name = "test_flush_stairs_job"
 
 
     # Create assembly parameters
-    assembly_params = StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(
+    assembly_params = StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(
         job_name=job_name,
-        assembly_name="test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly",
-        total_rise_height= 122,
-        top_floor_thickness=1.0,
+        assembly_name="test_straight_closed_risers_sawtooth_stringer_flush_stairs_assembly",
+        total_rise_height= 122.0,
+
         stairway_width= 36.75,
         number_of_steps_risers=16,
 
         first_step_riser_height=6.63,
-        last_step_riser_height=7.63,
-        last_tread_depth=11.5,
+        last_tread_depth=10.78,
         step_riser_height=7.63,
-        tread_depth=11.5,
+        tread_depth=10.78,
 
         # first_riser_material=plywood_1
 
     )
 
-    assembly = StraightClosedRisersSawtoothStringerStandardStairsAssembly(assembly_params)
+    assembly = StraightClosedRisersSawtoothStringerFlushStairsAssembly(assembly_params)
 
     assert assembly is not None
     assert assembly.get() is not None

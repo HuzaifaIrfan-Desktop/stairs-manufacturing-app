@@ -13,7 +13,7 @@ from models.material.plywood import plywood_1
 
 def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
 
-    job_name = "test_assembly_job"
+    job_name = "test_sawtooth_stairs_job"
 
 
     # Create assembly parameters
