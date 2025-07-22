@@ -22,6 +22,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
     stairway_width: float = Field(description="Stairway width")
     number_of_steps_risers: int = Field(description="Number of steps risers")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
+    stringer_placement_from_top: float = Field(init=False, default=None, validate_default=False, description="Stringer placement from top")
 
     first_step_riser_height: float = Field( description="First step riser height")
     last_tread_depth: float = Field( description="Last tread depth")
@@ -123,6 +124,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
             )
 
 
+        self.stringer_placement_from_top =self.last_tread_params.tread_thickness
 
 
         if abs(self.sawtooth_stringer_params.stringer_total_rise - (self.total_rise_height - self.last_tread_params.tread_thickness)) > 0.1:

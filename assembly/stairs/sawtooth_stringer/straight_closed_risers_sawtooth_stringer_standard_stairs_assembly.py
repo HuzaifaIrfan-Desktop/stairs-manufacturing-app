@@ -61,6 +61,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
 
 
 
+
         riser_y_offset = self.first_riser_params.riser_thickness -self.riser_params.riser_thickness
         z_offset = self.sawtooth_stringer_params.first_step_rise_height
 
@@ -73,24 +74,58 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
             compound.append(riser)
             z_offset += self.sawtooth_stringer_params.step_rise_height
 
-
-        riser_y_offset = riser_y_offset + self.sawtooth_stringer_params.last_step_run_depth
+        riser_y_offset = riser_y_offset + self.sawtooth_stringer_params.last_step_run_depth + self.riser_params.riser_thickness - self.last_riser_params.riser_thickness
         tread_y_offset = riser_y_offset - self.last_tread_params.tread_depth
+
+
+
         last_tread = self.last_tread.get().val().translate((0, inch_to_mm(tread_y_offset), inch_to_mm(z_offset)))
         last_riser = self.last_riser.get().val().translate((0, inch_to_mm(riser_y_offset), inch_to_mm(z_offset)))
         compound.append(last_tread)
         compound.append(last_riser)
 
+
+
+
         # box1 = cq.Workplane("XY").box(10, 10, 10).val()
         # box2 = cq.Workplane("XY").box(10, 10, 10).val().translate((15, 0, 0))  # offset after creation
+        stringer_y_offset = self.first_riser_params.riser_thickness
+        
+        num_of_stringers=self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.number_of_stringers
+        stairway_width=self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.stairway_width
+        tread_overhang_side_depth = self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.tread_overhang_side_depth
+        
+        if num_of_stringers == 1:
+            stringer_x_offset= stairway_width/2-self.sawtooth_stringer_params.stringer_thickness/2
+            sawtooth_stringer = self.sawtooth_stringer.get().val().translate((inch_to_mm(stringer_x_offset),inch_to_mm(stringer_y_offset), 0))
+            compound.append(sawtooth_stringer)
+        
+        if num_of_stringers == 2:
 
-        # sawtooth_stringer = self.sawtooth_stringer.get().val().translate((0,inch_to_mm(self.first_riser_params.riser_thickness), 0))
-        # compound.append(sawtooth_stringer)
+            stringer_x_offset= tread_overhang_side_depth
 
-        second_stringer_x_offset = self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.stairway_width - self.sawtooth_stringer_params.stringer_thickness
-        second_sawtooth_stringer = self.sawtooth_stringer.get().val().translate((inch_to_mm(second_stringer_x_offset), inch_to_mm(self.first_riser_params.riser_thickness), 0))
-        compound.append(second_sawtooth_stringer)
+            sawtooth_stringer = self.sawtooth_stringer.get().val().translate((inch_to_mm(stringer_x_offset),inch_to_mm(stringer_y_offset), 0))
+            compound.append(sawtooth_stringer)
+
+            second_stringer_x_offset = self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.stairway_width - self.sawtooth_stringer_params.stringer_thickness - tread_overhang_side_depth
+            second_sawtooth_stringer = self.sawtooth_stringer.get().val().translate((inch_to_mm(second_stringer_x_offset), inch_to_mm(stringer_y_offset), 0))
+            compound.append(second_sawtooth_stringer)
+
+        if num_of_stringers >= 3:
+
+            first_stringer_x_offset= tread_overhang_side_depth
+
+            last__stringer_x_offset = self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.stairway_width - self.sawtooth_stringer_params.stringer_thickness - tread_overhang_side_depth
+
+
+            step = (last__stringer_x_offset - first_stringer_x_offset) / (num_of_stringers - 1)
+            x_points=[first_stringer_x_offset + i * step for i in range(num_of_stringers)]
+            # print(x_points)
+
+            for stringer_x_offset in x_points:
+                sawtooth_stringer = self.sawtooth_stringer.get().val().translate((inch_to_mm(stringer_x_offset), inch_to_mm(stringer_y_offset), 0))
+                compound.append(sawtooth_stringer)
+
 
         compound = cq.Compound.makeCompound(compound)
         self.cq_assembly = cq.Workplane(obj=compound)
-
