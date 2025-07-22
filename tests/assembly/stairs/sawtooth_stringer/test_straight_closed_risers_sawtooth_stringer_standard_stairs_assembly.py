@@ -20,6 +20,7 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
     assembly_params = StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(
         job_name=job_name,
         assembly_name="test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly",
+        builder_name="Test Builder",
         total_rise_height= 122.0,
         stairway_width= 36.75,
         number_of_steps_risers=16,
@@ -53,3 +54,4 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
     assert assembly.export_dxf_top_view() is not None
     assert assembly.export_dxf_front_view() is not None
     assert assembly.export_dxf_right_view() is not None
+    assert assembly.export_cut_list() is not None

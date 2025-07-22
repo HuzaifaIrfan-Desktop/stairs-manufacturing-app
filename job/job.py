@@ -1,6 +1,6 @@
 
 
-from models.job.job_input_params import JobInputParams
+from models.job.job_params import JobInputParams
 
 class Job:
     def __init__(self, job_input_params: JobInputParams):

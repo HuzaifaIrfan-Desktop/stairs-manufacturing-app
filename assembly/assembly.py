@@ -4,6 +4,9 @@ from utils.math import inch_to_mm
 
 from models.assembly.assembly_params import AssemblyParams
 
+from models.report.cut_list_params import CutListParams
+from report.cut_list_report import CutListReport    
+
 import os
 class Assembly:
     def __init__(self, assembly_params: AssemblyParams):
@@ -44,6 +47,8 @@ class Assembly:
         self.export_dxf_right_view()
         
         # self.export_drawing()
+
+        self.export_cut_list()
 
         return stl_file_path
 
@@ -86,4 +91,20 @@ class Assembly:
         # Get a 2D projection for DXF
         right_view = self.cq_assembly.faces(">X").wires()
         cq.exporters.export(right_view, file_path, 'DXF')
+        return file_path
+
+    def export_cut_list(self) -> str:
+
+
+        cut_list_params = CutListParams(
+            job_name=self.assembly_params.job_name,
+            assembly_name=self.assembly_params.assembly_name,
+            builder_name=self.assembly_params.builder_name,
+            summary_items=[("Item", "Description")],
+            cut_list_data=[["Box1", "10x10x10"], ["Box2", "10x10x10"]]
+        )
+
+        cut_list_report = CutListReport(cut_list_params)
+        file_path = cut_list_report.export()
+
         return file_path

@@ -11,6 +11,10 @@ from part.stairs.sawtooth_stringer import SawtoothStringer
 from part.stairs.riser import Riser
 from part.stairs.tread import Tread
 
+
+from models.report.cut_list_params import CutListParams
+from report.cut_list_report import CutListReport    
+
 class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
     def __init__(self, straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params: StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams):
 
@@ -129,3 +133,40 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
 
         compound = cq.Compound.makeCompound(compound)
         self.cq_assembly = cq.Workplane(obj=compound)
+
+
+
+    def export_cut_list(self) -> str:
+
+        cut_list_data=[["Part", "Qty", "Material", "Dimension"]]
+
+        cut_list_data.append( ["Treads", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.number_of_steps_risers-2, self.tread_params.material.material_name, f"{self.tread_params.tread_depth} x {self.tread_params.tread_length}"])
+        cut_list_data.append( ["Last Tread", "1", self.last_tread_params.material.material_name, f"{self.last_tread_params.tread_depth} x {self.last_tread_params.tread_length}"])
+        cut_list_data.append( ["Risers", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.number_of_steps_risers-2, self.riser_params.material.material_name, f"{self.riser_params.riser_height} x {self.riser_params.riser_length}"])
+        cut_list_data.append( ["First Riser", "1", self.first_riser_params.material.material_name, f"{self.first_riser_params.riser_height} x {self.first_riser_params.riser_length}"])
+        cut_list_data.append( ["Last Riser", "1", self.last_riser_params.material.material_name, f"{self.last_riser_params.riser_height} x {self.last_riser_params.riser_length}"])
+        cut_list_data.append( ["Stringers", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.number_of_stringers, self.sawtooth_stringer_params.material.material_name, self.sawtooth_stringer_params.stringer_length])
+
+        summary_items=[("Total Rise", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.total_rise_height),
+                           ("Total Run", self.sawtooth_stringer_params.stringer_total_run),
+                           ("Stair Width", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.stairway_width),
+                           ("First Riser Height", self.first_riser_params.riser_height),
+                           ("Riser Height", self.riser_params.riser_height),
+                           ("Last Riser Height", self.last_riser_params.riser_height),
+                           ("Run Tread Depth", self.tread_params.tread_depth),
+                           ("Last Run Tread Depth", self.last_tread_params.tread_depth),
+                           ("Number of Risers", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.number_of_steps_risers),
+                           ("Number of Treads", self.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params.number_of_steps_risers - 1),]
+
+        cut_list_params = CutListParams(
+            job_name=self.assembly_params.job_name,
+            assembly_name=self.assembly_params.assembly_name,
+            builder_name=self.assembly_params.builder_name,
+            summary_items=summary_items,
+            cut_list_data=cut_list_data
+        )
+
+        cut_list_report = CutListReport(cut_list_params)
+        file_path = cut_list_report.export()
+
+        return file_path
