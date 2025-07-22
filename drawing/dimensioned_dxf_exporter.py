@@ -16,10 +16,13 @@ import pathlib
 
 from utils.math import inch_to_mm, mm_to_inch
 
+from models.drawing.drawing_params import DrawingParams
+
 class DimensionedDXFExporter:
-    def __init__(self, dxf_file_path:str, text_scale: float = 1.0):
+    def __init__(self, drawing_params: DrawingParams, dxf_file_path:str, text_scale: float = 1.0):
+        self.drawing_params = drawing_params
         self.file_path = dxf_file_path
-        self.output_dir = f"{pathlib.Path(self.file_path).parent}/drawings"
+        self.output_dir = os.path.join(os.getcwd(), f'output/{self.drawing_params.job_name}/drawings/dimensioned')
         self.file_stem = pathlib.Path(self.file_path).stem
         self.doc = ezdxf.new('R2018', setup=True)
         self.msp = self.doc.modelspace()

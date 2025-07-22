@@ -22,11 +22,10 @@ class SawtoothStringerParams(PartParams):
     step_rise_height: float
     step_run_depth: float
 
-    number_of_stringer_rise: int = Field(init=False, default=None, validate_default=False) # Same as run and not used in calculations
+    # number_of_stringer_rise: int = Field(init=False, default=None, validate_default=False) # Same as run and not used in calculations
     number_of_stringer_run: int # This is the number of runs, not the number of treads
 
     angle_of_stringer_rad: float = Field(init=False, default=None, validate_default=False)
-    stringer_placement_from_top: float
 
     # init False should not be set externally; it's computed on initialization
 
@@ -116,9 +115,9 @@ class SawtoothStringerParams(PartParams):
         self.angle_of_stringer_rad = math.atan2(self.step_rise_height, self.step_run_depth)
 
 
-        self.number_of_stringer_rise = self.number_of_stringer_run
+        number_of_stringer_rise = self.number_of_stringer_run
 
-        self.stringer_total_rise = self.first_step_rise_height + (self.number_of_stringer_rise - 1) * self.step_rise_height
+        self.stringer_total_rise = self.first_step_rise_height + (number_of_stringer_rise - 1) * self.step_rise_height
 
         self.stringer_total_run  = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.step_run_depth
 

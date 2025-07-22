@@ -21,6 +21,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
     stairway_width: float = Field(description="Stairway width")
     number_of_steps_risers: int = Field(description="Number of steps risers")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
+    stringer_placement_from_top: float = Field(default=0.0, description="Stringer placement from top")
 
     first_step_riser_height: float = Field( description="First step riser height")
     last_step_riser_height: float = Field( description="Last step riser height")
@@ -115,15 +116,13 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 part_name="sawtooth_stringer",
 
                 first_step_rise_height=self.first_riser_params.riser_height,
-                last_step_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth,
+                last_step_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth + (self.last_riser_params.riser_thickness - self.riser_params.riser_thickness),
 
                 step_rise_height=self.riser_params.riser_height,
                 step_run_depth=self.tread_params.tread_depth - self.tread_overhang_nosing_depth,
 
 
                 number_of_stringer_run=self.number_of_steps_risers - 1,
-
-                stringer_placement_from_top=0.0,
 
                 kicker_height=self.kicker_params.kicker_height,
                 kicker_depth=self.kicker_params.kicker_depth,

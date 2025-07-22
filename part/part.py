@@ -1,5 +1,5 @@
 import cadquery as cq
-from drawing.dimensioned_dxf_exporter import DimensionedDXFExporter
+
 from drawing.drawing import Drawing
 from utils.math import inch_to_mm
 
@@ -16,7 +16,7 @@ class Part:
         # part_logger.info(f"Creating Part with params: {part_params}")
         self.part_params = part_params
 
-        self.part_output_dir = os.path.join(os.getcwd(), f'output/{self.part_params.job_name}/part/')
+        self.part_output_dir = os.path.join(os.getcwd(), f'output/{self.part_params.job_name}/part/{self.part_params.part_name}')
         
         # Ensure the output directory exists
         os.makedirs(self.part_output_dir, exist_ok=True)

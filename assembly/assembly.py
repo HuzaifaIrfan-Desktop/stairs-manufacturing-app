@@ -9,7 +9,7 @@ class Assembly:
     def __init__(self, assembly_params: AssemblyParams):
         self.assembly_params = assembly_params
 
-        self.assembly_output_dir = os.path.join(os.getcwd(), f'output/{self.assembly_params.job_name}/assembly/')
+        self.assembly_output_dir = os.path.join(os.getcwd(), f'output/{self.assembly_params.job_name}/assembly/{self.assembly_params.assembly_name}')
         
         # Ensure the output directory exists
         os.makedirs(self.assembly_output_dir, exist_ok=True)

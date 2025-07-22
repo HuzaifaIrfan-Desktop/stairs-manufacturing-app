@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 import datetime
 import fitz  # PyMuPDF
-
+from models.drawing.drawing_params import DrawingParams
 
 class Drawing:
     def __init__(self, job_name:str, part_name:str, dxf_file_path:str, text_scale:float):
@@ -19,14 +19,20 @@ class Drawing:
         self.part_name = part_name
         self.dxf_file_path = dxf_file_path
         self.text_scale = text_scale
+        
+        self.drawing_params= DrawingParams(
+            job_name=self.job_name,
+            drawing_name=f"{self.part_name}"
+        )
 
-        self.dimensioned_pdf_file_path, self.dimensioned_png_file_path = DimensionedDXFExporter(dxf_file_path, text_scale=text_scale).export()
+        self.dimensioned_pdf_file_path, self.dimensioned_png_file_path = DimensionedDXFExporter(self.drawing_params,dxf_file_path, text_scale=text_scale).export()
 
-        self.output_dir = pathlib.Path(self.dimensioned_png_file_path).parent
-        self.file_stem = pathlib.Path(self.dimensioned_png_file_path).stem
+        self.output_dir = os.path.join(os.getcwd(), f'output/{self.drawing_params.job_name}/drawings')
+        self.file_stem = pathlib.Path(self.dimensioned_png_file_path).stem #self.part_name 
 
         self.template_svg_file_path = os.path.join(os.getcwd(), "drawing_templates", "ANSIA_Landscape.svg")
-        self.template_pdf_file_path = f'{self.output_dir}/template_{self.file_stem}.pdf'
+        self.template_pdf_file_path = f'{self.output_dir}/template/{self.file_stem}.pdf'
+        os.makedirs(os.path.dirname(self.template_pdf_file_path), exist_ok=True)
         self.drawing_pdf_file_path = f'{self.output_dir}/drawing_{self.file_stem}.pdf'
 
 

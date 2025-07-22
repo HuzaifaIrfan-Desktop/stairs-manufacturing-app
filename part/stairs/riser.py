@@ -6,7 +6,6 @@ from utils.math import inch_to_mm
 from logger import part_logger
 part_logger.info("Loading Riser class from part.stairs.riser module")
 
-from drawing.dimensioned_dxf_exporter import DimensionedDXFExporter
 from part.part import Part
 from models.part.stairs.riser_params import RiserParams
 

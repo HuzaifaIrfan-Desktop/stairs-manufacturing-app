@@ -5,7 +5,7 @@ from utils.math import inch_to_mm
 
 from logger import part_logger
 part_logger.info("Loading Kicker class from part.stairs.kicker module")
-from drawing.dimensioned_dxf_exporter import DimensionedDXFExporter
+
 from part.part import Part
 from models.part.stairs.kicker_params import KickerParams
 

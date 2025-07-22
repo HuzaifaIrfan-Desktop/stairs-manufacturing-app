@@ -9,7 +9,7 @@ def test_sawtooth_stringer_build():
                                               first_step_rise_height=6.63, last_step_run_depth=11.5,
                                               step_rise_height=7.63, step_run_depth=11.5,
                                               number_of_stringer_run=12,
-                                              stringer_placement_from_top=1.0,
+                                              
                                               kicker_height=1.0, kicker_depth=1.0)
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
     cq_part = stringer.get()
@@ -20,7 +20,7 @@ def test_sawtooth_stringer_export():
     stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer",
                                               first_step_rise_height=6.63, last_step_run_depth=11.5,
                                               step_rise_height=7.63, step_run_depth=11.5,number_of_stringer_run=15,
-                                              stringer_placement_from_top=9.13)
+                                              )
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
 
     stringer.export_part_params()
