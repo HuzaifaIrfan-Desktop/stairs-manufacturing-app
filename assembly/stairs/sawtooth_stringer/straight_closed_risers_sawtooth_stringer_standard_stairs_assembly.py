@@ -4,7 +4,7 @@ from utils.math import inch_to_mm
 
 
 from assembly.assembly import Assembly
-from models.assembly.stairs.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params import StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams
+from models.assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params import StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams
 
 from part.stairs.kicker import Kicker
 from part.stairs.sawtooth_stringer import SawtoothStringer
