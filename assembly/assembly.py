@@ -33,6 +33,19 @@ class Assembly:
 
     def get_assembly_params(self) -> AssemblyParams:
         return self.assembly_params
+    
+    def export(self) -> str:
+        self.export_assembly_params()
+
+        stl_file_path = self.export_stl()
+        self.export_step()
+        self.export_dxf_top_view()
+        self.export_dxf_front_view()
+        self.export_dxf_right_view()
+        
+        # self.export_drawing()
+
+        return stl_file_path
 
     def export_assembly_params(self) -> str:
         # Export the assembly parameters to a file

@@ -38,35 +38,13 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
         self.last_tread=Tread(self.last_tread_params)
         self.last_riser=Riser(self.last_riser_params)
 
-        self.kicker.export_step()
-        self.kicker.export_stl()
-        self.kicker.export_dxf_right_view()
-
-        self.sawtooth_stringer.export_step()
-        self.sawtooth_stringer.export_stl()
-        self.sawtooth_stringer.export_dxf_right_view()
-
-        self.riser.export_step()
-        self.riser.export_stl()
-        self.riser.export_dxf_right_view()
-
-        self.tread.export_step()
-        self.tread.export_stl()
-        self.tread.export_dxf_right_view()
-
-        self.first_riser.export_step()
-        self.first_riser.export_stl()
-        self.first_riser.export_dxf_right_view()
-
-        self.last_tread.export_step()
-        self.last_tread.export_stl()
-        self.last_tread.export_dxf_right_view()
-
-        self.last_riser.export_step()
-        self.last_riser.export_stl()
-        self.last_riser.export_dxf_right_view()
-
-
+        self.kicker.export()
+        self.riser.export()
+        self.tread.export()
+        self.first_riser.export()
+        self.last_tread.export()
+        self.last_riser.export()
+        self.sawtooth_stringer.export()
 
     def _assemble(self):
         # Logic to assemble the components based on the parameters
