@@ -94,7 +94,30 @@ def obj_to_shape(obj_file_path, triangulate=True):
     return compound
 
 
+def get_shape_from_file(file_path: str) -> TopoDS_Shape:
+    path = pathlib.Path(file_path)
+    filename = path.name # e.g., "file.pdf"
+    extension = path.suffix  # e.g., ".pdf"
+    filename_without_extension = path.stem  # e.g., "file"
 
+    try:
+        if extension == ".stl":
+            # file_path = "output/Crestmont/Landing.stl"
+            shape = stl_to_shape(file_path)
+        elif extension == ".obj":
+            # file_path = "output/Crestmont/Landing.obj"
+            shape = obj_to_shape(file_path, triangulate=False)
+        else:
+            shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
+    except Exception as e:
+        print(f"Error loading shape from {file_path}: {e}")
+        shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
+    
+    return shape
+
+from PySide6.QtWidgets import (
+    QApplication, QWidget, QVBoxLayout, QPushButton, QSizePolicy
+)
 class OCCViewerWidget(QWidget):
     def __init__(self, parent: Optional[QWidget] = None, size: Optional[Tuple[int, int]] = (1024, 768)):
         super().__init__(parent)
@@ -102,6 +125,7 @@ class OCCViewerWidget(QWidget):
         self._display = None
         self._viewer = None
         self.init_ui()
+        self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         
     def init_ui(self):
         """Initialize the user interface."""
