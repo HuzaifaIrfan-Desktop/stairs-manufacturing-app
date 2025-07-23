@@ -13,10 +13,12 @@ from job import available_job_classes
 import json
 from models.job.job_params import JobInputParams
 from job.job import Job
+import threading
 
 class Backend(QObject):
     # Example signal
     dataChanged = Signal(str)
+    job_completed = Signal()
 
 
 
@@ -25,6 +27,10 @@ class Backend(QObject):
         # Initialize backend state here
         self.input_widget: InputWidget = None
         self.output_widget: OutputWidget = None
+        self.job_completed.connect(self.on_job_completed)
+
+        self.job:Job = None
+        self.job_input_params: JobInputParams = None
 
     def update_data(self, new_data):
         # Update internal state and emit signal
@@ -37,6 +43,7 @@ class Backend(QObject):
 
     def set_output_widget(self, output_widget):
         from output_widget import OutputWidget
+
         self.output_widget: OutputWidget = output_widget
 
 
@@ -65,4 +72,22 @@ class Backend(QObject):
         self.job_class = available_job_classes[self.job_class_name]['job_class']
         self.job_input_params_class = available_job_classes[self.job_class_name]['input_params_class']
         
+
+
+        thread = threading.Thread(target=self.run_job)
+        thread.start()
+
+    def run_job(self):
         self.job = self.job_class(self.job_input_params)
+        self.job.export()
+        self.assembly_model_file_path = self.job.export_assembly()
+        
+        # print("Job completed signal emit.")
+        self.job_completed.emit()
+
+    def on_job_completed(self):
+        # Handle job completion
+        # print("Job completed signal received.")
+        # self.clear_console()
+        self.display_3d_model(self.assembly_model_file_path)
+        self.append_to_console(f"Job {self.job_input_params.job_name} Exported Successfully.")

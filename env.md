@@ -15,12 +15,7 @@ conda activate stairs_app_env
 
 
 ```sh
-mamba install -c conda-forge cadquery pythonocc-core lxml cairosvg ezdxf pyside6 jupyterlab pydantic pydantic-settings pytest reportlab qt-material
-```
-
-
-```sh
-mamba install -c conda-forge PyInstaller
+mamba install -c conda-forge cadquery pythonocc-core lxml cairosvg ezdxf pyside6 jupyterlab pydantic pydantic-settings pytest reportlab qt-material PyInstaller
 ```
 
 

@@ -1,5 +1,7 @@
 
 import json
+
+from pyparsing import line
 from models.job.job_params import JobInputParams
 from job.job import Job
 
@@ -21,15 +23,20 @@ from PySide6.QtWidgets import QScrollArea, QWidget
 def widget_for_field(field_type):
     if field_type is str:
         line_edit = QLineEdit()
-        # line_edit.setPlaceholderText("Enter text")
+        line_edit.setPlaceholderText("Enter text")
+        line_edit.setMaxLength(100)
         # line_edit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         return line_edit
     elif field_type is int:
         spin_box = QSpinBox()
+        spin_box.setMinimum(0)  # Set a minimum value if needed
+        spin_box.setMaximum(999)  # Set a maximum value if needed
         # spin_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         return spin_box
     elif field_type is float:
         double_spin_box = QDoubleSpinBox()
+        double_spin_box.setMinimum(0)  # Set a minimum value if needed
+        double_spin_box.setMaximum(999)  # Set a maximum value if needed
         # double_spin_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         return double_spin_box
     elif field_type is bool:
@@ -38,6 +45,9 @@ def widget_for_field(field_type):
         return check_box
     else:
         line_edit = QLineEdit()  # fallback
+        line_edit.setPlaceholderText("Unsupported type, enter text")
+        line_edit.setStyleSheet("color: red;")  # Indicate unsupported type
+        line_edit.setMaxLength(100)
         # line_edit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         return line_edit
 from backend import Backend
@@ -183,7 +193,7 @@ class InputWidget(QWidget):
             self.backend.append_to_console(f"Valid job params: {self.job_params}")
         except Exception as e:
             self.result_label.setText(f"Error: {e}")
-            self.backend.append_to_console(f"Error building job params: {e}")
+            # self.backend.append_to_console(f"Error building job params: {e}")
 
     def load_job(self):
         file_selector = QFileDialog(self)
@@ -200,7 +210,7 @@ class InputWidget(QWidget):
                 self.job_params = self.input_params_class(**data)
                 self.result_label.setText(f"Loaded: {self.job_params}") 
                 print(f"Loaded job params: {self.job_params}")
-                self.backend.append_to_console(f"Loaded job params: {self.job_params}")
+                # self.backend.append_to_console(f"Loaded job params: {self.job_params}")
         
         self.build_form_from_job_params()
 

@@ -1,4 +1,4 @@
-name: stairs_app_env
+name: 
 channels:
   - conda-forge
 dependencies:
@@ -6,6 +6,7 @@ dependencies:
   - aiohappyeyeballs=2.6.1=pyhd8ed1ab_0
   - aiohttp=3.12.14=py312h05f76fc_0
   - aiosignal=1.4.0=pyhd8ed1ab_0
+  - altgraph=0.17.4=pyhd8ed1ab_1
   - ampl-asl=1.0.0=he0c23c2_2
   - annotated-types=0.7.0=pyhd8ed1ab_1
   - anyio=4.9.0=pyh29332c3_0
@@ -35,6 +36,7 @@ dependencies:
   - casadi=3.7.0=py312h1fc29e6_3
   - certifi=2025.7.14=pyhd8ed1ab_0
   - cffi=1.17.1=py312h4389bb4_0
+  - chardet=5.2.0=pyhd8ed1ab_3
   - charset-normalizer=3.4.2=pyhd8ed1ab_0
   - colorama=0.4.6=pyhd8ed1ab_1
   - comm=0.2.2=pyhd8ed1ab_1
@@ -63,7 +65,9 @@ dependencies:
   - freeglut=3.2.2=he0c23c2_3
   - freeimage=3.18.0=h8310ca0_22
   - freetype=2.13.3=h57928b3_1
+  - freetype-py=2.3.0=pyhd8ed1ab_0
   - frozenlist=1.7.0=py312hfdf67e6_0
+  - future=1.0.0=pyhd8ed1ab_2
   - gl2ps=1.4.2=had7236b_1
   - glew=2.1.0=h39d44d4_2
   - glib=2.84.1=h3d4babf_0
@@ -84,6 +88,7 @@ dependencies:
   - idna=3.10=pyhd8ed1ab_1
   - imath=3.1.12=hbb528cf_0
   - importlib-metadata=8.7.0=pyhe01879c_1
+  - iniconfig=2.0.0=pyhd8ed1ab_1
   - intel-openmp=2024.2.1=h57928b3_1083
   - ipopt=3.14.17=h812a801_2
   - ipykernel=6.29.5=pyh4bbf305_0
@@ -188,11 +193,13 @@ dependencies:
   - pandocfilters=1.5.0=pyhd8ed1ab_0
   - parso=0.8.4=pyhd8ed1ab_1
   - pcre2=10.44=h99c9b8b_2
+  - pefile=2023.2.7=pyhd8ed1ab_0
   - pickleshare=0.7.5=pyhd8ed1ab_1004
   - pillow=11.3.0=py312hfb502af_0
   - pip=25.1.1=pyh8b19718_0
   - pixman=0.46.2=had0cd8c_0
   - platformdirs=4.3.8=pyhe01879c_0
+  - pluggy=1.6.0=pyhd8ed1ab_0
   - proj=9.3.1=he13c7e8_0
   - prometheus_client=0.22.1=pyhd8ed1ab_0
   - prompt-toolkit=3.0.51=pyha770c72_0
@@ -202,14 +209,18 @@ dependencies:
   - pugixml=1.14=h63175ca_0
   - pure_eval=0.2.3=pyhd8ed1ab_1
   - pybind11-abi=4=hd8ed1ab_3
+  - pycairo=1.27.0=py312h487989a_0
   - pycparser=2.22=pyh29332c3_1
   - pydantic=2.11.7=pyh3cfb1c2_0
   - pydantic-core=2.33.2=py312h8422cdd_0
   - pydantic-settings=2.10.1=pyh3cfb1c2_0
   - pygments=2.19.2=pyhd8ed1ab_0
+  - pyinstaller=6.14.2=py312hf4647a0_0
+  - pyinstaller-hooks-contrib=2025.6=pyhd8ed1ab_0
   - pyparsing=3.2.3=pyhd8ed1ab_1
   - pyside6=6.8.1=py312h2ee7485_0
   - pysocks=1.7.1=pyh09c184e_7
+  - pytest=8.4.1=pyhd8ed1ab_0
   - python=3.12.2=h2628c8c_0_cpython
   - python-dateutil=2.9.0.post0=pyhe01879c_2
   - python-dotenv=1.1.1=pyhe01879c_0
@@ -219,16 +230,20 @@ dependencies:
   - pythonocc-core=7.7.2=all_h47b224c_202
   - pytz=2025.2=pyhd8ed1ab_0
   - pywin32=311=py312h829343e_0
+  - pywin32-ctypes=0.2.3=py312h2e8e312_1
   - pywinpty=2.0.15=py312h275cf98_0
   - pyyaml=6.0.2=py312h31fea79_2
   - pyzmq=27.0.0=py312hd7027bb_0
   - qt-main=5.15.15=h9151539_4
+  - qt-material=2.14=pyhd8ed1ab_0
   - qt6-main=6.8.1=h2fedb45_0
   - rapidjson=1.1.0.post20240409=he0c23c2_2
   - referencing=0.36.2=pyh29332c3_0
+  - reportlab=4.4.1=py312h4389bb4_0
   - requests=2.32.4=pyhd8ed1ab_0
   - rfc3339-validator=0.1.4=pyhd8ed1ab_1
   - rfc3986-validator=0.1.1=pyh9f0ad1d_0
+  - rlpycairo=0.2.0=pyhd8ed1ab_0
   - rpds-py=0.26.0=py312hdabe01f_0
   - send2trash=1.8.3=pyh5737063_1
   - setuptools=80.9.0=pyhff2d567_0
@@ -288,5 +303,7 @@ dependencies:
   - zlib=1.3.1=h2466b09_2
   - zstandard=0.23.0=py312h4389bb4_2
   - zstd=1.5.7=hbeecb71_2
+  - pip:
+    - PyMuPDF==1.26.3
 
 prefix: "C:\\Users\\admi\\miniforge3\\envs\\stairs_app_env"

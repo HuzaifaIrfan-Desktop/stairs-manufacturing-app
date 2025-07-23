@@ -1,11 +1,20 @@
 # -*- mode: python ; coding: utf-8 -*-
+import glob
 
+import shutil
+import os
+
+src = os.path.join('drawing_templates')
+dst = os.path.join('dist', 'drawing_templates')
+if os.path.exists(dst):
+    shutil.rmtree(dst)
+shutil.copytree(src, dst)
 
 a = Analysis(
     ['main.py'],
     pathex=['.'],
     binaries=[],
-    datas=[],
+    datas=[('drawing_templates', 'drawing_templates')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -37,3 +46,5 @@ exe = EXE(
     entitlements_file=None,
     icon='favicon.ico'  
 )
+
+

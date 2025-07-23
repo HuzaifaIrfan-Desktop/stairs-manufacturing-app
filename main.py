@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel
 import sys
-from qt_material import apply_stylesheet, list_themes
 
 from main_layout import MainLayout
 
@@ -16,6 +15,7 @@ class MainWindow(QWidget):
 
 
 
+from qt_material import apply_stylesheet, list_themes
 
 
 if __name__ == "__main__":
