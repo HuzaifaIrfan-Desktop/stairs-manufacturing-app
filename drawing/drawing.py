@@ -15,6 +15,8 @@ import datetime
 import fitz  # PyMuPDF
 from models.drawing.drawing_params import DrawingParams
 
+from logger import drawing_logger
+
 class Drawing:
     def __init__(self, job_name:str, part_name:str, dxf_file_path:str, text_scale:float):
         self.job_name = job_name
@@ -36,6 +38,8 @@ class Drawing:
         self.template_pdf_file_path = f'{self.output_dir}/template/{self.file_stem}.pdf'
         os.makedirs(os.path.dirname(self.template_pdf_file_path), exist_ok=True)
         self.drawing_pdf_file_path = f'{self.output_dir}/drawing_{self.file_stem}.pdf'
+
+        drawing_logger.info(f"Initialized Drawing with job_name: {self.job_name}, part_name: {self.part_name}, dxf_file_path: {self.dxf_file_path}, text_scale: {self.text_scale}")
 
 
     def edit_and_export_template(self):
@@ -140,5 +144,7 @@ class Drawing:
     def export(self) -> str:
         self.edit_and_export_template()
         self.scale_embed_png_to_template()
+
+        drawing_logger.info(f"Exported drawing to PDF: {self.drawing_pdf_file_path}")
 
         return self.drawing_pdf_file_path

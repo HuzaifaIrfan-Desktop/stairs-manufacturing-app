@@ -73,7 +73,7 @@ class Backend(QObject):
         self.job_input_params_class = available_job_classes[self.job_class_name]['input_params_class']
 
         self.append_to_console(f"Starting Job Export {self.job_input_params.job_name}.")
-
+        self.input_widget.set_result_label(f"Exporting {self.job_input_params.job_name}...")
 
         thread = threading.Thread(target=self.run_job)
         thread.start()
@@ -98,3 +98,4 @@ class Backend(QObject):
         # self.clear_console()
         self.display_3d_model(self.assembly_model_file_path)
         self.append_to_console(f"Job {self.job_input_params.job_name} Exported Successfully.\n\n")
+        self.input_widget.set_result_label(f"Exported {self.job_input_params.job_name} Successfully.")

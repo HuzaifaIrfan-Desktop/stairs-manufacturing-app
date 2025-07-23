@@ -7,6 +7,8 @@ from models.assembly.assembly_params import AssemblyParams
 from models.report.cut_list_params import CutListParams
 from report.cut_list_report import CutListReport    
 
+from logger import assembly_logger
+
 import os
 class Assembly:
     def __init__(self, assembly_params: AssemblyParams):
@@ -19,6 +21,8 @@ class Assembly:
 
         self._build()
         self._assemble()
+
+        assembly_logger.info(f"Initialized Assembly with job_name: {self.assembly_params.job_name}, assembly_name: {self.assembly_params.assembly_name}")
 
     def _build(self):
         pass

@@ -5,7 +5,7 @@ from models.job.job_params import JobInputParams
 import cadquery as cq
 from utils.math import inch_to_mm
 
-
+from logger import job_logger
 class Job:
     def __init__(self, job_input_params: JobInputParams):
         self.job_input_params = job_input_params
@@ -17,6 +17,9 @@ class Job:
 
         self._build()
         self._assemble()
+
+        job_logger.info(f"Job {self.job_input_params.job_name} initialized with parameters: {self.job_input_params}")
+        
 
 
     def _build(self):

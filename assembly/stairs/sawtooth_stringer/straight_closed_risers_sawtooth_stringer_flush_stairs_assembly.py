@@ -14,6 +14,8 @@ from part.stairs.tread import Tread
 from models.report.cut_list_params import CutListParams
 from report.cut_list_report import CutListReport    
 
+from logger import assembly_logger
+
 class StraightClosedRisersSawtoothStringerFlushStairsAssembly(Assembly):
     def __init__(self, straight_closed_risers_sawtooth_stringer_flush_stairs_assembly_params: StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams):
 
@@ -30,6 +32,8 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssembly(Assembly):
 
 
         super().__init__(self.assembly_params)
+
+        
 
 
     def _build(self):

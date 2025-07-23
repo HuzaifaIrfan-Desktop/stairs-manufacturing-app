@@ -216,11 +216,13 @@ class InputWidget(QWidget):
             self.result_label.setText(f"Valid: {self.job_params}")
             self.backend.append_to_console(f"Valid job params: {self.job_params}")
         except Exception as e:
-            self.result_label.setText(f"Error: {e}")
-            # self.backend.append_to_console(f"Error building job params: {e}")
+            # self.result_label.setText(f"Error: {e}")
+            self.backend.append_to_console(f"Error building job params: {e}")
 
     def load_job(self):
+        
         file_selector = QFileDialog(self)
+        file_selector.setDirectory(os.path.join(os.getcwd(), 'output'))
         file_selector.setNameFilter("JSON files (*.json)")
         file_selector.setAcceptMode(QFileDialog.AcceptOpen)
         if file_selector.exec_() == QFileDialog.Accepted:
@@ -232,7 +234,7 @@ class InputWidget(QWidget):
                 label=available_job_classes[job_class_name]['label']
                 self.job_class_selector.setCurrentText(label)
                 self.job_params = self.input_params_class(**data)
-                self.result_label.setText(f"Loaded: {self.job_params}") 
+                # self.result_label.setText(f"Loaded: {self.job_params}") 
                 print(f"Loaded job params: {self.job_params}")
                 self.backend.append_to_console(f"Loaded job params: {self.job_params}")
         
@@ -242,7 +244,8 @@ class InputWidget(QWidget):
             loaded_3d_model_path = os.path.join(os.getcwd(), 'output', self.job_params.job_name , f"{self.job_params.job_name}.stl")
             self.backend.display_3d_model(loaded_3d_model_path)
 
-
+    def set_result_label(self, text):
+        self.result_label.setText(text)
 
     def calculate_and_save_job(self):
         self.build_job_params_from_form()

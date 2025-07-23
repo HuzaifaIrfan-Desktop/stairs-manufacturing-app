@@ -27,7 +27,7 @@ if __name__ == "__main__":
     print("Available themes:", list_themes())
 
     # Apply Material Design theme
-    apply_stylesheet(app, theme='light_teal_500.xml')
+    apply_stylesheet(app, theme='light_blue_500.xml')
 
     window = MainWindow()
     window.show()

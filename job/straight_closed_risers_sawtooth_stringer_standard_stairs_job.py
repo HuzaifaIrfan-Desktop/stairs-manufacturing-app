@@ -16,7 +16,6 @@ from logger import job_logger
 class StraightClosedRisersSawtoothStringerStandardStairsJob(Job):
     def __init__(self, straight_closed_risers_sawtooth_stringer_standard_stairs_job_input_params:StraightClosedRisersSawtoothStringerStandardStairsJobInputParams):
         self.job_input_params = straight_closed_risers_sawtooth_stringer_standard_stairs_job_input_params
-        job_logger.info(f"Initializing StraightClosedRisersSawtoothStringerStandardStairsJob with params: {self.job_input_params}")
 
         self.job_output_params = StraightClosedRisersSawtoothStringerStandardStairsJobOutputParams(
             **self.job_input_params.model_dump()

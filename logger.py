@@ -29,17 +29,16 @@ handler.setFormatter(logging.Formatter('[%(asctime)s] [%(process)d] [%(levelname
 handler.formatter.converter=time.gmtime
 job_logger.addHandler(handler)
 
-
-ezdxf_logger=logging.getLogger("ezdxf")
-ezdxf_logger.setLevel(logging.INFO)  # Or DEBUG if needed
-handler=logging.FileHandler('log/ezdxf.log',mode="a")
+drawing_logger=logging.getLogger("drawing")
+drawing_logger.setLevel(logging.INFO)  # Or DEBUG if needed
+handler=logging.FileHandler('log/drawing.log',mode="a")
 handler.setFormatter(logging.Formatter('[%(asctime)s] [%(process)d] [%(levelname)s]  %(message)s'))
 handler.formatter.converter=time.gmtime
-ezdxf_logger.addHandler(handler)
+drawing_logger.addHandler(handler)
 
 
 
-# Suppress ezdxf logs
+# Suppress specific library logs
 logging.getLogger("ezdxf").setLevel(logging.CRITICAL)
 logging.getLogger("PIL").setLevel(logging.CRITICAL)
 logging.getLogger("fontTools").setLevel(logging.CRITICAL)
