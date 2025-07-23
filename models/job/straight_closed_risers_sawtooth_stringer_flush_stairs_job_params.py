@@ -19,9 +19,6 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputPara
     number_of_steps_risers: int = Field(default=16,description="Number of steps risers")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
 
-    flush_stairs_assembly_params:StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams = Field(init=False, default=None, validate_default=False, description="Flush stairs assembly parameters")
-
-
     first_step_riser_height: float = Field(default=6.63, description="First step riser height")
     last_tread_depth: float = Field(default=10.78, description="Last tread depth")
 
@@ -52,6 +49,9 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputPara
     )
 
 class StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams(StraightClosedRisersSawtoothStringerFlushStairsJobInputParams):
+
+
+    flush_stairs_assembly_params:StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams = Field(init=False, default=None, validate_default=False, description="Flush stairs assembly parameters")
 
 
     @model_validator(mode='after')
