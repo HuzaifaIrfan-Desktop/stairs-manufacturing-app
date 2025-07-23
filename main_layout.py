@@ -1,11 +1,13 @@
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel
 
-from output_layout import OutputLayout
+from output_widget import  OutputWidget
 
 
-from input_layout import InputLayout
+from input_widget import InputWidget
 
 from PySide6.QtCore import Qt
+
+from backend import Backend
 
 class MainLayout(QVBoxLayout):
     def __init__(self):
@@ -14,11 +16,16 @@ class MainLayout(QVBoxLayout):
         self.central_layout = QHBoxLayout()
         self.addLayout(self.central_layout)
 
-        self.input_layout = InputLayout()
+        self.backend = Backend()
 
-        self.central_layout.addLayout(self.input_layout)
+        # self.input_layout = InputLayout(self.backend)
 
-        self.output_layout = OutputLayout()
-        self.central_layout.addLayout(self.output_layout)
+        # self.central_layout.addLayout(self.input_layout)
+        self.input_widget = InputWidget(self.backend)
+        self.central_layout.addWidget(self.input_widget)
 
+        self.output_widget = OutputWidget(self.backend)
+        self.central_layout.addWidget(self.output_widget)
 
+        self.backend.set_input_widget(self.input_widget)
+        self.backend.set_output_widget(self.output_widget)

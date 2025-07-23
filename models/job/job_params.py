@@ -11,7 +11,7 @@ class JobInputParams(BaseModel):
     def compute_params(self) -> 'JobInputParams':
         # if self.job_template is None:
         classes=[c.__qualname__ for c in self.__class__.__mro__ if c is not BaseModel and c is not object]
-        print(f"Setting job_template to {classes}")
+        # print(f"Setting job_template to {classes}")
         self.job_template = classes[0]
 
         return self

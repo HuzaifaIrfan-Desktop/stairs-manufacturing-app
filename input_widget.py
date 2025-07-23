@@ -1,13 +1,13 @@
 
+import json
 from models.job.job_params import JobInputParams
 from job.job import Job
 
 from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QPushButton, QSizePolicy
 )
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel, QFileDialog
 
-from output_layout import OutputLayout
 
 from PySide6.QtCore import Qt
 
@@ -15,6 +15,7 @@ from PySide6.QtWidgets import QLineEdit, QSpinBox, QCheckBox, QWidget, QFormLayo
 
 from job import available_job_templates
 from PySide6.QtWidgets import QComboBox
+from PySide6.QtWidgets import QScrollArea, QWidget
 
 
 def widget_for_field(field_type):
@@ -39,10 +40,13 @@ def widget_for_field(field_type):
         line_edit = QLineEdit()  # fallback
         # line_edit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         return line_edit
+from backend import Backend
 
-class JobInputWidget(QWidget):
-    def __init__(self):
+
+class InputWidget(QWidget):
+    def __init__(self, backend:Backend):
         super().__init__()
+        self.backend = backend
         self.setFixedWidth(600)
         self.job_params: JobInputParams = JobInputParams()
 
@@ -57,6 +61,24 @@ class JobInputWidget(QWidget):
 
         layout = QVBoxLayout(self)
 
+        title_label = QLabel("Stairs App")
+        title_label.setAlignment(Qt.AlignCenter)
+        font = title_label.font()
+        font.setBold(True)
+        font.setPointSize(40)
+        title_label.setFont(font)
+        layout.addWidget(title_label)  
+        
+
+
+        input_title_label = QLabel("Job Input")
+        input_title_label.setAlignment(Qt.AlignCenter)
+        font = input_title_label.font()
+        font.setBold(True)
+        font.setPointSize(20)
+        input_title_label.setFont(font)
+        layout.addWidget(input_title_label)
+
         button_layout = QHBoxLayout()
         self.load_button = QPushButton("Load Job")
         self.load_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -68,8 +90,8 @@ class JobInputWidget(QWidget):
         button_layout.addWidget(self.calculate_and_save_button)
 
         layout.addLayout(button_layout)
-
-
+ 
+        layout.addWidget(QLabel("Job Template:"))
         self.template_selector = QComboBox()
         self.template_selector.addItems([template['label'] for template in available_job_templates.values()])
         self.template_selector.currentTextChanged.connect(self.on_template_changed)
@@ -80,7 +102,17 @@ class JobInputWidget(QWidget):
         layout.addWidget(self.template_selector)
 
         self.form_layout = QFormLayout()
+        # Add a scroll area for the form layout
+
+        self.form_widget = QWidget()
+        self.form_widget.setLayout(self.form_layout)
         self.form_layout.setSizeConstraint(QVBoxLayout.SetMinimumSize)
+
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+        self.scroll_area.setWidget(self.form_widget)
+
+        layout.addWidget(self.scroll_area)
         layout.addLayout(self.form_layout)
 
 
@@ -148,24 +180,31 @@ class JobInputWidget(QWidget):
         try:
             self.job_params = self.input_params_class(**data)
             self.result_label.setText(f"Valid: {self.job_params}")
+            self.backend.append_to_console(f"Valid job params: {self.job_params}")
         except Exception as e:
             self.result_label.setText(f"Error: {e}")
+            self.backend.append_to_console(f"Error building job params: {e}")
 
     def load_job(self):
-        pass
+        file_selector = QFileDialog(self)
+        file_selector.setNameFilter("JSON files (*.json)")
+        file_selector.setAcceptMode(QFileDialog.AcceptOpen)
+        if file_selector.exec_() == QFileDialog.Accepted:
+            file_path = file_selector.selectedFiles()[0]
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                job_template=data["job_template"]
+
+                label=available_job_templates[job_template]['label']
+                self.template_selector.setCurrentText(label)
+                self.job_params = self.input_params_class(**data)
+                self.result_label.setText(f"Loaded: {self.job_params}") 
+                print(f"Loaded job params: {self.job_params}")
+                self.backend.append_to_console(f"Loaded job params: {self.job_params}")
+        
+        self.build_form_from_job_params()
+
     def calculate_and_save_job(self):
         self.build_job_params_from_form()
         self.job = self.job_class(self.job_params)
 
-class InputLayout(QVBoxLayout):
-    def __init__(self):
-        super().__init__()
-        self.setContentsMargins(10, 10, 10, 10)
-        self.setAlignment(Qt.AlignTop)  
-        self.setSpacing(10)
-        self.setSizeConstraint(QVBoxLayout.SetMinimumSize)
-        
-
-
-        self.input_widget = JobInputWidget()
-        self.addWidget(self.input_widget)
