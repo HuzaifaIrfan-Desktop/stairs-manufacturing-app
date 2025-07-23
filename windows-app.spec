@@ -7,11 +7,7 @@ import os
 import sys
 import site
 
-src = os.path.join('drawing_templates')
-dst = os.path.join('dist', 'drawing_templates')
-if os.path.exists(dst):
-    shutil.rmtree(dst)
-shutil.copytree(src, dst)
+
 
 # ocp_dir = r"C:\Users\admi\miniforge3\envs\stairs_app_env\Lib\site-packages\OCC"
 
@@ -42,16 +38,13 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
-    name='Stairs App',
+    exclude_binaries=True,
+    name='Stairs-App',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    upx_exclude=[],
-    runtime_tmpdir=None,
     console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
@@ -60,5 +53,28 @@ exe = EXE(
     entitlements_file=None,
     icon='favicon.ico'  
 )
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='Stairs-App',
+)
 
 
+src = os.path.join('assets')
+dst = os.path.join('dist','Stairs-App', 'assets')
+if os.path.exists(dst):
+    shutil.rmtree(dst)
+shutil.copytree(src, dst)
+
+
+src = os.path.join('drawing_templates')
+dst = os.path.join('dist','Stairs-App', 'drawing_templates')
+if os.path.exists(dst):
+    shutil.rmtree(dst)
+shutil.copytree(src, dst)
+
+print("Copied required folders to:", dst)
