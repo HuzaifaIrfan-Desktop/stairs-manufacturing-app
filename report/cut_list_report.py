@@ -49,8 +49,8 @@ class CutListReport:
         # Title and Job Info
         elements.append(Spacer(1, 12))
         elements.append(Paragraph(f"<b>Cut List - {self.cut_list_params.job_name} Job</b>", styles['Title']))
-        elements.append(Paragraph(f"Assembly: {self.cut_list_params.assembly_name}", styles['Normal']))
-        elements.append(Paragraph(f"Builder: {self.cut_list_params.builder_name}", styles['Normal']))
+        elements.append(Paragraph(f"Assembly: {self.cut_list_params.assembly_name}", styles['Heading2']))
+        elements.append(Paragraph(f"Builder: {self.cut_list_params.builder_name}", styles['Heading3']))
         # elements.append(Paragraph(f'Total Rise: {total_rise}", Width: {width}"', styles['Normal']))
         elements.append(Spacer(1, 12))
 
