@@ -71,7 +71,8 @@ class Backend(QObject):
         self.job_class_name = job_input_params.job_class_name
         self.job_class = available_job_classes[self.job_class_name]['job_class']
         self.job_input_params_class = available_job_classes[self.job_class_name]['input_params_class']
-        
+
+        self.append_to_console(f"Starting Job Export {self.job_input_params.job_name}.")
 
 
         thread = threading.Thread(target=self.run_job)

@@ -59,8 +59,8 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
             self.kicker_params = KickerParams(
                 job_name=self.job_name,
                 part_name="kicker",
-                kicker_height=1,
-                kicker_depth=1,
+                kicker_height=0,
+                kicker_depth=0,
                 kicker_length=self.stairway_width
             )
 

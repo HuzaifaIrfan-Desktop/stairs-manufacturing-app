@@ -4,7 +4,7 @@ from drawing.drawing import Drawing
 from utils.math import inch_to_mm
 
 from logger import part_logger
-part_logger.info("Loading Part class from part.part module")
+# part_logger.info("Loading Part class from part.part module")
 
 
 from models.part.part_params import PartParams

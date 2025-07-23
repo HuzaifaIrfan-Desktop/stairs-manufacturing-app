@@ -105,8 +105,8 @@ class InputWidget(QWidget):
         self.job_class_selector.addItems([job_class['label'] for job_class in available_job_classes.values()])
         self.job_class_selector.currentTextChanged.connect(self.on_job_class_changed)
         self.selected_job_class_label = None
-        self.job_class_selector.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        self.job_class_selector.setMinimumWidth(300)
+        # self.job_class_selector.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        # self.job_class_selector.setMinimumWidth(300)
         layout.addWidget(self.job_class_selector)
 
 
@@ -140,13 +140,13 @@ class InputWidget(QWidget):
     def on_job_class_changed(self, job_class_name):
         self.selected_job_class_label = job_class_name
         job_class_key = [key for key, value in available_job_classes.items() if value['label'] == job_class_name][0]
-        self.job_class = available_job_classes[job_class_key]['job_class']
+        # self.job_class = available_job_classes[job_class_key]['job_class']
         self.input_params_class = available_job_classes[job_class_key]['input_params_class']
         self.job_params = self.input_params_class()
 
         self.build_form_from_job_params()
 
-        self.job = self.job_class(self.job_params)
+        # self.job = self.job_class(self.job_params)
 
     def build_form_from_job_params(self):
           # Clear existing rows

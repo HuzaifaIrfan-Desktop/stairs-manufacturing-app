@@ -50,6 +50,10 @@ class Assembly:
 
         self.export_cut_list()
 
+        self.export_parts()
+        
+        self.export_drawing()
+
         return stl_file_path
 
     def export_assembly_params(self) -> str:
@@ -106,5 +110,16 @@ class Assembly:
 
         cut_list_report = CutListReport(cut_list_params)
         file_path = cut_list_report.export()
+
+        return file_path
+
+    def export_drawing(self) -> str:
+        # Placeholder for drawing export logic
+        file_path = ""
+
+        return file_path
+
+    def export_parts(self) -> str:
+        file_path=""
 
         return file_path
