@@ -79,11 +79,16 @@ class Backend(QObject):
         thread.start()
 
     def run_job(self):
-        import logger
-        self.job = self.job_class(self.job_input_params)
-        self.job.export()
-        self.assembly_model_file_path = self.job.export_assembly()
-        
+
+        try:
+            self.job = self.job_class(self.job_input_params)
+            self.job.export()
+            self.assembly_model_file_path = self.job.export_assembly()
+        except Exception as e:
+            print(f"Error during job execution: {str(e)}")
+            self.append_to_console(f"Error during job execution: {str(e)} \n\n")
+            return
+            
         # print("Job completed signal emit.")
         self.job_completed.emit()
 
@@ -92,4 +97,4 @@ class Backend(QObject):
         # print("Job completed signal received.")
         # self.clear_console()
         self.display_3d_model(self.assembly_model_file_path)
-        self.append_to_console(f"Job {self.job_input_params.job_name} Exported Successfully.")
+        self.append_to_console(f"Job {self.job_input_params.job_name} Exported Successfully.\n\n")

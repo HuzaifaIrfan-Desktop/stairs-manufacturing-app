@@ -16,8 +16,6 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputP
     stairway_width: float = Field(default=36.75, description="Stairway width")
     number_of_steps_risers: int = Field(default=16, description="Number of steps risers")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
-   
-    top_floor_thickness: float = Field(default=1.0,description="Top floor thickness")
 
     first_step_riser_height: float = Field(default=6.63, description="First step riser height")
     last_step_riser_height: float = Field(default=7.63, description="Last step riser height")

@@ -7,7 +7,7 @@ from models.job.job_params import JobInputParams
 from job.job import Job
 
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QPushButton, QSizePolicy
+    QApplication, QWidget, QVBoxLayout, QPushButton, QSizePolicy,
 )
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel, QFileDialog
 import os
@@ -15,6 +15,8 @@ import os
 from PySide6.QtCore import Qt
 
 from PySide6.QtWidgets import QLineEdit, QSpinBox, QCheckBox, QWidget, QFormLayout, QDoubleSpinBox
+from PySide6.QtGui import QFont
+
 
 from job import available_job_classes
 from PySide6.QtWidgets import QComboBox
@@ -75,18 +77,13 @@ class InputWidget(QWidget):
 
         title_label = QLabel("Stairs App")
         title_label.setAlignment(Qt.AlignCenter)
-        font = title_label.font()
-        font.setBold(True)
-        font.setPointSize(40)
-        title_label.setFont(font)
-        layout.addWidget(title_label)  
+        title_label.setStyleSheet("font: bold 24pt;")
+
+        layout.addWidget(title_label)
 
         input_title_label = QLabel("Job Input")
         input_title_label.setAlignment(Qt.AlignCenter)
-        font = input_title_label.font()
-        font.setBold(True)
-        font.setPointSize(20)
-        input_title_label.setFont(font)
+        input_title_label.setStyleSheet("font: bold 12pt;")
         layout.addWidget(input_title_label)
 
         # Add buttons for loading and calculating and saving job
@@ -106,7 +103,11 @@ class InputWidget(QWidget):
         layout.addLayout(button_layout)
 
         # Add a label and a combo box for selecting the job class
-        layout.addWidget(QLabel("Job Class:"))
+
+        job_class_label =QLabel("Job Class:")
+        job_class_label.setStyleSheet("font: bold 12pt;")
+        layout.addWidget(job_class_label)
+        
         self.job_class_selector = QComboBox()
         self.job_class_selector.addItems([job_class['label'] for job_class in available_job_classes.values()])
         self.job_class_selector.currentTextChanged.connect(self.on_job_class_changed)
@@ -138,6 +139,7 @@ class InputWidget(QWidget):
         # layout.addWidget(self.submit_btn)
 
         self.result_label = QLabel("Result:")
+        self.result_label.setStyleSheet("font: bold 12pt;")
         layout.addWidget(self.result_label)
 
         self.on_job_class_changed(self.job_class_selector.currentText())

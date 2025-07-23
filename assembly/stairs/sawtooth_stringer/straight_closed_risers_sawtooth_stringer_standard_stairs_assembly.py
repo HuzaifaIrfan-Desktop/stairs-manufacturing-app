@@ -54,8 +54,10 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
         self.first_riser.export()
         self.last_tread.export()
         self.last_riser.export()
-        self.sawtooth_stringer.export()
         
+        self.sawtooth_stringer.export()
+        self.sawtooth_stringer.export_cam()
+
         return file_path
 
     def export_drawing(self) -> str:

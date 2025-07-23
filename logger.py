@@ -38,10 +38,8 @@ handler.formatter.converter=time.gmtime
 ezdxf_logger.addHandler(handler)
 
 
-PIL_logger=logging.getLogger("PIL")
-PIL_logger.setLevel(logging.INFO)  # Or DEBUG if needed
-handler=logging.FileHandler('log/PIL.log',mode="a")
-handler.setFormatter(logging.Formatter('[%(asctime)s] [%(process)d] [%(levelname)s]  %(message)s'))
-handler.formatter.converter=time.gmtime
-PIL_logger.addHandler(handler)
 
+# Suppress ezdxf logs
+logging.getLogger("ezdxf").setLevel(logging.CRITICAL)
+logging.getLogger("PIL").setLevel(logging.CRITICAL)
+logging.getLogger("fontTools").setLevel(logging.CRITICAL)

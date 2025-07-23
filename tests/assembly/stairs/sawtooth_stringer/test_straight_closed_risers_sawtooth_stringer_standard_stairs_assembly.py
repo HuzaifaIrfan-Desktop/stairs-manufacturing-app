@@ -36,7 +36,7 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         tread_overhang_side_depth=1.0,
 
         number_of_stringers=4,
-        top_floor_thickness=1.0,
+
 
         # first_riser_material=plywood_1
 

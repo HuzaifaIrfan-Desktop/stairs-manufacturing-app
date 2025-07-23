@@ -148,6 +148,7 @@ class OCCViewerWidget(QWidget):
         self._viewer.InitDriver()
         self._display = self._viewer._display
         
+        
         # Set initial size
         if self._size:
             self._viewer.resize(self._size[0], self._size[1])

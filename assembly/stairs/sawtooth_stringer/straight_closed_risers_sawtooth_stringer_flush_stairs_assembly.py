@@ -54,6 +54,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssembly(Assembly):
         self.last_tread.export()
 
         self.sawtooth_stringer.export()
+        self.sawtooth_stringer.export_cam()
 
         return file_path
 

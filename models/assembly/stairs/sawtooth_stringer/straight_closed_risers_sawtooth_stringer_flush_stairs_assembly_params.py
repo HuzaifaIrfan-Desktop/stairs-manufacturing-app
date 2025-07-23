@@ -124,15 +124,16 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
             )
 
 
-        self.stringer_placement_from_top =self.last_tread_params.tread_thickness
 
+        self.stringer_placement_from_top =self.total_rise_height - self.sawtooth_stringer_params.stringer_total_rise
+          
 
-        if abs(self.sawtooth_stringer_params.stringer_total_rise - (self.total_rise_height - self.last_tread_params.tread_thickness)) > 0.1:
+        # if abs(self.sawtooth_stringer_params.stringer_total_rise - (self.total_rise_height - self.last_tread_params.tread_thickness)) > 0.1:
 
-                print( f"stringer_total_rise {self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}")
-                raise ValueError(
-                    f"sawtooth_stringer_params.stringer_total_rise must be within 0.1 of total_rise_height - last_tread_params.tread_thickness "
-                    f"{self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}"
-                )
+        #         print( f"stringer_total_rise {self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}")
+        #         raise ValueError(
+        #             f"sawtooth_stringer_params.stringer_total_rise must be within 0.1 of total_rise_height - last_tread_params.tread_thickness "
+        #             f"{self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.last_tread_params.tread_thickness}"
+        #         )
 
         return self

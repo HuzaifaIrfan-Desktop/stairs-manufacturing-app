@@ -22,7 +22,6 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
     number_of_steps_risers: int = Field(description="Number of steps risers")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
     stringer_placement_from_top: float = Field(init=False, default=None, validate_default=False, description="Stringer placement from top")
-    top_floor_thickness: float = Field(description="Top floor thickness")
 
     first_step_riser_height: float = Field( description="First step riser height")
     last_step_riser_height: float = Field( description="Last step riser height")
@@ -132,17 +131,16 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
 
             )
 
-        self.stringer_placement_from_top = self.last_riser_params.riser_height + self.top_floor_thickness
 
-
+        self.stringer_placement_from_top =self.total_rise_height - self.sawtooth_stringer_params.stringer_total_rise
             
-        if abs(self.sawtooth_stringer_params.stringer_total_rise - (self.total_rise_height - self.stringer_placement_from_top)) > 0.1:
+        # if abs( (self.stringer_placement_from_top) ) > 0.1:
 
-                print( f"stringer_total_rise {self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.stringer_placement_from_top}")
-                raise ValueError(
-                    f"sawtooth_stringer_params.stringer_total_rise must be within 0.1 of total_rise_height - stringer_placement_from_top "
-                    f"{self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.stringer_placement_from_top}"
-                )
+        #         print( f"stringer_total_rise {self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.stringer_placement_from_top}")
+        #         raise ValueError(
+        #             f"sawtooth_stringer_params.stringer_total_rise must be within 0.1 of total_rise_height - stringer_placement_from_top "
+        #             f"{self.sawtooth_stringer_params.stringer_total_rise} != {self.total_rise_height - self.stringer_placement_from_top}"
+        #         )
 
         return self
 

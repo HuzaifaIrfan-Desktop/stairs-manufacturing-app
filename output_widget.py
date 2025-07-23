@@ -30,6 +30,7 @@ class OutputWidget(QWidget):
 
 
         self.label = QLabel("Output Console.")
+        self.label.setStyleSheet("font: bold 12pt;")
         layout.addWidget(self.label)
         self.console_area = QTextEdit()
         self.console_area.setReadOnly(True)
