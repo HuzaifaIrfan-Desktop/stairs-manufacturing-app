@@ -13,7 +13,7 @@ from PySide6.QtCore import Qt
 
 from PySide6.QtWidgets import QLineEdit, QSpinBox, QCheckBox, QWidget, QFormLayout, QDoubleSpinBox
 
-from job import available_job_templates
+from job import available_job_classes
 from PySide6.QtWidgets import QComboBox
 from PySide6.QtWidgets import QScrollArea, QWidget
 
@@ -49,9 +49,7 @@ class InputWidget(QWidget):
         self.backend = backend
         self.setFixedWidth(600)
         self.job_params: JobInputParams = JobInputParams()
-
-        self.job_class = Job
-        self.input_params_class = JobInputParams
+        self.job_input_params_class = JobInputParams
 
         self.job: Job = None
 
@@ -61,6 +59,8 @@ class InputWidget(QWidget):
 
         layout = QVBoxLayout(self)
 
+        # App Title
+
         title_label = QLabel("Stairs App")
         title_label.setAlignment(Qt.AlignCenter)
         font = title_label.font()
@@ -68,8 +68,6 @@ class InputWidget(QWidget):
         font.setPointSize(40)
         title_label.setFont(font)
         layout.addWidget(title_label)  
-        
-
 
         input_title_label = QLabel("Job Input")
         input_title_label.setAlignment(Qt.AlignCenter)
@@ -79,6 +77,7 @@ class InputWidget(QWidget):
         input_title_label.setFont(font)
         layout.addWidget(input_title_label)
 
+        # Add buttons for loading and calculating and saving job
         button_layout = QHBoxLayout()
         self.load_button = QPushButton("Load Job")
         self.load_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -88,19 +87,20 @@ class InputWidget(QWidget):
         self.calculate_and_save_button.clicked.connect(self.calculate_and_save_job)
         button_layout.addWidget(self.load_button)
         button_layout.addWidget(self.calculate_and_save_button)
-
         layout.addLayout(button_layout)
- 
-        layout.addWidget(QLabel("Job Template:"))
-        self.template_selector = QComboBox()
-        self.template_selector.addItems([template['label'] for template in available_job_templates.values()])
-        self.template_selector.currentTextChanged.connect(self.on_template_changed)
-        self.selected_template_label = None
 
-        self.template_selector.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        self.template_selector.setMinimumWidth(300)
-        layout.addWidget(self.template_selector)
+        # Add a label and a combo box for selecting the job class
+        layout.addWidget(QLabel("Job Class:"))
+        self.job_class_selector = QComboBox()
+        self.job_class_selector.addItems([job_class['label'] for job_class in available_job_classes.values()])
+        self.job_class_selector.currentTextChanged.connect(self.on_job_class_changed)
+        self.selected_job_class_label = None
+        self.job_class_selector.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.job_class_selector.setMinimumWidth(300)
+        layout.addWidget(self.job_class_selector)
 
+
+        # Input Form Layout
         self.form_layout = QFormLayout()
         # Add a scroll area for the form layout
 
@@ -124,12 +124,14 @@ class InputWidget(QWidget):
         self.result_label = QLabel("Result:")
         layout.addWidget(self.result_label)
 
+        self.on_job_class_changed(self.job_class_selector.currentText())
 
-    def on_template_changed(self, template_name):
-        self.selected_template_label = template_name
-        template_key = [key for key, value in available_job_templates.items() if value['label'] == template_name][0]
-        self.job_class = available_job_templates[template_key]['job_class']
-        self.input_params_class = available_job_templates[template_key]['input_params_class']
+
+    def on_job_class_changed(self, job_class_name):
+        self.selected_job_class_label = job_class_name
+        job_class_key = [key for key, value in available_job_classes.items() if value['label'] == job_class_name][0]
+        self.job_class = available_job_classes[job_class_key]['job_class']
+        self.input_params_class = available_job_classes[job_class_key]['input_params_class']
         self.job_params = self.input_params_class()
 
         self.build_form_from_job_params()
@@ -143,12 +145,10 @@ class InputWidget(QWidget):
         for i in range(self.form_layout.rowCount()-1, -1, -1):
             self.form_layout.removeRow(i)
 
-
-
         self.inputs.clear()
         for name, field in self.input_params_class.model_fields.items():
             
-            if name == 'job_template':
+            if name == 'job_class_name':
                 continue
 
             widget = widget_for_field(field.annotation)
@@ -193,10 +193,10 @@ class InputWidget(QWidget):
             file_path = file_selector.selectedFiles()[0]
             with open(file_path, 'r') as f:
                 data = json.load(f)
-                job_template=data["job_template"]
+                job_class_name=data["job_class_name"]
 
-                label=available_job_templates[job_template]['label']
-                self.template_selector.setCurrentText(label)
+                label=available_job_classes[job_class_name]['label']
+                self.job_class_selector.setCurrentText(label)
                 self.job_params = self.input_params_class(**data)
                 self.result_label.setText(f"Loaded: {self.job_params}") 
                 print(f"Loaded job params: {self.job_params}")
@@ -206,5 +206,5 @@ class InputWidget(QWidget):
 
     def calculate_and_save_job(self):
         self.build_job_params_from_form()
-        self.job = self.job_class(self.job_params)
+        self.backend.calculate_and_save_job(self.job_params)
 

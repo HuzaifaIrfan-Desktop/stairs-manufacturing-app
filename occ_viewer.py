@@ -100,19 +100,23 @@ def get_shape_from_file(file_path: str) -> TopoDS_Shape:
     extension = path.suffix  # e.g., ".pdf"
     filename_without_extension = path.stem  # e.g., "file"
 
-    try:
-        if extension == ".stl":
-            # file_path = "output/Crestmont/Landing.stl"
-            shape = stl_to_shape(file_path)
-        elif extension == ".obj":
-            # file_path = "output/Crestmont/Landing.obj"
-            shape = obj_to_shape(file_path, triangulate=False)
-        else:
-            shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
-    except Exception as e:
-        print(f"Error loading shape from {file_path}: {e}")
+    if not path.exists():
+        print(f"File does not exist: {file_path}. Displaying default shape.")
         shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
-    
+    else:
+        try:
+            if extension == ".stl":
+                # file_path = "output/Crestmont/Landing.stl"
+                shape = stl_to_shape(file_path)
+            elif extension == ".obj":
+                # file_path = "output/Crestmont/Landing.obj"
+                shape = obj_to_shape(file_path, triangulate=False)
+            else:
+                shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
+        except Exception as e:
+            print(f"Error loading shape from {file_path}: {e}")
+            shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
+        
     return shape
 
 from PySide6.QtWidgets import (
@@ -214,31 +218,9 @@ class OCCViewerWindow(QMainWindow):
         
 
 
+        shape=get_shape_from_file(self.file_path)
         
-
-        path = pathlib.Path(self.file_path)
-        filename = path.name # e.g., "file.pdf"
-        extension = path.suffix  # e.g., ".pdf"
-        filename_without_extension = path.stem  # e.g., "file"
-
-        try:
-            if extension == ".stl":
-                # file_path = "output/Crestmont/Landing.stl"
-
-                shape = stl_to_shape(self.file_path)
-               
-            elif extension == ".obj":
-                # file_path = "output/Crestmont/Landing.obj"
-
-                shape = obj_to_shape(self.file_path, triangulate=False)
-
-            else:
-                shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
-        except Exception as e:
-            print(f"Error loading shape from {self.file_path}: {e}")
-            shape = BRepPrimAPI_MakeBox(10, 20, 30).Shape()
-
-
+        self.occ_viewer.display.EraseAll()
         self.occ_viewer.display.DisplayShape(shape, update=True)
         self.occ_viewer.display.FitAll()
 

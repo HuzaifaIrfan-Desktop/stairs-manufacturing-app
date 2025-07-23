@@ -8,6 +8,11 @@ except ImportError as e:
     print("Error importing widgets. Ensure they are in the same directory as backend.py.")
     print(e)
 
+from job import available_job_classes
+
+import json
+from models.job.job_params import JobInputParams
+from job.job import Job
 
 class Backend(QObject):
     # Example signal
@@ -36,10 +41,6 @@ class Backend(QObject):
 
 
 
-
-
-
-
     def append_to_console(self, text: str):
         if self.output_widget:
             self.output_widget.append_to_console(text)
@@ -57,3 +58,11 @@ class Backend(QObject):
             self.output_widget.display_3d_model(file_path)
         else:
             print("Output widget is not set. Cannot display 3D model.")
+
+    def calculate_and_save_job(self, job_input_params: JobInputParams):
+        self.job_input_params = job_input_params
+        self.job_class_name = job_input_params.job_class_name
+        self.job_class = available_job_classes[self.job_class_name]['job_class']
+        self.job_input_params_class = available_job_classes[self.job_class_name]['input_params_class']
+        
+        self.job = self.job_class(self.job_input_params)

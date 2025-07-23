@@ -10,7 +10,7 @@ from models.job.straight_closed_risers_sawtooth_stringer_flush_stairs_job_params
 
 
 
-available_job_templates = {
+available_job_classes = {
     "StraightClosedRisersSawtoothStringerStandardStairsJobInputParams": {
         "label": "Straight Closed Risers Sawtooth Stringer Standard Stairs",
         "job_class": StraightClosedRisersSawtoothStringerStandardStairsJob,
