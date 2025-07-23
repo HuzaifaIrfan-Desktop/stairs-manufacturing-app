@@ -1,4 +1,5 @@
 
+from importlib.resources import path
 import json
 
 from pyparsing import line
@@ -9,7 +10,7 @@ from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QPushButton, QSizePolicy
 )
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel, QFileDialog
-
+import os
 
 from PySide6.QtCore import Qt
 
@@ -210,9 +211,15 @@ class InputWidget(QWidget):
                 self.job_params = self.input_params_class(**data)
                 self.result_label.setText(f"Loaded: {self.job_params}") 
                 print(f"Loaded job params: {self.job_params}")
-                # self.backend.append_to_console(f"Loaded job params: {self.job_params}")
+                self.backend.append_to_console(f"Loaded job params: {self.job_params}")
         
         self.build_form_from_job_params()
+
+        if self.job_params.job_name:
+            loaded_3d_model_path = os.path.join(os.getcwd(), 'output', self.job_params.job_name , f"{self.job_params.job_name}.stl")
+            self.backend.display_3d_model(loaded_3d_model_path)
+
+
 
     def calculate_and_save_job(self):
         self.build_job_params_from_form()
