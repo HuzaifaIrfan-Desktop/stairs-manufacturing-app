@@ -79,6 +79,7 @@ class Backend(QObject):
         thread.start()
 
     def run_job(self):
+        import logger
         self.job = self.job_class(self.job_input_params)
         self.job.export()
         self.assembly_model_file_path = self.job.export_assembly()

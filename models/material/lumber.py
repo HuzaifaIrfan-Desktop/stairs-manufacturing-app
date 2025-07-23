@@ -14,3 +14,10 @@ lumber_2x6 = Lumber(material_name='2x6 Lumber', thickness=1.5, width=5.5)
 lumber_2x8 = Lumber(material_name='2x8 Lumber', thickness=1.5, width=7.25)
 lumber_2x10 = Lumber(material_name='2x10 Lumber', thickness=1.5, width=9.25)
 lumber_2x12 = Lumber(material_name='2x12 Lumber', thickness=1.5, width=11.25)
+
+available_lumbers = {
+    '2x6 Lumber': lumber_2x6,
+    '2x8 Lumber': lumber_2x8,
+    '2x10 Lumber': lumber_2x10,
+    '2x12 Lumber': lumber_2x12,
+}

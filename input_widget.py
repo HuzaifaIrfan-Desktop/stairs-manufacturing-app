@@ -22,6 +22,7 @@ from PySide6.QtWidgets import QScrollArea, QWidget
 
 
 def widget_for_field(field_type):
+
     if field_type is str:
         line_edit = QLineEdit()
         line_edit.setPlaceholderText("Enter text")
@@ -166,7 +167,17 @@ class InputWidget(QWidget):
             if name == 'job_class_name':
                 continue
 
-            widget = widget_for_field(field.annotation)
+            # print(f"Adding field {field.json_schema_extra}")
+            if field.json_schema_extra:
+                if 'enum' in field.json_schema_extra:
+                    print(f"Adding field {name} with enum {field.json_schema_extra['enum']}")
+                    widget = QComboBox()
+                    widget.addItems(field.json_schema_extra['enum'])
+                else:
+                    widget = widget_for_field(field.annotation)
+            else:
+                widget = widget_for_field(field.annotation)
+
             self.inputs[name] = widget
             self.form_layout.addRow(QLabel(name), widget) 
 
@@ -180,6 +191,10 @@ class InputWidget(QWidget):
                     widget.setValue(float(value))
                 elif isinstance(widget, QCheckBox):
                     widget.setChecked(bool(value))
+                elif isinstance(widget, QComboBox):
+                    index = widget.findText(str(value))
+                    if index != -1:
+                        widget.setCurrentIndex(index)
 
     def build_job_params_from_form(self):
         data = {}
@@ -192,6 +207,8 @@ class InputWidget(QWidget):
                 data[name] = widget.value()
             elif isinstance(widget, QCheckBox):
                 data[name] = widget.isChecked()
+            elif isinstance(widget, QComboBox):
+                data[name] = widget.currentText()
         try:
             self.job_params = self.input_params_class(**data)
             self.result_label.setText(f"Valid: {self.job_params}")

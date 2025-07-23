@@ -1,3 +1,4 @@
+import logger
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout,QVBoxLayout, QLabel
 import sys
 

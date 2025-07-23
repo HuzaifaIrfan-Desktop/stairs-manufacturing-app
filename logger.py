@@ -29,11 +29,19 @@ handler.setFormatter(logging.Formatter('[%(asctime)s] [%(process)d] [%(levelname
 handler.formatter.converter=time.gmtime
 job_logger.addHandler(handler)
 
-calculator_logger=logging.getLogger("calculator")
-calculator_logger.setLevel(logging.INFO)  # Or DEBUG if needed
-handler=logging.FileHandler('log/calculator.log',mode="a")
+
+ezdxf_logger=logging.getLogger("ezdxf")
+ezdxf_logger.setLevel(logging.INFO)  # Or DEBUG if needed
+handler=logging.FileHandler('log/ezdxf.log',mode="a")
 handler.setFormatter(logging.Formatter('[%(asctime)s] [%(process)d] [%(levelname)s]  %(message)s'))
 handler.formatter.converter=time.gmtime
-calculator_logger.addHandler(handler)
+ezdxf_logger.addHandler(handler)
 
+
+PIL_logger=logging.getLogger("PIL")
+PIL_logger.setLevel(logging.INFO)  # Or DEBUG if needed
+handler=logging.FileHandler('log/PIL.log',mode="a")
+handler.setFormatter(logging.Formatter('[%(asctime)s] [%(process)d] [%(levelname)s]  %(message)s'))
+handler.formatter.converter=time.gmtime
+PIL_logger.addHandler(handler)
 
