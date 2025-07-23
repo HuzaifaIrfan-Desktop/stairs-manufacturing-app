@@ -7,7 +7,7 @@ from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
 def test_sawtooth_stringer_build():
     stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer",
                                               first_step_rise_height=6.63, last_step_run_depth=11.5,
-                                              step_rise_height=7.63, step_run_depth=11.5,
+                                              typical_step_rise_height=7.63, typical_step_run_depth=11.5,
                                               number_of_stringer_run=12,
                                               
                                               kicker_height=1.0, kicker_depth=1.0)
@@ -19,7 +19,7 @@ def test_sawtooth_stringer_build():
 def test_sawtooth_stringer_export():
     stringer_params = SawtoothStringerParams(job_name="test_job", part_name="test_sawtooth_stringer",
                                               first_step_rise_height=6.63, last_step_run_depth=11.5,
-                                              step_rise_height=7.63, step_run_depth=11.5,number_of_stringer_run=15,
+                                              typical_step_rise_height=7.63, typical_step_run_depth=11.5, number_of_stringer_run=15,
                                               )
     stringer = sawtooth_stringer.SawtoothStringer(stringer_params)
 

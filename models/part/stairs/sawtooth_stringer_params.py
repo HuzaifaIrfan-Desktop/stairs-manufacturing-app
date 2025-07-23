@@ -19,8 +19,8 @@ class SawtoothStringerParams(PartParams):
     first_step_rise_height: float
     last_step_run_depth: float
 
-    step_rise_height: float
-    step_run_depth: float
+    typical_step_rise_height: float
+    typical_step_run_depth: float
 
     # number_of_stringer_rise: int = Field(init=False, default=None, validate_default=False) # Same as run and not used in calculations
     number_of_stringer_run: int # This is the number of runs, not the number of treads
@@ -112,23 +112,23 @@ class SawtoothStringerParams(PartParams):
 
 
         # The angle of the stringer (hypotenuse)
-        self.angle_of_stringer_rad = math.atan2(self.step_rise_height, self.step_run_depth)
+        self.angle_of_stringer_rad = math.atan2(self.typical_step_rise_height, self.typical_step_run_depth)
 
 
         number_of_stringer_rise = self.number_of_stringer_run
 
-        self.stringer_total_rise = self.first_step_rise_height + (number_of_stringer_rise - 1) * self.step_rise_height
+        self.stringer_total_rise = self.first_step_rise_height + (number_of_stringer_rise - 1) * self.typical_step_rise_height
 
-        self.stringer_total_run  = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.step_run_depth
+        self.stringer_total_run  = self.last_step_run_depth + (self.number_of_stringer_run - 1) * self.typical_step_run_depth
 
         self.stringer_length = math.sqrt(self.stringer_total_rise**2 + self.stringer_total_run**2)
 
         self.bottom_stringer_depth = calculate_x(self.angle_of_stringer_rad, self.stringer_width, self.first_step_rise_height)
-        self.back_stringer_reverse_height = calculate_y(self.angle_of_stringer_rad, self.first_step_rise_height, 0, self.step_rise_height, self.last_step_run_depth, self.bottom_stringer_depth)
+        self.back_stringer_reverse_height = calculate_y(self.angle_of_stringer_rad, self.first_step_rise_height, 0, self.typical_step_rise_height, self.last_step_run_depth, self.bottom_stringer_depth)
 
-        self.stringer_width_min = calculate_w_min(self.angle_of_stringer_rad, self.step_run_depth, self.first_step_rise_height, self.bottom_stringer_depth)
-        
-        
+        self.stringer_width_min = calculate_w_min(self.angle_of_stringer_rad, self.typical_step_run_depth, self.first_step_rise_height, self.bottom_stringer_depth)
+
+
         if self.kicker_height >= self.first_step_rise_height:
             raise ValueError("kicker_height must be less than first_step_rise_height")
         if self.kicker_depth >= self.bottom_stringer_depth:

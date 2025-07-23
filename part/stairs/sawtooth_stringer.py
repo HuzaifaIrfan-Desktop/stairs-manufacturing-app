@@ -54,9 +54,9 @@ class SawtoothStringer(Part):
         
         # one minus because the last run will be added after the loop
         for i in range(self.part_params.number_of_stringer_run-1):
-            current_x += inch_to_mm(self.part_params.step_run_depth)
+            current_x += inch_to_mm(self.part_params.typical_step_run_depth)
             points.append((current_x, current_y))
-            current_y += inch_to_mm(self.part_params.step_rise_height)
+            current_y += inch_to_mm(self.part_params.typical_step_rise_height)
             points.append((current_x, current_y))
 
         current_x += inch_to_mm(self.part_params.last_step_run_depth)
