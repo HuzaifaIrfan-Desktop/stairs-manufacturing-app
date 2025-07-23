@@ -255,4 +255,14 @@ class InputWidget(QWidget):
     def open_output_directory(self):
         output_dir = os.path.join(os.getcwd(), 'output', self.job_params.job_name)
         if os.path.exists(output_dir):
-            os.startfile(output_dir)
+            if os.name == 'nt':
+                os.startfile(output_dir)
+            elif os.name == 'posix':
+                import subprocess
+                subprocess.Popen(['xdg-open', output_dir])
+            elif os.name == 'mac':
+                import subprocess
+                subprocess.Popen(['open', output_dir])
+        else:
+            self.backend.append_to_console(f"Output directory does not exist: {output_dir}")
+            print(f"Output directory does not exist: {output_dir}")
