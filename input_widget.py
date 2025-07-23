@@ -96,8 +96,12 @@ class InputWidget(QWidget):
         self.calculate_and_save_button = QPushButton("Calculate and Save Job")
         self.calculate_and_save_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.calculate_and_save_button.clicked.connect(self.calculate_and_save_job)
+        self.open_output_dir_button = QPushButton("Open Output Directory")
+        self.open_output_dir_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.open_output_dir_button.clicked.connect(self.open_output_directory)
         button_layout.addWidget(self.load_button)
         button_layout.addWidget(self.calculate_and_save_button)
+        button_layout.addWidget(self.open_output_dir_button)
         layout.addLayout(button_layout)
 
         # Add a label and a combo box for selecting the job class
@@ -225,3 +229,8 @@ class InputWidget(QWidget):
         self.build_job_params_from_form()
         self.backend.calculate_and_save_job(self.job_params)
 
+
+    def open_output_directory(self):
+        output_dir = os.path.join(os.getcwd(), 'output', self.job_params.job_name)
+        if os.path.exists(output_dir):
+            os.startfile(output_dir)

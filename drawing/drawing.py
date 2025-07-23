@@ -2,6 +2,8 @@
 import pathlib
 from drawing.dimensioned_dxf_exporter import DimensionedDXFExporter
 
+from PIL import Image
+import io
 
 
 import svgwrite
@@ -106,7 +108,19 @@ class Drawing:
         img_rect = fitz.Rect(x0, y0, x1, y1)
 
         # Insert image
-        page.insert_image(img_rect, filename=self.dimensioned_png_file_path)
+        # page.insert_image(img_rect, filename=self.dimensioned_png_file_path) # this insert high size raw image
+        
+        # Convert PNG to JPEG in memory
+        png = Image.open(self.dimensioned_png_file_path).convert("RGB")
+        jpeg_io = io.BytesIO()
+        png.save(jpeg_io, format="JPEG", quality=70)
+        jpeg_bytes = jpeg_io.getvalue()
+
+        # Use in PyMuPDF
+        page.insert_image(img_rect, stream=jpeg_bytes)
+
+                
+        
         # Insert text annotation at the center of the image
         text = f"{self.part_name} - {self.job_name}"
         text_x = x0 + (new_width / 2)
