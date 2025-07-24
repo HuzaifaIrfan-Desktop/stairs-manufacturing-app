@@ -73,13 +73,6 @@ class InputWidget(QWidget):
 
         layout = QVBoxLayout(self)
 
-        # App Title
-
-        title_label = QLabel("Stairs App")
-        title_label.setAlignment(Qt.AlignCenter)
-        title_label.setStyleSheet("font: bold 24pt;")
-
-        layout.addWidget(title_label)
 
         input_title_label = QLabel("Job Input")
         input_title_label.setAlignment(Qt.AlignCenter)
