@@ -41,4 +41,5 @@ class StraightClosedRisersSawtoothStringerFlushStairsJob(Job):
         # Export the job parameters to a file
         file_path = self.export_job_params()
         self.flush_stairs_assembly.export()
+        self.flush_stairs_assembly.export_cam()
         return file_path

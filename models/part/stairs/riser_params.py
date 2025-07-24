@@ -11,11 +11,11 @@ class RiserParams(PartParams):
     riser_thickness: float = Field(init=False, default=None, validate_default=False, gt=0, description="Thickness of the riser, must be positive and non-zero")
     riser_length: float = Field(..., gt=0, description="Length of the riser, must be positive and non-zero")
 
-    material: union[Lumber, Plywood] = Field(default=plywood_3_8, description="Material of the tread, e.g., Lumber, Plywood, etc.")
+    riser_material: union[Lumber, Plywood] = Field(default=plywood_3_8, description="Material of the riser, e.g., Lumber, Plywood, etc.")
 
 
     @model_validator(mode='after')
-    def compute_params(self) -> 'RiserParams':
+    def compute(self) -> 'RiserParams':
         if self.riser_thickness is None:
-            self.riser_thickness = self.material.thickness
+            self.riser_thickness = self.riser_material.thickness
         return self

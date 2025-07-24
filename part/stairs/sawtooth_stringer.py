@@ -27,7 +27,7 @@ class SawtoothStringer(Part):
 
         points = []
 
-        first_x = inch_to_mm(self.part_params.bottom_stringer_depth)
+        first_x = inch_to_mm(self.part_params.bottom_stringer_placement_depth)
         first_y = 0
 
 
@@ -35,34 +35,34 @@ class SawtoothStringer(Part):
         current_y = first_y
         points.append((current_x, current_y))
 
-        if self.part_params.kicker_height > 0 and self.part_params.kicker_depth > 0:
-            current_x+= -(inch_to_mm(self.part_params.bottom_stringer_depth)-inch_to_mm(self.part_params.kicker_depth))
+        if self.part_params.stringer_kicker_height > 0 and self.part_params.stringer_kicker_depth > 0:
+            current_x+= -(inch_to_mm(self.part_params.bottom_stringer_placement_depth)-inch_to_mm(self.part_params.stringer_kicker_depth))
             points.append((current_x, current_y))
-            current_y += inch_to_mm(self.part_params.kicker_height)
+            current_y += inch_to_mm(self.part_params.stringer_kicker_height)
             points.append((current_x, current_y))
 
-            current_x += -inch_to_mm(self.part_params.kicker_depth)
+            current_x += -inch_to_mm(self.part_params.stringer_kicker_depth)
             points.append((current_x, current_y))
-            current_y += (inch_to_mm(self.part_params.first_step_rise_height)-inch_to_mm(self.part_params.kicker_height))
+            current_y += (inch_to_mm(self.part_params.first_stringer_rise_height)-inch_to_mm(self.part_params.stringer_kicker_height))
             points.append((current_x, current_y))
 
         else:
-            current_x += -inch_to_mm(self.part_params.bottom_stringer_depth)
+            current_x += -inch_to_mm(self.part_params.bottom_stringer_placement_depth)
             points.append((current_x, current_y))
-            current_y += inch_to_mm(self.part_params.first_step_rise_height)
+            current_y += inch_to_mm(self.part_params.first_stringer_rise_height)
             points.append((current_x, current_y))
         
         # one minus because the last run will be added after the loop
-        for i in range(self.part_params.number_of_stringer_run-1):
-            current_x += inch_to_mm(self.part_params.typical_step_run_depth)
+        for i in range(self.part_params.number_of_stringer_rise-1):
+            current_x += inch_to_mm(self.part_params.typical_stringer_run_depth)
             points.append((current_x, current_y))
-            current_y += inch_to_mm(self.part_params.typical_step_rise_height)
+            current_y += inch_to_mm(self.part_params.typical_stringer_rise_height)
             points.append((current_x, current_y))
 
-        current_x += inch_to_mm(self.part_params.last_step_run_depth)
+        current_x += inch_to_mm(self.part_params.last_stringer_run_depth)
         points.append((current_x, current_y))
 
-        current_y -= inch_to_mm(self.part_params.back_stringer_reverse_height)
+        current_y -= inch_to_mm(self.part_params.back_stringer_hanger_height)
         points.append((current_x, current_y))
 
         stringer_part=(
@@ -77,9 +77,9 @@ class SawtoothStringer(Part):
 
         cq_part = self.get()
         # Translate the stringer for rotation
-        cq_part = cq_part.translate((0, -inch_to_mm(self.part_params.bottom_stringer_depth), 0))
+        cq_part = cq_part.translate((0, -inch_to_mm(self.part_params.bottom_stringer_placement_depth), 0))
         cq_part = cq_part.rotate((0, 0, 0), (1, 0, 0), -math.degrees(self.part_params.angle_of_stringer_rad))
-        reverse_translate_y = inch_to_mm(self.part_params.bottom_stringer_depth * math.cos(self.part_params.angle_of_stringer_rad))
+        reverse_translate_y = inch_to_mm(self.part_params.bottom_stringer_placement_depth * math.cos(self.part_params.angle_of_stringer_rad))
         cq_part = cq_part.translate((0, reverse_translate_y, 0))
 
         step_file_path = f'{self.part_output_dir}/CAM_{self.part_params.part_name}.step'

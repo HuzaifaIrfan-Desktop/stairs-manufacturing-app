@@ -18,13 +18,6 @@ class Riser(Part):
         # to create the part, so we call super().__init__ here
         super().__init__(riser_params)
 
-
-    def calculate_area(self) -> float:
-        return self.part_params.riser_length * self.part_params.riser_height
-
-    def calculate_volume(self) -> float:
-        return self.calculate_area() * self.part_params.riser_thickness
-
     def _build(self) -> cq.Workplane:
         # Create a simple riser part
         return (

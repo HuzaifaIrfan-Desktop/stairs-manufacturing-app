@@ -50,8 +50,6 @@ class Assembly:
         self.export_dxf_top_view()
         self.export_dxf_front_view()
         self.export_dxf_right_view()
-        
-        # self.export_drawing()
 
         self.export_cut_list()
 

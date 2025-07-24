@@ -21,12 +21,6 @@ class Tread(Part):
         super().__init__(tread_params)
 
 
-    def calculate_area(self) -> float:
-        return self.part_params.tread_length * self.part_params.tread_depth
-
-    def calculate_volume(self) -> float:
-        return self.calculate_area() * self.part_params.tread_thickness
-
     def _build(self) -> cq.Workplane:
         # Create a simple tread part
         return (

@@ -35,7 +35,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputPara
 
 
     stringer_material_name: str = Field(
-        default='2x12 Lumber',
+        default='2x12 LSL',
         description="Stringer material",
         json_schema_extra={"enum": list(available_lumbers.keys())}
     )

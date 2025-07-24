@@ -12,11 +12,11 @@ class TreadParams(PartParams):
     tread_thickness: float = Field(default=None, gt=0, description="Thickness of the tread, must be positive and non-zero")
     tread_length: float = Field(..., gt=0, description="Length of the tread, must be positive and non-zero")
 
-    material: union[Lumber, Plywood] = Field(default=plywood_1, description="Material of the tread, e.g., Lumber, Plywood, etc.")
+    tread_material: union[Lumber, Plywood] = Field(default=plywood_1, description="Material of the tread, e.g., Lumber, Plywood, etc.")
 
 
     @model_validator(mode='after')
-    def compute_params(self) -> 'TreadParams':
+    def compute(self) -> 'TreadParams':
         if self.tread_thickness is None:
-            self.tread_thickness = self.material.thickness
+            self.tread_thickness = self.tread_material.thickness
         return self

@@ -17,13 +17,6 @@ class Kicker(Part):
         # to create the part, so we call super().__init__ here
         super().__init__(kicker_params)
 
-
-    def calculate_area(self) -> float:
-        return self.part_params.kicker_length * self.part_params.kicker_height
-
-    def calculate_volume(self) -> float:
-        return self.calculate_area() * self.part_params.kicker_depth
-
     def _build(self) -> cq.Workplane:
         # Create a simple kicker part
         if not self.part_params.kicker_length or not self.part_params.kicker_height or not self.part_params.kicker_depth:
