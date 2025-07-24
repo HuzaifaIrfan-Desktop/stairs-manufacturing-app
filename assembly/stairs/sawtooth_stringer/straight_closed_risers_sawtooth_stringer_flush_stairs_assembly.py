@@ -66,6 +66,8 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssembly(Assembly):
         # Placeholder for drawing export logic
         file_path = ""
 
+        file_path = self.export_dxf_right_view()
+        self.export_drawing_from_dxf(file_path, text_scale=4.0)
 
         self.kicker.export_drawing()
         self.typical_riser.export_drawing()

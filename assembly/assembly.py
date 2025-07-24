@@ -1,5 +1,6 @@
 
 import cadquery as cq
+from drawing.drawing import Drawing
 from utils.math import inch_to_mm
 
 from models.assembly.assembly_params import AssemblyParams
@@ -96,9 +97,15 @@ class Assembly:
 
     def export_dxf_right_view(self) -> str:
         file_path = f'{self.assembly_output_dir}/{self.assembly_params.assembly_name}_right.dxf'
+        
         # Get a 2D projection for DXF
-        right_view = self.cq_assembly.faces(">X").wires()
-        cq.exporters.export(right_view, file_path, 'DXF')
+        right_wires = self.cq_assembly.faces("-X").wires()
+
+        # --- Step 3: Flatten wires onto YZ plane as sketch is drawn on YZ for DXF ---
+        flattened = cq.Workplane("YZ").add(right_wires)
+
+        # --- Step 4: Export to DXF ---
+        cq.exporters.export(flattened, file_path, 'DXF')
         return file_path
 
     def export_cut_list(self) -> str:
@@ -116,6 +123,14 @@ class Assembly:
         file_path = cut_list_report.export()
 
         return file_path
+
+
+    def export_drawing_from_dxf(self, dxf_file_path: str, text_scale: float = 1.0) -> str:
+        drawing = Drawing(job_name=self.assembly_params.job_name, part_name=self.assembly_params.assembly_name, dxf_file_path=dxf_file_path, text_scale=text_scale)
+        drawing_pdf_file_path = drawing.export()
+
+        return drawing_pdf_file_path
+
 
     def export_drawing(self) -> str:
         # Placeholder for drawing export logic
