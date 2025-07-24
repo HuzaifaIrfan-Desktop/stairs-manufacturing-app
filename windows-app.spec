@@ -40,7 +40,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='Stairs-App',
+    name='stairs_app',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -51,8 +51,12 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='favicon.ico'  
+    icon='favicon.ico',
+    version='version.txt',
 )
+
+dir_name='stairs_app-v_0_1_0'
+
 coll = COLLECT(
     exe,
     a.binaries,
@@ -60,19 +64,19 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='Stairs-App',
+    name=dir_name,
 )
 
 
 src = os.path.join('assets')
-dst = os.path.join('dist','Stairs-App', 'assets')
+dst = os.path.join('dist',dir_name, 'assets')
 if os.path.exists(dst):
     shutil.rmtree(dst)
 shutil.copytree(src, dst)
 
 
 src = os.path.join('drawing_templates')
-dst = os.path.join('dist','Stairs-App', 'drawing_templates')
+dst = os.path.join('dist',dir_name, 'drawing_templates')
 if os.path.exists(dst):
     shutil.rmtree(dst)
 shutil.copytree(src, dst)
