@@ -17,6 +17,7 @@ class TreadParams(PartParams):
 
     @model_validator(mode='after')
     def compute(self) -> 'TreadParams':
-        if self.tread_thickness is None:
-            self.tread_thickness = self.tread_material.thickness
+
+        self.tread_thickness = self.tread_material.thickness
+        
         return self

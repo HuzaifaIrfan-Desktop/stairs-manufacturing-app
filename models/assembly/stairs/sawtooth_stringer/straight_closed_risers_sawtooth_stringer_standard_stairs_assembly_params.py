@@ -57,84 +57,82 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
     def compute_params(self) -> 'StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams':
 
 
-
-        if self.kicker_params is None:
-            self.kicker_params = KickerParams(
-                job_name=self.job_name,
-                part_name="kicker",
-                kicker_height=0,
-                kicker_depth=0,
-                kicker_length=self.stairway_width
-            )
-
-        if self.typical_riser_params is None:
-            self.typical_riser_params = RiserParams(
-                job_name=self.job_name,
-                part_name="riser",
-                riser_height=self.typical_step_riser_height,
-                riser_length=self.stairway_width,
-                riser_material=self.typical_riser_material
-            )
-
-        if self.typical_tread_params is None:
-            self.typical_tread_params = TreadParams(
-                job_name=self.job_name,
-                part_name="tread",
-                tread_depth=self.typical_tread_depth,
-                tread_length=self.stairway_width,
-                tread_material=self.typical_tread_material
-            )
-
-        if self.first_riser_params is None:
-            self.first_riser_params = RiserParams(
-                job_name=self.job_name,
-                part_name="first_riser",
-                riser_height=self.first_step_riser_height,
-                riser_length=self.stairway_width,
-                riser_material=self.first_riser_material
-            )
-
-        if self.last_tread_params is None:
-            self.last_tread_params = TreadParams(
-                job_name=self.job_name,
-                part_name="last_tread",
-                tread_depth=self.last_tread_depth,
-                tread_length=self.stairway_width,
-                tread_material=self.last_tread_material
-            )
-
-        if self.last_riser_params is None:
-            self.last_riser_params = RiserParams(
-                job_name=self.job_name,
-                part_name="last_riser",
-                riser_height=self.last_step_riser_height,
-                riser_length=self.stairway_width,
-                riser_material=self.last_riser_material
-            )
+        self.kicker_params = KickerParams(
+            job_name=self.job_name,
+            part_name="kicker",
+            kicker_height=0,
+            kicker_depth=0,
+            kicker_length=self.stairway_width
+        )
 
 
-        if self.sawtooth_stringer_params is None:
-            self.sawtooth_stringer_params = SawtoothStringerParams(
-                job_name=self.job_name,
-                part_name="sawtooth_stringer",
-
-                first_stringer_rise_height=self.first_riser_params.riser_height,
-                last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth - self.typical_riser_params.riser_thickness, # + self.last_riser_params.riser_thickness
-
-                typical_stringer_rise_height=self.typical_riser_params.riser_height,
-                typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth,
+        self.typical_riser_params = RiserParams(
+            job_name=self.job_name,
+            part_name="riser",
+            riser_height=self.typical_step_riser_height,
+            riser_length=self.stairway_width,
+            riser_material=self.typical_riser_material
+        )
 
 
-                number_of_stringer_rise=self.number_of_steps_risers - 1,
+        self.typical_tread_params = TreadParams(
+            job_name=self.job_name,
+            part_name="tread",
+            tread_depth=self.typical_tread_depth,
+            tread_length=self.stairway_width,
+            tread_material=self.typical_tread_material
+        )
 
-                stringer_kicker_height=self.kicker_params.kicker_height,
-                stringer_kicker_depth=self.kicker_params.kicker_depth,
+        self.first_riser_params = RiserParams(
+            job_name=self.job_name,
+            part_name="first_riser",
+            riser_height=self.first_step_riser_height,
+            riser_length=self.stairway_width,
+            riser_material=self.first_riser_material
+        )
 
-                stringer_material=self.stringer_material
 
-            )
+        self.last_tread_params = TreadParams(
+            job_name=self.job_name,
+            part_name="last_tread",
+            tread_depth=self.last_tread_depth,
+            tread_length=self.stairway_width,
+            tread_material=self.last_tread_material
+        )
 
-        self.total_assembly_run_depth = self.sawtooth_stringer_params.total_stringer_run_depth + self.last_riser_params.riser_thickness
+
+        self.last_riser_params = RiserParams(
+            job_name=self.job_name,
+            part_name="last_riser",
+            riser_height=self.last_step_riser_height,
+            riser_length=self.stairway_width,
+            riser_material=self.last_riser_material
+        )
+
+
+        self.sawtooth_stringer_params = SawtoothStringerParams(
+            job_name=self.job_name,
+            part_name="sawtooth_stringer",
+
+            first_stringer_rise_height=self.first_riser_params.riser_height,
+            last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth - self.typical_riser_params.riser_thickness, # + self.last_riser_params.riser_thickness
+
+            typical_stringer_rise_height=self.typical_riser_params.riser_height,
+            typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth,
+
+
+            number_of_stringer_rise=self.number_of_steps_risers - 1,
+
+            stringer_kicker_height=self.kicker_params.kicker_height,
+            stringer_kicker_depth=self.kicker_params.kicker_depth,
+
+            stringer_material=self.stringer_material
+
+        )
+
+        self.total_assembly_rise_height = self.first_riser_params.riser_height + ((self.number_of_steps_risers - 2) * self.typical_riser_params.riser_height) + self.typical_riser_params.riser_height + self.typical_tread_params.tread_thickness
+
+        self.total_assembly_run_depth = self.first_riser_params.riser_thickness + self.sawtooth_stringer_params.total_stringer_run_depth + self.last_riser_params.riser_thickness
 
         self.stringer_placement_from_top = self.total_assembly_rise_height - self.sawtooth_stringer_params.total_stringer_rise_height
 

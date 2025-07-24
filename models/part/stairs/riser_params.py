@@ -16,6 +16,7 @@ class RiserParams(PartParams):
 
     @model_validator(mode='after')
     def compute(self) -> 'RiserParams':
-        if self.riser_thickness is None:
-            self.riser_thickness = self.riser_material.thickness
+
+        self.riser_thickness = self.riser_material.thickness
+        
         return self
