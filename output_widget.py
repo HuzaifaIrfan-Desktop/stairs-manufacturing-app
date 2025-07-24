@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
 )
 
 from backend import Backend
+from PySide6.QtWidgets import QMessageBox
 
 class OutputWidget(QWidget):
     def __init__(self, backend:Backend):
@@ -58,3 +59,10 @@ class OutputWidget(QWidget):
         self.console_area.verticalScrollBar().setValue(self.console_area.verticalScrollBar().maximum())
 
 
+    def show_popup(self, message: str):
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.show()
+        # msg_box.exec()

@@ -99,3 +99,5 @@ class Backend(QObject):
         self.display_3d_model(self.assembly_model_file_path)
         self.append_to_console(f"Job {self.job_input_params.job_name} Exported Successfully.\n\n")
         self.input_widget.set_result_label(f"Exported {self.job_input_params.job_name} Successfully.")
+
+        self.output_widget.show_popup(f"Exported {self.job_input_params.job_name} Successfully.")
