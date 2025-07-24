@@ -10,14 +10,17 @@ from models.part.stairs.riser_params import RiserParams
 from models.part.stairs.tread_params import TreadParams
 
 from models.material.material import Material
-from models.material.lumber import Lumber, lumber_2x12
+from models.material.lumber import Lumber, lumber_2x12, lsl_2x12
 from models.material.plywood import Plywood, plywood_3_8, plywood_5_8, plywood_1
 
 from typing import Union as union
 
 class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyParams):
 
-    assembly_rise_height: float = Field(description="Total rise height")
+
+    total_assembly_rise_height: float = Field(init=False, default=None, validate_default=False, description="Total rise height")
+    total_assembly_run_depth: float = Field(init=False, default=None, validate_default=False, description="Total run depth")
+
     stairway_width: float = Field(description="Stairway width")
     number_of_steps_risers: int = Field(description="Number of steps risers")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
@@ -39,7 +42,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
     last_riser_material : Plywood = Field(default=plywood_5_8, description="Material of the last riser, e.g., Plywood, etc.")
     typical_tread_material : Plywood = Field(default=plywood_1, description="Material of the tread, e.g., Plywood, etc.")
     last_tread_material : Plywood = Field(default=plywood_1, description="Material of the last tread, e.g., Plywood, etc.")
-    stringer_material: Lumber = Field(default=lumber_2x12, description="Material of the stringer, e.g., Lumber, etc.")
+    stringer_material: Lumber = Field(default=lsl_2x12, description="Material of the stringer, e.g., Lumber, etc.")
 
 
     kicker_params: KickerParams = Field(init=False, default=None, validate_default=False, description="Parameters for the kicker")
@@ -70,7 +73,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 part_name="riser",
                 riser_height=self.typical_step_riser_height,
                 riser_length=self.stairway_width,
-                material=self.typical_riser_material
+                riser_material=self.typical_riser_material
             )
 
         if self.typical_tread_params is None:
@@ -79,7 +82,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 part_name="tread",
                 tread_depth=self.typical_tread_depth,
                 tread_length=self.stairway_width,
-                material=self.typical_tread_material
+                tread_material=self.typical_tread_material
             )
 
         if self.first_riser_params is None:
@@ -88,7 +91,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 part_name="first_riser",
                 riser_height=self.first_step_riser_height,
                 riser_length=self.stairway_width,
-                material=self.first_riser_material
+                riser_material=self.first_riser_material
             )
 
         if self.last_tread_params is None:
@@ -97,7 +100,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 part_name="last_tread",
                 tread_depth=self.last_tread_depth,
                 tread_length=self.stairway_width,
-                material=self.last_tread_material
+                tread_material=self.last_tread_material
             )
 
         if self.last_riser_params is None:
@@ -106,7 +109,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 part_name="last_riser",
                 riser_height=self.last_step_riser_height,
                 riser_length=self.stairway_width,
-                material=self.last_riser_material
+                riser_material=self.last_riser_material
             )
 
 
@@ -115,25 +118,25 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
                 job_name=self.job_name,
                 part_name="sawtooth_stringer",
 
-                first_step_rise_height=self.first_riser_params.riser_height,
-                last_step_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth + (self.last_riser_params.riser_thickness - self.typical_riser_params.riser_thickness),
+                first_stringer_rise_height=self.first_riser_params.riser_height,
+                last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth - self.typical_riser_params.riser_thickness, # + self.last_riser_params.riser_thickness
 
-                typical_step_rise_height=self.typical_riser_params.riser_height,
-                typical_step_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth,
+                typical_stringer_rise_height=self.typical_riser_params.riser_height,
+                typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth,
 
 
-                number_of_stringer_run=self.number_of_steps_risers - 1,
+                number_of_stringer_rise=self.number_of_steps_risers - 1,
 
-                kicker_height=self.kicker_params.kicker_height,
-                kicker_depth=self.kicker_params.kicker_depth,
+                stringer_kicker_height=self.kicker_params.kicker_height,
+                stringer_kicker_depth=self.kicker_params.kicker_depth,
 
-                material=self.stringer_material
+                stringer_material=self.stringer_material
 
             )
 
+        self.total_assembly_run_depth = self.sawtooth_stringer_params.total_stringer_run_depth + self.last_riser_params.riser_thickness
 
-        self.stringer_placement_from_top =self.assembly_rise_height - self.sawtooth_stringer_params.stringer_total_rise
-            
+        self.stringer_placement_from_top = self.total_assembly_rise_height - self.sawtooth_stringer_params.total_stringer_rise_height
 
         return self
 

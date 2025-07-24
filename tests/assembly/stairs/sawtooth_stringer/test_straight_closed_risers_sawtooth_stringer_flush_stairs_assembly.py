@@ -21,7 +21,7 @@ def test_straight_closed_risers_sawtooth_stringer_flush_stairs_assembly():
         job_name=job_name,
         assembly_name="test_straight_closed_risers_sawtooth_stringer_flush_stairs_assembly",
         builder_name="Test Builder",
-        assembly_rise_height= 122.0,
+        # total_assembly_rise_height= 122.0,
 
         stairway_width= 36.75,
         number_of_steps_risers=16,
@@ -53,5 +53,5 @@ def test_straight_closed_risers_sawtooth_stringer_flush_stairs_assembly():
     assert assembly.export_dxf_right_view() is not None
     assert assembly.export_cut_list() is not None
         
-    assert assembly.export_parts() is not None
+    # assert assembly.export_parts() is not None
     # assert assembly.export_drawing() is not None

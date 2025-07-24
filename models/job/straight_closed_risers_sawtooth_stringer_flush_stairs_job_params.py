@@ -14,7 +14,7 @@ from models.material import available_materials
 class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputParams):
     job_name: str = "Default Flush Stairs Job"
 
-    # total_rise_height: float = Field(default=122.0,description="Total rise height")
+    total_rise_height: float = Field(default=122.0,description="Total rise height")
     stairway_width: float = Field(default=36.75,description="Stairway width")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
 
@@ -72,7 +72,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams(StraightClo
         self.flush_stairs_assembly_params = StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(
             **self.model_dump(),
             assembly_name="FlushStairsAssembly",
-            assembly_rise_height=0,
+        total_assembly_rise_height=self.total_rise_height,
 
             typical_tread_material=typical_tread_material,
             last_tread_material=last_tread_material,

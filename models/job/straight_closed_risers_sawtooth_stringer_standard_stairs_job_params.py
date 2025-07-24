@@ -12,7 +12,7 @@ from models.material import available_materials
 class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputParams):
     job_name: str = "Default Standard Stairs Job"
 
-    # total_rise_height: float = Field(default=122.0, description="Total rise height")
+    total_rise_height: float = Field(default=122.0, description="Total rise height")
     stairway_width: float = Field(default=36.75, description="Stairway width")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
 
@@ -23,7 +23,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputP
 
     number_of_steps_risers: int = Field(default=16, description="Number of steps risers")
     first_step_riser_height: float = Field(default=6.63, description="First step riser height")
-    last_step_riser_height: float = Field(default=7.63, description="Last step riser height")
+    last_step_riser_height: float = Field(default=13.25, description="Last step riser height")
     last_tread_depth: float = Field(default=11.5, description="Last tread depth")
 
     typical_step_riser_height: float = Field(default=7.63, description="step riser height")
@@ -74,7 +74,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobOutputParams(Straight
         self.standard_stairs_assembly_params = StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(
             **self.model_dump(),
             assembly_name="StandardStairsAssembly",
-            assembly_rise_height=0,
+            total_assembly_rise_height=self.total_rise_height,
 
             typical_tread_material=typical_tread_material,
             last_tread_material=last_tread_material,
