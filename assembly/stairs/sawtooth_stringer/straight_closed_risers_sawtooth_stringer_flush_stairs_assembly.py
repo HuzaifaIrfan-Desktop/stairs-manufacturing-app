@@ -69,6 +69,14 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssembly(Assembly):
         file_path = self.export_dxf_right_view()
         self.export_drawing_from_dxf(file_path, text_scale=4.0)
 
+        four_steps_assembly_params=self.assembly_params.model_copy()
+        four_steps_assembly_params.assembly_name = f"Four Steps {self.assembly_params.assembly_name}"
+        four_steps_assembly_params.number_of_steps_risers=4
+        four_steps_assembly_params.sawtooth_stringer_params.number_of_stringer_run=4
+        four_steps_assembly = StraightClosedRisersSawtoothStringerFlushStairsAssembly(four_steps_assembly_params)
+        four_steps_assembly_dxf_file_path=four_steps_assembly.export_dxf_right_view()
+        self.export_drawing_from_dxf(four_steps_assembly_dxf_file_path, text_scale=4.0)
+
         self.kicker.export_drawing()
         self.typical_riser.export_drawing()
         self.typical_tread.export_drawing()
