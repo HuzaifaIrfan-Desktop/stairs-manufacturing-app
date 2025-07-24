@@ -9,6 +9,7 @@ import os
 
 
 from models.report.cut_list_params import CutListParams
+from datetime import datetime
 
 
 class CutListReport:
@@ -51,7 +52,7 @@ class CutListReport:
         elements.append(Paragraph(f"<b>Cut List - {self.cut_list_params.job_name} Job</b>", styles['Title']))
         elements.append(Paragraph(f"Assembly: {self.cut_list_params.assembly_name}", styles['Heading2']))
         elements.append(Paragraph(f"Builder: {self.cut_list_params.builder_name}", styles['Heading3']))
-        # elements.append(Paragraph(f'Total Rise: {total_rise}", Width: {width}"', styles['Normal']))
+        elements.append(Paragraph(f'Date: {datetime.now().strftime("%Y-%m-%d %H:%M")}', styles['Normal']))    
         elements.append(Spacer(1, 12))
 
         # Stair Summary
