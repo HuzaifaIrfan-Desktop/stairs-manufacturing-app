@@ -126,15 +126,15 @@ class Drawing:
                 
         
         # Insert text annotation at the center of the image
-        text = f"{self.part_name} - {self.job_name}"
-        text_x = x0 + (new_width / 2)
-        text_y = y0 + (new_height / 2) -100
-        page.insert_text(
-            fitz.Point(text_x, text_y),
-            text,
-            fontsize=24,
-            color=(0, 0, 0),
-        )
+        # text = f"{self.part_name} - {self.job_name}"
+        # text_x = x0 + (new_width / 2)
+        # text_y = y0 + (new_height / 2) -100
+        # page.insert_text(
+        #     fitz.Point(text_x, text_y),
+        #     text,
+        #     fontsize=24,
+        #     color=(0, 0, 0),
+        # )
 
         # Save to output PDF
         template_pdf.save(self.drawing_pdf_file_path)
