@@ -75,13 +75,15 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
         four_steps_assembly_params=self.assembly_params.model_copy()
         four_steps_assembly_params.assembly_name = f"four_steps_{self.assembly_params.assembly_name}"
         four_steps_assembly_params.number_of_steps=4
+        four_steps_assembly_params.compute()
         four_steps_assembly_params.sawtooth_stringer_params.part_name = f"four_steps_{self.sawtooth_stringer_params.part_name}"
-        four_steps_assembly_params.sawtooth_stringer_params.number_of_stringer_rise=3
+
+        # four_steps_assembly_params.sawtooth_stringer_params.number_of_stringer_rise=3
         four_steps_assembly = StraightClosedRisersSawtoothStringerStandardStairsAssembly(four_steps_assembly_params)
         four_steps_assembly_dxf_file_path=four_steps_assembly.export_dxf_right_view()
         four_steps_assembly.export_drawing_from_dxf(four_steps_assembly_dxf_file_path, text_scale=4.0)
-        # four_steps_assembly_stringer_dxf_file_path=four_steps_assembly.sawtooth_stringer.export_dxf_right_view()
-        # four_steps_assembly.sawtooth_stringer.export_drawing_from_dxf(four_steps_assembly_stringer_dxf_file_path, text_scale=4.0)
+        four_steps_assembly_stringer_dxf_file_path=four_steps_assembly.sawtooth_stringer.export_dxf_right_view()
+        four_steps_assembly.sawtooth_stringer.export_drawing_from_dxf(four_steps_assembly_stringer_dxf_file_path, text_scale=4.0)
 
         self.kicker.export_drawing()
         self.typical_riser.export_drawing()

@@ -59,8 +59,21 @@ class OutputWidget(QWidget):
         self.console_area.verticalScrollBar().setValue(self.console_area.verticalScrollBar().maximum())
 
 
-    def show_popup(self, message: str):
+    def show_error_popup(self, title: str, message: str):
         msg_box = QMessageBox(self)
+        msg_box.setWindowTitle(title)
+        msg_box.setWindowFlags(msg_box.windowFlags() | Qt.WindowStaysOnTopHint)
+        msg_box.setWindowModality(Qt.ApplicationModal)
+        msg_box.setIcon(QMessageBox.Critical)
+        msg_box.setText(message)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.show()
+
+    def show_popup(self, title: str, message: str):
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle(title)
+        msg_box.setWindowFlags(msg_box.windowFlags() | Qt.WindowStaysOnTopHint)
+        msg_box.setWindowModality(Qt.ApplicationModal)
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setText(message)
         msg_box.setStandardButtons(QMessageBox.Ok)

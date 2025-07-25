@@ -54,7 +54,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
     sawtooth_stringer_params: SawtoothStringerParams = Field(init=False, default=None, validate_default=False, description="Parameters for the sawtooth stringer")
 
     @model_validator(mode='after')
-    def compute_params(self) -> 'StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams':
+    def compute(self) -> 'StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams':
 
 
         self.kicker_params = KickerParams(

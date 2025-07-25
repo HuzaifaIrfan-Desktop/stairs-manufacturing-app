@@ -17,9 +17,10 @@ from job.job import Job
 import threading
 
 class Backend(QObject):
-    # Example signal
-    dataChanged = Signal(str)
-    job_completed = Signal()
+
+
+    job_completed = Signal(str)
+    job_error = Signal(str)
 
 
 
@@ -29,13 +30,12 @@ class Backend(QObject):
         self.input_widget: InputWidget = None
         self.output_widget: OutputWidget = None
         self.job_completed.connect(self.on_job_completed)
+        self.job_error.connect(self.on_job_error)
 
         self.job:Job = None
         self.job_input_params: JobInputParams = None
 
-    def update_data(self, new_data):
-        # Update internal state and emit signal
-        self.dataChanged.emit(new_data)
+
 
     def set_input_widget(self, input_widget):
         from input_widget import InputWidget
@@ -73,8 +73,8 @@ class Backend(QObject):
         self.job_class = available_job_classes[self.job_class_name]['job_class']
         self.job_input_params_class = available_job_classes[self.job_class_name]['input_params_class']
 
-        self.append_to_console(f"Starting Job Export {self.job_input_params.job_name}.")
-        self.input_widget.set_result_label(f"Exporting {self.job_input_params.job_name}...")
+        self.append_to_console(f"\nStarting Job Export {self.job_input_params.job_name}.\n")
+        self.input_widget.set_info_label(f"Exporting {self.job_input_params.job_name}...")
 
         thread = threading.Thread(target=self.run_job)
         thread.start()
@@ -87,18 +87,31 @@ class Backend(QObject):
             self.assembly_model_file_path = self.job.export_assembly()
         except Exception as e:
             print(f"Error during job execution: {str(e)}")
-            self.append_to_console(f"Error during job execution: {str(e)} \n\n")
+            self.job_error.emit(str(e))
+            
             return
             
         # print("Job completed signal emit.")
-        self.job_completed.emit()
+        self.job_completed.emit(f"{self.job_input_params.job_name} Job Export successfully.")
 
-    def on_job_completed(self):
+    def on_job_error(self, error_message: str):
+        # Handle job error
+        # print("Job error signal received.")
+
+        self.append_to_console(error_message)
+        self.append_to_console(f"\nJob {self.job_input_params.job_name} Export Failed.\n\n")
+        
+        self.output_widget.show_error_popup("Job Export Failed", f"Error during job execution: {error_message}")
+        self.input_widget.set_info_label("Job Export Failed")
+
+    def on_job_completed(self, success_message: str):
         # Handle job completion
         # print("Job completed signal received.")
         # self.clear_console()
-        self.display_3d_model(self.assembly_model_file_path)
-        self.append_to_console(f"Job {self.job_input_params.job_name} Exported Successfully.\n\n")
-        self.input_widget.set_result_label(f"Exported {self.job_input_params.job_name} Successfully.")
+        
+        self.append_to_console(f"{success_message}.\n\n")
 
-        self.output_widget.show_popup(f"Exported {self.job_input_params.job_name} Successfully.")
+        self.output_widget.show_popup("Job Export Successful", success_message)
+        self.input_widget.set_info_label("Job Export Successful")
+
+        self.display_3d_model(self.assembly_model_file_path)

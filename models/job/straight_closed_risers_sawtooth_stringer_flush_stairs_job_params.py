@@ -12,42 +12,42 @@ from models.material.plywood import available_plywoods
 from models.material import available_materials
 
 class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputParams):
-    job_name: str = Field(default="Default Flush Stairs Job", description="Job name")
+    job_name: str = Field(default="Default Flush Stairs Job", description="Job Name")
 
-    stairway_width: float = Field(default=36.75,description="Stairway width")
-    number_of_stringers: int = Field(default=2, description="Number of stringers")
+    stairway_width: float = Field(default=36.75,description="Stairway Width (in)")
+    number_of_stringers: int = Field(default=2, description="Number of Stringers")
 
-    tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread overhang nosing depth")
-    tread_overhang_side_depth: float = Field(default=0.0, description="Tread overhang side depth")
+    tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread Overhang Nosing Depth (in)")
+    tread_overhang_side_depth: float = Field(default=0.0, description="Tread Overhang Side Depth (in)")
 
 
 
-    number_of_steps: int = Field(default=16,description="Number of steps")
+    number_of_steps: int = Field(default=16,description="Number of Steps")
 
-    first_riser_height: float = Field(default=6.63, description="First riser height")
-    last_tread_depth: float = Field(default=10.78, description="Last tread depth")
+    first_riser_height: float = Field(default=6.63, description="First Riser Height (in)")
+    last_tread_depth: float = Field(default=10.78, description="Last Tread Depth (in)")
 
-    typical_riser_height: float = Field(default=7.63, description="Riser height")
-    typical_tread_depth: float = Field(default=10.78,description="Tread depth")
+    typical_riser_height: float = Field(default=7.63, description="Riser Height (in)")
+    typical_tread_depth: float = Field(default=10.78,description="Tread Depth (in)")
 
 
 
 
     stringer_material_name: str = Field(
         default='2x12 LSL',
-        description="Stringer material",
+        description="Stringer Material",
         json_schema_extra={"enum": list(available_lumbers.keys())}
     )
 
     riser_material_name: str = Field(
         default='3/8" Plywood',
-        description="Riser material",
+        description="Riser Material",
         json_schema_extra={"enum": list(available_plywoods.keys())}
     )
 
     tread_material_name: str = Field(
         default='1" Plywood',
-        description="Tread material",
+        description="Tread Material",
         json_schema_extra={"enum": list(available_materials.keys())}
     )
 

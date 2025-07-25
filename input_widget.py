@@ -132,9 +132,9 @@ class InputWidget(QWidget):
         # self.submit_btn.clicked.connect(self.on_submit)
         # layout.addWidget(self.submit_btn)
 
-        self.result_label = QLabel("Result:")
-        self.result_label.setStyleSheet("font: bold 12pt;")
-        layout.addWidget(self.result_label)
+        self.info_label = QLabel("Info:")
+        self.info_label.setStyleSheet("font: bold 12pt;")
+        layout.addWidget(self.info_label)
 
         self.on_job_class_changed(self.job_class_selector.currentText())
 
@@ -181,8 +181,9 @@ class InputWidget(QWidget):
             widget_label=QLabel(name)
 
             if field.description:
-                # widget_label.setToolTip(field.description)
                 widget.setToolTip(field.description)
+                widget_label.setText(field.description)
+                widget_label.setToolTip(name)
 
             self.inputs[name] = widget
             self.form_layout.addRow(widget_label, widget) 
@@ -217,10 +218,10 @@ class InputWidget(QWidget):
                 data[name] = widget.currentText()
         try:
             self.job_params = self.input_params_class(**data)
-            self.result_label.setText(f"Valid: {self.job_params}")
+            self.info_label.setText(f"Valid: {self.job_params}")
             self.backend.append_to_console(f"Valid job params: {self.job_params}")
         except Exception as e:
-            # self.result_label.setText(f"Error: {e}")
+            # self.info_label.setText(f"Error: {e}")
             self.backend.append_to_console(f"Error building job params: {e}")
 
     def load_job(self):
@@ -238,7 +239,7 @@ class InputWidget(QWidget):
                 label=available_job_classes[job_class_name]['label']
                 self.job_class_selector.setCurrentText(label)
                 self.job_params = self.input_params_class(**data)
-                # self.result_label.setText(f"Loaded: {self.job_params}") 
+                # self.info_label.setText(f"Loaded: {self.job_params}") 
                 print(f"Loaded job params: {self.job_params}")
                 self.backend.append_to_console(f"Loaded job params: {self.job_params}")
         
@@ -248,8 +249,8 @@ class InputWidget(QWidget):
             loaded_3d_model_path = os.path.join(os.getcwd(), 'output', self.job_params.job_name , f"{self.job_params.job_name}.stl")
             self.backend.display_3d_model(loaded_3d_model_path)
 
-    def set_result_label(self, text):
-        self.result_label.setText(text)
+    def set_info_label(self, text):
+        self.info_label.setText(text)
 
     def calculate_and_save_job(self):
         self.build_job_params_from_form()

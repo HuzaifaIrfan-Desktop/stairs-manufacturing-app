@@ -55,7 +55,8 @@ exe = EXE(
     version='version.txt',
 )
 
-dir_name='stairs_app-v_0_1_0'
+
+dir_name='stairs_app-v_0_1_1'
 
 coll = COLLECT(
     exe,
