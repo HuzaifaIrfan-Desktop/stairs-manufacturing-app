@@ -14,24 +14,17 @@ from models.material import available_materials
 class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputParams):
     job_name: str = Field(default="Default Flush Stairs Job", description="Job Name")
 
+    total_rise_height: float = Field(default=122.0, description="Total Rise Height (in)")
+    number_of_steps: int = Field(default=16,description="Number of Steps")
+
+
+    tread_depth: float = Field(default=10.78, description="Tread Depth (in)")
+
     stairway_width: float = Field(default=36.75,description="Stairway Width (in)")
     number_of_stringers: int = Field(default=2, description="Number of Stringers")
 
     tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread Overhang Nosing Depth (in)")
     tread_overhang_side_depth: float = Field(default=0.0, description="Tread Overhang Side Depth (in)")
-
-
-
-    number_of_steps: int = Field(default=16,description="Number of Steps")
-
-    first_riser_height: float = Field(default=6.63, description="First Riser Height (in)")
-    last_tread_depth: float = Field(default=10.78, description="Last Tread Depth (in)")
-
-    typical_riser_height: float = Field(default=7.63, description="Riser Height (in)")
-    typical_tread_depth: float = Field(default=10.78,description="Tread Depth (in)")
-
-
-
 
     stringer_material_name: str = Field(
         default='2x12 LSL',
@@ -58,7 +51,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams(StraightClo
 
 
     @model_validator(mode='after')
-    def compute_params(self) -> 'StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams':
+    def compute(self) -> 'StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams':
 
         typical_tread_material= available_materials[self.tread_material_name].model_dump()
         last_tread_material= available_materials[self.tread_material_name].model_dump()
@@ -66,11 +59,58 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams(StraightClo
         typical_riser_material = available_materials[self.riser_material_name].model_dump()
         stringer_material = available_materials[self.stringer_material_name].model_dump()
 
+        last_tread_depth: float = self.tread_depth
+        typical_tread_depth: float = self.tread_depth
 
+        # Calculate riser heights from total rise and number of steps
+        def calculate_flush_stair_riser_heights(
+            total_rise: float,
+            num_steps: int,
+            tread_thickness: float
+        ) -> dict:
+            """
+            Calculate first and typical riser heights for flush-mounted stairs.
+
+            Args:
+                total_rise: Total vertical height between floors (inches)
+                num_steps: Total number of risers/steps
+                tread_thickness: Thickness of each tread (inches)
+
+            Returns:
+                Dictionary with first_riser_height and typical_riser_height
+            """
+
+            typical_riser_height = total_rise / num_steps
+            first_riser_height = typical_riser_height - tread_thickness
+
+            return {
+                "typical_riser_height": round(typical_riser_height, 2),
+                "first_riser_height": round(first_riser_height, 2)
+            }
+        
+        risers_heights_calculations = calculate_flush_stair_riser_heights(
+            total_rise=self.total_rise_height,
+            num_steps=self.number_of_steps,
+            tread_thickness= available_materials[self.tread_material_name].thickness
+        )
+
+        typical_riser_height: float = risers_heights_calculations["typical_riser_height"]
+        first_riser_height: float = risers_heights_calculations["first_riser_height"]
+
+
+        if typical_riser_height >= 7.875:
+            raise ValueError("Maximum allowed riser height is 7.875 inches. Please adjust the number of steps.")
+
+        
 
         self.flush_stairs_assembly_params = StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(
             **self.model_dump(),
             assembly_name="FlushStairsAssembly",
+
+            last_tread_depth=last_tread_depth,
+            typical_tread_depth=typical_tread_depth,
+            first_riser_height=first_riser_height,
+            typical_riser_height=typical_riser_height,
 
             typical_tread_material=typical_tread_material,
             last_tread_material=last_tread_material,
