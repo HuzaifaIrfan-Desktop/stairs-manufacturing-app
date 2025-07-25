@@ -83,6 +83,12 @@ class Backend(QObject):
 
         try:
             self.job = self.job_class(self.job_input_params)
+            
+
+            output_params_model_dump=self.job.get_job_output_params().model_dump_json(indent=4)
+            self.append_to_console(f"{output_params_model_dump}.\n\n")
+            
+
             self.job.export()
             self.assembly_model_file_path = self.job.export_assembly()
         except Exception as e:

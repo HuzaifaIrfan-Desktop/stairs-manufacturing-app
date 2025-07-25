@@ -42,6 +42,7 @@ class Job:
     def get_job_output_params(self) -> JobInputParams:
         return self.job_output_params
 
+
     def export_job_params(self) -> str:
         # Export the job parameters to a file
         job_input_params_file_path = f'{self.output_dir}/{self.job_input_params.job_name}_params.json'
