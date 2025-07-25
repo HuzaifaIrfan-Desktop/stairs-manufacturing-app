@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field, model_validator
 
 class JobInputParams(BaseModel):
     job_class_name: str = Field(init=False, default=None, validate_default=False, description="Job class name")
-    job_name: str = "Default Job"
-    builder_name: str = "Default Builder"
+    job_name: str = Field(default="Default Standard Stairs Job", description="Job name")
+    builder_name: str = Field(default="Default Builder", description="Builder name")
 
 
     @model_validator(mode='after')

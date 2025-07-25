@@ -12,8 +12,7 @@ from models.material.plywood import available_plywoods
 from models.material import available_materials
 
 class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputParams):
-    job_name: str = "Default Flush Stairs Job"
-
+    job_name: str = Field(default="Default Flush Stairs Job", description="Job name")
 
     stairway_width: float = Field(default=36.75,description="Stairway width")
     number_of_stringers: int = Field(default=2, description="Number of stringers")

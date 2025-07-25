@@ -111,19 +111,20 @@ class InputWidget(QWidget):
 
 
         # Input Form Layout
-        self.form_layout = QFormLayout()
+        
         # Add a scroll area for the form layout
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
 
         self.form_widget = QWidget()
+
+        self.form_layout = QFormLayout()
         self.form_widget.setLayout(self.form_layout)
         self.form_layout.setSizeConstraint(QVBoxLayout.SetMinimumSize)
 
-        self.scroll_area = QScrollArea()
-        self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setWidget(self.form_widget)
-
         layout.addWidget(self.scroll_area)
-        layout.addLayout(self.form_layout)
+        # layout.addLayout(self.form_layout)
 
 
 
@@ -169,7 +170,7 @@ class InputWidget(QWidget):
             # print(f"Adding field {field.json_schema_extra}")
             if field.json_schema_extra:
                 if 'enum' in field.json_schema_extra:
-                    print(f"Adding field {name} with enum {field.json_schema_extra['enum']}")
+                    # print(f"Adding field {name} with enum {field.json_schema_extra['enum']}")
                     widget = QComboBox()
                     widget.addItems(field.json_schema_extra['enum'])
                 else:
@@ -177,8 +178,14 @@ class InputWidget(QWidget):
             else:
                 widget = widget_for_field(field.annotation)
 
+            widget_label=QLabel(name)
+
+            if field.description:
+                # widget_label.setToolTip(field.description)
+                widget.setToolTip(field.description)
+
             self.inputs[name] = widget
-            self.form_layout.addRow(QLabel(name), widget) 
+            self.form_layout.addRow(widget_label, widget) 
 
             if hasattr(self.job_params, name):
                 value = getattr(self.job_params, name)

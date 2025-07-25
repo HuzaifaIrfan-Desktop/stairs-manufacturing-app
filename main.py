@@ -24,10 +24,10 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
 
-    print("Available themes:", list_themes())
+    # print("Available themes:", list_themes())
 
     # Apply Material Design theme
-    apply_stylesheet(app, theme='light_blue_500.xml')
+    apply_stylesheet(app, theme='light_blue.xml')
 
     window = MainWindow()
     window.show()

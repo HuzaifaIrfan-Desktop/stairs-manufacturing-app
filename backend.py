@@ -5,8 +5,9 @@ try:
     from input_widget import InputWidget
     from output_widget import OutputWidget
 except ImportError as e:
-    print("Error importing widgets. Ensure they are in the same directory as backend.py.")
-    print(e)
+    # print("Error importing widgets. Ensure they are in the same directory as backend.py.")
+    # print(e)
+    pass
 
 from job import available_job_classes
 

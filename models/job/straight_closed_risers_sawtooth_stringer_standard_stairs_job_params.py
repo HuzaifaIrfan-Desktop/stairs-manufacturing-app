@@ -10,7 +10,7 @@ from models.material.plywood import available_plywoods
 from models.material import available_materials
 
 class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputParams):
-    job_name: str = "Default Standard Stairs Job"
+    job_name: str  = Field(default="Default Standard Stairs Job", description="Job name")
 
     stairway_width: float = Field(default=36.75, description="Stairway width")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
@@ -45,7 +45,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputP
 
     last_riser_hanger_material_name: str = Field(
         default='5/8" Plywood',
-        description="Riser material",
+        description="Riser Hanger material",
         json_schema_extra={"enum": list(available_plywoods.keys())}
     )
 

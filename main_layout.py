@@ -33,17 +33,19 @@ class MainLayout(QVBoxLayout):
         company_name_label.setStyleSheet("font: bold 24pt;")
         self.head_layout.addWidget(company_name_label)
 
-        app_title_label = QLabel("Stairs App")
+        app_title_label = QLabel(f"Stairs App v{settings.__version__}")
         app_title_label.setAlignment(Qt.AlignCenter)
         app_title_label.setStyleSheet("font: bold 24pt;")
         self.head_layout.addWidget(app_title_label)
 
-        app_version_label = QLabel(f"v{settings.__version__}")
-        app_version_label.setAlignment(Qt.AlignCenter)
-        app_version_label.setStyleSheet("font: bold 12pt;")
-        self.head_layout.addWidget(app_version_label)
-
-
+        developer_label = QLabel(f"Developed By: {settings.developer_name}")
+        developer_label.setAlignment(Qt.AlignCenter)
+        developer_label.setText(f'<a href="{settings.developer_url}">Developed By: {settings.developer_name}</a>')
+        developer_label.setTextFormat(Qt.RichText)
+        developer_label.setTextInteractionFlags(Qt.TextBrowserInteraction)
+        developer_label.setOpenExternalLinks(True)
+        developer_label.setStyleSheet("font: bold 12pt;")
+        self.head_layout.addWidget(developer_label)
 
         self.central_layout = QHBoxLayout()
         self.addLayout(self.central_layout)
