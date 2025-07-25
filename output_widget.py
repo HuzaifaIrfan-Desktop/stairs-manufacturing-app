@@ -41,7 +41,7 @@ class OutputWidget(QWidget):
 
         self.setLayout(layout)
 
-        self.display_3d_model("output/test.stl")  # Load a default model
+        # self.display_3d_model("output/test.stl")  # Load a default model
         
     def display_3d_model(self, file_path: str):
 

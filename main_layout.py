@@ -7,7 +7,10 @@ from input_widget import InputWidget
 
 from PySide6.QtCore import Qt
 
+from settings import settings
 from backend import Backend
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QLabel
 
 class MainLayout(QVBoxLayout):
     def __init__(self):
@@ -19,15 +22,26 @@ class MainLayout(QVBoxLayout):
         self.head_layout = QHBoxLayout()
         self.addLayout(self.head_layout)
 
-        title_label = QLabel("Stairs App")
-        title_label.setAlignment(Qt.AlignCenter)
-        title_label.setStyleSheet("font: bold 24pt;")
-        self.head_layout.addWidget(title_label)
+        logo_label = QLabel()
+        pixmap = QPixmap("assets/logo.jpg")
+        logo_label.setPixmap(pixmap.scaled(256, 256, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        logo_label.setAlignment(Qt.AlignCenter)
+        self.head_layout.addWidget(logo_label)
 
-        version_label = QLabel("v0.1.0")
-        version_label.setAlignment(Qt.AlignCenter)
-        version_label.setStyleSheet("font: bold 12pt;")
-        self.head_layout.addWidget(version_label)
+        company_name_label = QLabel(f"{settings.company_name}")
+        company_name_label.setAlignment(Qt.AlignCenter)
+        company_name_label.setStyleSheet("font: bold 24pt;")
+        self.head_layout.addWidget(company_name_label)
+
+        app_title_label = QLabel("Stairs App")
+        app_title_label.setAlignment(Qt.AlignCenter)
+        app_title_label.setStyleSheet("font: bold 24pt;")
+        self.head_layout.addWidget(app_title_label)
+
+        app_version_label = QLabel(f"v{settings.__version__}")
+        app_version_label.setAlignment(Qt.AlignCenter)
+        app_version_label.setStyleSheet("font: bold 12pt;")
+        self.head_layout.addWidget(app_version_label)
 
 
 
@@ -35,11 +49,17 @@ class MainLayout(QVBoxLayout):
         self.addLayout(self.central_layout)
 
         # self.central_layout.addLayout(self.input_layout)
+
+        
+        self.output_widget = OutputWidget(self.backend)
+        self.backend.set_output_widget(self.output_widget)
+
         self.input_widget = InputWidget(self.backend)
+        self.backend.set_input_widget(self.input_widget)
+        
         self.central_layout.addWidget(self.input_widget)
 
-        self.output_widget = OutputWidget(self.backend)
         self.central_layout.addWidget(self.output_widget)
 
-        self.backend.set_input_widget(self.input_widget)
-        self.backend.set_output_widget(self.output_widget)
+
+

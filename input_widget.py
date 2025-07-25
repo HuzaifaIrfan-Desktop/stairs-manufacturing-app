@@ -148,6 +148,10 @@ class InputWidget(QWidget):
         self.build_form_from_job_params()
 
         # self.job = self.job_class(self.job_params)
+        
+        if self.job_params.job_name:
+            loaded_3d_model_path = os.path.join(os.getcwd(), 'output', self.job_params.job_name , f"{self.job_params.job_name}.stl")
+            self.backend.display_3d_model(loaded_3d_model_path)
 
     def build_form_from_job_params(self):
           # Clear existing rows

@@ -11,6 +11,8 @@ import os
 from models.report.cut_list_params import CutListParams
 from datetime import datetime
 
+from settings import settings
+
 
 class CutListReport:
     def __init__(self, cut_list_params: CutListParams):
@@ -37,7 +39,7 @@ class CutListReport:
         elements = []
 
         # Header with Logo
-        logo_path = "assets/TBD1_logo.jpg"
+        logo_path = "assets/logo.jpg"
         if os.path.exists(logo_path):
             # , width=1.5*inch, height=0.75*inch
             logo = Image(logo_path)
@@ -45,7 +47,7 @@ class CutListReport:
             elements.append(logo)
         else:
             # No Logo
-            elements.append(Paragraph("<b>Treads by Design</b>", styles['Normal']))
+            elements.append(Paragraph(f"<b>{settings.company_name}</b>", styles['Normal']))
 
         # Title and Job Info
         elements.append(Spacer(1, 12))
