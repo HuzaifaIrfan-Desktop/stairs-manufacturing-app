@@ -23,13 +23,13 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputPara
 
 
 
-    number_of_steps_risers: int = Field(default=16,description="Number of steps risers")
+    number_of_steps: int = Field(default=16,description="Number of steps")
 
-    first_step_riser_height: float = Field(default=6.63, description="First step riser height")
+    first_riser_height: float = Field(default=6.63, description="First riser height")
     last_tread_depth: float = Field(default=10.78, description="Last tread depth")
 
-    typical_step_riser_height: float = Field(default=7.63, description="step riser height")
-    typical_tread_depth: float = Field(default=10.78,description="tread depth")
+    typical_riser_height: float = Field(default=7.63, description="Riser height")
+    typical_tread_depth: float = Field(default=10.78,description="Tread depth")
 
 
 
@@ -40,13 +40,13 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputPara
         json_schema_extra={"enum": list(available_lumbers.keys())}
     )
 
-    typical_riser_material_name: str = Field(
+    riser_material_name: str = Field(
         default='3/8" Plywood',
         description="Riser material",
         json_schema_extra={"enum": list(available_plywoods.keys())}
     )
 
-    typical_tread_material_name: str = Field(
+    tread_material_name: str = Field(
         default='1" Plywood',
         description="Tread material",
         json_schema_extra={"enum": list(available_materials.keys())}
@@ -61,10 +61,10 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams(StraightClo
     @model_validator(mode='after')
     def compute_params(self) -> 'StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams':
 
-        typical_tread_material= available_materials[self.typical_tread_material_name].model_dump()
-        last_tread_material= available_materials[self.typical_tread_material_name].model_dump()
-        first_riser_material= available_materials[self.typical_riser_material_name].model_dump()
-        typical_riser_material = available_materials[self.typical_riser_material_name].model_dump()
+        typical_tread_material= available_materials[self.tread_material_name].model_dump()
+        last_tread_material= available_materials[self.tread_material_name].model_dump()
+        first_riser_material= available_materials[self.riser_material_name].model_dump()
+        typical_riser_material = available_materials[self.riser_material_name].model_dump()
         stringer_material = available_materials[self.stringer_material_name].model_dump()
 
 

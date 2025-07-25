@@ -22,15 +22,15 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
     total_assembly_run_depth: float = Field(init=False, default=None, validate_default=False, description="Total run depth")
 
     stairway_width: float = Field(description="Stairway width")
-    number_of_steps_risers: int = Field(description="Number of steps risers")
+    number_of_steps: int = Field(description="Number of steps")
     number_of_stringers: int = Field(default=2, description="Number of stringers")
     stringer_placement_from_top: float = Field(init=False, default=None, validate_default=False, description="Stringer placement from top")
 
-    first_step_riser_height: float = Field( description="First step riser height")
+    first_riser_height: float = Field( description="First riser height")
     last_tread_depth: float = Field( description="Last tread depth")
 
-    typical_step_riser_height: float = Field( description="step riser height")
-    typical_tread_depth: float = Field(description="tread depth")
+    typical_riser_height: float = Field( description="Typical riser height")
+    typical_tread_depth: float = Field(description="Typical tread depth")
 
     tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread overhang nosing depth")
     tread_overhang_side_depth: float = Field(default=0.0, description="Tread overhang side depth")
@@ -38,7 +38,6 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
 
     first_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the first riser, e.g., Plywood, etc.")
     typical_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the riser, e.g., Plywood, etc.")
-    last_riser_material : Plywood = Field(default=plywood_5_8, description="Material of the last riser, e.g., Plywood, etc.")
     typical_tread_material : Plywood = Field(default=plywood_1, description="Material of the tread, e.g., Plywood, etc.")
     last_tread_material : Plywood = Field(default=plywood_1, description="Material of the last tread, e.g., Plywood, etc.")
     stringer_material: Lumber = Field(default=lsl_2x12, description="Material of the stringer, e.g., Lumber, etc.")
@@ -68,7 +67,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
         self.typical_riser_params = RiserParams(
             job_name=self.job_name,
             part_name="riser",
-            riser_height=self.typical_step_riser_height,
+            riser_height=self.typical_riser_height,
             riser_length=self.stairway_width,
             riser_material=self.typical_riser_material
         )
@@ -87,7 +86,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
         self.first_riser_params = RiserParams(
             job_name=self.job_name,
             part_name="first_riser",
-            riser_height=self.first_step_riser_height,
+            riser_height=self.first_riser_height,
             riser_length=self.stairway_width,
             riser_material=self.first_riser_material
         )
@@ -113,7 +112,7 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
             typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth ,
 
 
-            number_of_stringer_rise=self.number_of_steps_risers,
+            number_of_stringer_rise=self.number_of_steps,
 
             stringer_kicker_height=self.kicker_params.kicker_height,
             stringer_kicker_depth=self.kicker_params.kicker_depth,
@@ -124,8 +123,8 @@ class StraightClosedRisersSawtoothStringerFlushStairsAssemblyParams(AssemblyPara
 
 
         self.total_assembly_run_depth = self.first_riser_params.riser_thickness + self.sawtooth_stringer_params.total_stringer_run_depth
-        
-        self.total_assembly_rise_height = self.first_riser_params.riser_height + (self.typical_riser_params.riser_height*(self.number_of_steps_risers-1)) + self.last_tread_params.tread_thickness
+
+        self.total_assembly_rise_height = self.first_riser_params.riser_height + (self.typical_riser_params.riser_height*(self.number_of_steps-1)) + self.last_tread_params.tread_thickness
 
         self.stringer_placement_from_top = self.total_assembly_rise_height - self.sawtooth_stringer_params.total_stringer_rise_height
 

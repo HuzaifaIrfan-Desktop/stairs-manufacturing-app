@@ -20,13 +20,13 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputP
 
 
 
-    number_of_steps_risers: int = Field(default=16, description="Number of steps risers")
-    first_step_riser_height: float = Field(default=6.63, description="First step riser height")
-    last_step_riser_height: float = Field(default=13.25, description="Last step riser height")
+    number_of_steps: int = Field(default=16, description="Number of steps")
+    first_riser_height: float = Field(default=6.63, description="First riser height")
+    last_riser_hanger_height: float = Field(default=13.25, description="Last riser hanger height")
     last_tread_depth: float = Field(default=11.5, description="Last tread depth")
 
-    typical_step_riser_height: float = Field(default=7.63, description="step riser height")
-    typical_tread_depth: float = Field(default=11.5,description="tread depth")
+    typical_riser_height: float = Field(default=7.63, description="Riser height")
+    typical_tread_depth: float = Field(default=11.5,description="Tread depth")
 
 
 
@@ -36,20 +36,20 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobInputParams(JobInputP
         json_schema_extra={"enum": list(available_lumbers.keys())}
     )
 
-    typical_riser_material_name: str = Field(
+    riser_material_name: str = Field(
         default='3/8" Plywood',
         description="Riser material",
         json_schema_extra={"enum": list(available_plywoods.keys())}
     )
 
 
-    last_riser_material_name: str = Field(
+    last_riser_hanger_material_name: str = Field(
         default='5/8" Plywood',
         description="Riser material",
         json_schema_extra={"enum": list(available_plywoods.keys())}
     )
 
-    typical_tread_material_name: str = Field(
+    tread_material_name: str = Field(
         default='1" Plywood',
         description="Tread material",
         json_schema_extra={"enum": list(available_materials.keys())}
@@ -61,12 +61,12 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobOutputParams(Straight
     @model_validator(mode='after')
     def compute_params(self) -> 'StraightClosedRisersSawtoothStringerStandardStairsJobOutputParams':
 
-        
-        typical_tread_material= available_materials[self.typical_tread_material_name].model_dump()
-        last_tread_material= available_materials[self.typical_tread_material_name].model_dump()
-        first_riser_material= available_materials[self.typical_riser_material_name].model_dump()
-        typical_riser_material = available_materials[self.typical_riser_material_name].model_dump()
-        last_riser_material = available_materials[self.last_riser_material_name].model_dump()
+
+        typical_tread_material= available_materials[self.tread_material_name].model_dump()
+        last_tread_material= available_materials[self.tread_material_name].model_dump()
+        first_riser_material= available_materials[self.riser_material_name].model_dump()
+        typical_riser_material = available_materials[self.riser_material_name].model_dump()
+        last_riser_hanger_material = available_materials[self.last_riser_hanger_material_name].model_dump()
         stringer_material = available_materials[self.stringer_material_name].model_dump()
 
 
@@ -78,7 +78,7 @@ class StraightClosedRisersSawtoothStringerStandardStairsJobOutputParams(Straight
             last_tread_material=last_tread_material,
             first_riser_material=first_riser_material,
             typical_riser_material=typical_riser_material,
-            last_riser_material=last_riser_material,
+            last_riser_hanger_material=last_riser_hanger_material,
             stringer_material=stringer_material
 
         )

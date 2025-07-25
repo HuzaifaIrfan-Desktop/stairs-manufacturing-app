@@ -23,12 +23,12 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
         builder_name="Test Builder",
         # total_assembly_rise_height= 122.0,
         stairway_width= 36.75,
-        number_of_steps_risers=16,
+        number_of_steps=16,
 
-        first_step_riser_height=6.63,
-        last_step_riser_height=13.25,
+        first_riser_height=6.63,
+        last_riser_hanger_height=13.25,
         last_tread_depth=11.5,
-        typical_step_riser_height=7.63,
+        typical_riser_height=7.63,
         typical_tread_depth=11.5,
 
 
