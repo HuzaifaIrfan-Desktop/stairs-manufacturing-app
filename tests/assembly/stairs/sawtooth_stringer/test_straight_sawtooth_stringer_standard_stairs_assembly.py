@@ -1,8 +1,8 @@
 
 
-from assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly import StraightClosedRisersSawtoothStringerStandardStairsAssembly
+from assembly.stairs.sawtooth_stringer.straight_sawtooth_stringer_standard_stairs_assembly import StraightSawtoothStringerStandardStairsAssembly
 
-from models.assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params import StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams   
+from models.assembly.stairs.sawtooth_stringer.straight_sawtooth_stringer_standard_stairs_assembly_params import StraightSawtoothStringerStandardStairsAssemblyParams   
 
 from models.part.stairs.kicker_params import KickerParams
 from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
@@ -11,15 +11,15 @@ from models.part.stairs.tread_params import TreadParams
 
 from models.material.plywood import plywood_1
 
-def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
+def test_straight_sawtooth_stringer_standard_stairs_assembly():
 
     job_name = "test_sawtooth_stairs_job"
 
 
     # Create assembly parameters
-    assembly_params = StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(
+    assembly_params = StraightSawtoothStringerStandardStairsAssemblyParams(
         job_name=job_name,
-        assembly_name="test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly",
+        assembly_name="test_straight_sawtooth_stringer_standard_stairs_assembly",
         builder_name="Test Builder",
         # total_assembly_rise_height= 122.0,
         stairway_width= 36.75,
@@ -42,7 +42,7 @@ def test_straight_closed_risers_sawtooth_stringer_standard_stairs_assembly():
 
     )
 
-    assembly = StraightClosedRisersSawtoothStringerStandardStairsAssembly(assembly_params)
+    assembly = StraightSawtoothStringerStandardStairsAssembly(assembly_params)
 
 
     assert assembly is not None

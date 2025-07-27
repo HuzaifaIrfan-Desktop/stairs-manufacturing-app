@@ -2,23 +2,23 @@
 
 
 
-from job.straight_closed_risers_sawtooth_stringer_standard_stairs_job import StraightClosedRisersSawtoothStringerStandardStairsJob
-from models.job.straight_closed_risers_sawtooth_stringer_standard_stairs_job_params import StraightClosedRisersSawtoothStringerStandardStairsJobInputParams
+from job.straight_sawtooth_stringer_standard_stairs_job import StraightSawtoothStringerStandardStairsJob
+from models.job.straight_sawtooth_stringer_standard_stairs_job_params import StraightSawtoothStringerStandardStairsJobInputParams
 
-from job.straight_closed_risers_sawtooth_stringer_flush_stairs_job import StraightClosedRisersSawtoothStringerFlushStairsJob
-from models.job.straight_closed_risers_sawtooth_stringer_flush_stairs_job_params import StraightClosedRisersSawtoothStringerFlushStairsJobInputParams
+from job.straight_sawtooth_stringer_flush_stairs_job import StraightSawtoothStringerFlushStairsJob
+from models.job.straight_sawtooth_stringer_flush_stairs_job_params import StraightSawtoothStringerFlushStairsJobInputParams
 
 
 
 available_job_classes = {
-    "StraightClosedRisersSawtoothStringerStandardStairsJobInputParams": {
-        "label": "Straight Closed Risers Sawtooth Stringer Standard Stairs",
-        "job_class": StraightClosedRisersSawtoothStringerStandardStairsJob,
-        "input_params_class": StraightClosedRisersSawtoothStringerStandardStairsJobInputParams
+    "StraightSawtoothStringerStandardStairsJobInputParams": {
+        "label": "Straight Sawtooth Stringer Standard Stairs",
+        "job_class": StraightSawtoothStringerStandardStairsJob,
+        "input_params_class": StraightSawtoothStringerStandardStairsJobInputParams
     },
-    "StraightClosedRisersSawtoothStringerFlushStairsJobInputParams": {
-        "label": "Straight Closed Risers Sawtooth Stringer Flush Stairs",
-        "job_class": StraightClosedRisersSawtoothStringerFlushStairsJob,
-        "input_params_class": StraightClosedRisersSawtoothStringerFlushStairsJobInputParams
+    "StraightSawtoothStringerFlushStairsJobInputParams": {
+        "label": "Straight Sawtooth Stringer Flush Stairs",
+        "job_class": StraightSawtoothStringerFlushStairsJob,
+        "input_params_class": StraightSawtoothStringerFlushStairsJobInputParams
     }
 }

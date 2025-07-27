@@ -15,7 +15,7 @@ from models.material.plywood import Plywood, plywood_3_8, plywood_5_8, plywood_1
 
 from typing import Union as union
 
-class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyParams):
+class StraightSawtoothStringerStandardStairsAssemblyParams(AssemblyParams):
 
 
     total_assembly_rise_height: float = Field(init=False, default=None, validate_default=False, description="Total rise height")
@@ -23,38 +23,47 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams(AssemblyP
 
     stairway_width: float = Field(description="Stairway width")
     number_of_steps: int = Field(description="Number of steps")
-    number_of_stringers: int = Field(default=2, description="Number of stringers")
-    stringer_placement_from_top: float = Field(init=False, default=None, validate_default=False, description="Stringer placement from top")
 
-    first_riser_height: float = Field( description="First riser height")
-    last_riser_hanger_height: float = Field( description="Last riser hanger height")
-    last_tread_depth: float = Field( description="Last tread depth")
 
-    typical_riser_height: float = Field( description="Riser height")
     typical_tread_depth: float = Field(description="Tread depth")
-
     tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread overhang nosing depth")
     tread_overhang_side_depth: float = Field(default=0.0, description="Tread overhang side depth")
-
-
-    first_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the first riser, e.g., Plywood, etc.")
-    typical_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the riser, e.g., Plywood, etc.")
-    last_riser_hanger_material : Plywood = Field(default=plywood_5_8, description="Material of the last riser hanger, e.g., Plywood, etc.")
     typical_tread_material : Plywood = Field(default=plywood_1, description="Material of the tread, e.g., Plywood, etc.")
+    typical_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the treads")
+
+    last_tread_depth: float = Field( description="Last tread depth")
     last_tread_material : Plywood = Field(default=plywood_1, description="Material of the last tread, e.g., Plywood, etc.")
-    stringer_material: Lumber = Field(default=lsl_2x12, description="Material of the stringer, e.g., Lumber, etc.")
+    last_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the last tread")
+    
+
+
+    open_riser: bool = Field(default=False, description="Open Riser")
+    typical_riser_height: float = Field( description="Riser height")
+    typical_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the riser, e.g., Plywood, etc.")  
+    typical_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the risers")
+
+    first_riser_height: float = Field( description="First riser height")
+    first_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the first riser, e.g., Plywood, etc.")
+    first_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the first riser")  
+
+    last_riser_hanger_height: float = Field( description="Last riser hanger height")
+    last_riser_hanger_material : Plywood = Field(default=plywood_5_8, description="Material of the last riser hanger, e.g., Plywood, etc.")
+    last_riser_hanger_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the last riser hanger")
 
 
     kicker_params: KickerParams = Field(init=False, default=None, validate_default=False, description="Parameters for the kicker")
-    typical_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the risers")
-    typical_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the treads")
-    first_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the first riser")
-    last_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the last tread")
-    last_riser_hanger_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the last riser hanger")
+
+
+    number_of_stringers: int = Field(default=2, description="Number of stringers")
+    stringer_placement_from_top: float = Field(init=False, default=None, validate_default=False, description="Stringer placement from top")
+    stringer_material: Lumber = Field(default=lsl_2x12, description="Material of the stringer, e.g., Lumber, etc.")  
     sawtooth_stringer_params: SawtoothStringerParams = Field(init=False, default=None, validate_default=False, description="Parameters for the sawtooth stringer")
 
+
+
+
     @model_validator(mode='after')
-    def compute(self) -> 'StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams':
+    def compute(self) -> 'StraightSawtoothStringerStandardStairsAssemblyParams':
 
 
         self.kicker_params = KickerParams(

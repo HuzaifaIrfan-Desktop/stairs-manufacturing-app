@@ -4,21 +4,22 @@ from utils.math import inch_to_mm
 
 
 from assembly.assembly import Assembly
-from models.assembly.stairs.sawtooth_stringer.straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params import StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams
+from models.assembly.stairs.sawtooth_stringer.straight_sawtooth_stringer_flush_stairs_assembly_params import StraightSawtoothStringerFlushStairsAssemblyParams
 
 from part.stairs.kicker import Kicker
 from part.stairs.sawtooth_stringer import SawtoothStringer
 from part.stairs.riser import Riser
 from part.stairs.tread import Tread
 
-
 from models.report.cut_list_params import CutListParams
 from report.cut_list_report import CutListReport    
 
-class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
-    def __init__(self, straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params: StraightClosedRisersSawtoothStringerStandardStairsAssemblyParams):
+from logger import assembly_logger
 
-        self.assembly_params=straight_closed_risers_sawtooth_stringer_standard_stairs_assembly_params
+class StraightSawtoothStringerFlushStairsAssembly(Assembly):
+    def __init__(self, straight_sawtooth_stringer_flush_stairs_assembly_params: StraightSawtoothStringerFlushStairsAssemblyParams):
+
+        self.assembly_params=straight_sawtooth_stringer_flush_stairs_assembly_params
 
         self.kicker_params = self.assembly_params.kicker_params
         self.sawtooth_stringer_params = self.assembly_params.sawtooth_stringer_params
@@ -27,10 +28,12 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
 
         self.first_riser_params = self.assembly_params.first_riser_params
         self.last_tread_params = self.assembly_params.last_tread_params
-        self.last_riser_hanger_params = self.assembly_params.last_riser_hanger_params
+
 
 
         super().__init__(self.assembly_params)
+
+        
 
 
     def _build(self):
@@ -40,10 +43,10 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
         self.typical_tread=Tread(self.typical_tread_params)
         self.first_riser=Riser(self.first_riser_params)
         self.last_tread=Tread(self.last_tread_params)
-        self.last_riser_hanger=Riser(self.last_riser_hanger_params)
 
 
 
+    
     def export_parts(self) -> str:
 
         file_path=""
@@ -53,12 +56,12 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
         self.typical_tread.export()
         self.first_riser.export()
         self.last_tread.export()
-        self.last_riser_hanger.export()
 
         self.sawtooth_stringer.export()
-        
+
+
         return file_path
-    
+
     def export_cam(self) -> str:
         self.sawtooth_stringer.export_cam()
 
@@ -67,34 +70,32 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
         # Placeholder for drawing export logic
         file_path = ""
 
-
         file_path = self.export_dxf_right_view()
         self.export_drawing_from_dxf(file_path, text_scale=4.0)
-
 
         four_steps_assembly_params=self.assembly_params.model_copy()
         four_steps_assembly_params.assembly_name = f"four_steps_{self.assembly_params.assembly_name}"
         four_steps_assembly_params.number_of_steps=4
         four_steps_assembly_params.compute()
         four_steps_assembly_params.sawtooth_stringer_params.part_name = f"four_steps_{self.sawtooth_stringer_params.part_name}"
-
-        # four_steps_assembly_params.sawtooth_stringer_params.number_of_stringer_rise=3
-        four_steps_assembly = StraightClosedRisersSawtoothStringerStandardStairsAssembly(four_steps_assembly_params)
+        
+        # four_steps_assembly_params.sawtooth_stringer_params.number_of_stringer_rise=4
+        four_steps_assembly = StraightSawtoothStringerFlushStairsAssembly(four_steps_assembly_params)
         four_steps_assembly_dxf_file_path=four_steps_assembly.export_dxf_right_view()
         four_steps_assembly.export_drawing_from_dxf(four_steps_assembly_dxf_file_path, text_scale=4.0)
         four_steps_assembly_stringer_dxf_file_path=four_steps_assembly.sawtooth_stringer.export_dxf_right_view()
         four_steps_assembly.sawtooth_stringer.export_drawing_from_dxf(four_steps_assembly_stringer_dxf_file_path, text_scale=4.0)
+
 
         self.kicker.export_drawing()
         self.typical_riser.export_drawing()
         self.typical_tread.export_drawing()
         self.first_riser.export_drawing()
         self.last_tread.export_drawing()
-        self.last_riser_hanger.export_drawing()
         self.sawtooth_stringer.export_drawing()
 
         return file_path
-
+    
     def _assemble(self):
         # Logic to assemble the components based on the parameters
         
@@ -110,11 +111,10 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
 
 
 
-
         riser_y_offset = self.first_riser_params.riser_thickness -self.typical_riser_params.riser_thickness
         z_offset = self.sawtooth_stringer_params.first_stringer_rise_height
 
-        for i in range(self.assembly_params.number_of_steps - 2):
+        for i in range(self.assembly_params.number_of_steps - 1):
             riser_y_offset = riser_y_offset + self.sawtooth_stringer_params.typical_stringer_run_depth
             tread_y_offset = riser_y_offset - self.typical_tread_params.tread_depth
             typical_tread =  self.typical_tread.get().val().translate((0, inch_to_mm(tread_y_offset), inch_to_mm(z_offset)))
@@ -123,17 +123,12 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
             compound.append(typical_riser)
             z_offset += self.sawtooth_stringer_params.typical_stringer_rise_height
 
-        last_tread_y_offset = riser_y_offset + self.sawtooth_stringer_params.last_stringer_run_depth + self.typical_riser_params.riser_thickness - self.last_tread_params.tread_depth
 
-        last_riser_hanger_y_offset = last_tread_y_offset+ self.last_tread_params.tread_depth
-        last_riser_hanger_z_offset = z_offset - self.last_riser_hanger_params.riser_height+ self.typical_riser_params.riser_height+self.typical_tread_params.tread_thickness
+        riser_y_offset = riser_y_offset + self.sawtooth_stringer_params.last_stringer_run_depth + self.typical_riser_params.riser_thickness
+        tread_y_offset = riser_y_offset - self.last_tread_params.tread_depth
+        last_tread = self.last_tread.get().val().translate((0, inch_to_mm(tread_y_offset), inch_to_mm(z_offset)))
 
-        last_tread = self.last_tread.get().val().translate((0, inch_to_mm(last_tread_y_offset), inch_to_mm(z_offset)))
-        last_riser_hanger = self.last_riser_hanger.get().val().translate((0, inch_to_mm(last_riser_hanger_y_offset), inch_to_mm(last_riser_hanger_z_offset)))
         compound.append(last_tread)
-        compound.append(last_riser_hanger)
-
-
 
 
         # box1 = cq.Workplane("XY").box(10, 10, 10).val()
@@ -185,11 +180,10 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
 
         cut_list_data=[["Part", "Qty", "Material", "Dimension"]]
 
-        cut_list_data.append( ["Typical Treads", self.assembly_params.number_of_steps-2, self.typical_tread_params.tread_material.material_name, f"{self.typical_tread_params.tread_depth} x {self.typical_tread_params.tread_length}"])
+        cut_list_data.append( ["Typical Treads", self.assembly_params.number_of_steps-1, self.typical_tread_params.tread_material.material_name, f"{self.typical_tread_params.tread_depth} x {self.typical_tread_params.tread_length}"])
         cut_list_data.append( ["Last Tread", "1", self.last_tread_params.tread_material.material_name, f"{self.last_tread_params.tread_depth} x {self.last_tread_params.tread_length}"])
-        cut_list_data.append( ["Typical Risers", self.assembly_params.number_of_steps-2, self.typical_riser_params.riser_material.material_name, f"{self.typical_riser_params.riser_height} x {self.typical_riser_params.riser_length}"])
+        cut_list_data.append( ["Typical Risers", self.assembly_params.number_of_steps-1, self.typical_riser_params.riser_material.material_name, f"{self.typical_riser_params.riser_height} x {self.typical_riser_params.riser_length}"])
         cut_list_data.append( ["First Riser", "1", self.first_riser_params.riser_material.material_name, f"{self.first_riser_params.riser_height} x {self.first_riser_params.riser_length}"])
-        cut_list_data.append( ["Last Riser/Hanger", "1", self.last_riser_hanger_params.riser_material.material_name, f"{self.last_riser_hanger_params.riser_height} x {self.last_riser_hanger_params.riser_length}"])
         cut_list_data.append( ["Stringers", self.assembly_params.number_of_stringers, self.sawtooth_stringer_params.stringer_material.material_name, self.sawtooth_stringer_params.stringer_length])
 
         summary_items=[("Total Rise", self.assembly_params.total_assembly_rise_height),
@@ -197,11 +191,10 @@ class StraightClosedRisersSawtoothStringerStandardStairsAssembly(Assembly):
                            ("Stair Width", self.assembly_params.stairway_width),
                            ("First Riser Height", self.first_riser_params.riser_height),
                            ("Typical Riser Height", self.typical_riser_params.riser_height),
-                           ("Last Riser/Hanger Height", self.last_riser_hanger_params.riser_height),
                            ("Typical Run Tread Depth", self.typical_tread_params.tread_depth),
                            ("Last Run Tread Depth", self.last_tread_params.tread_depth),
                            ("Number of Risers", self.assembly_params.number_of_steps),
-                           ("Number of Treads", self.assembly_params.number_of_steps - 1),]
+                           ("Number of Treads", self.assembly_params.number_of_steps),]
 
         cut_list_params = CutListParams(
             job_name=self.assembly_params.job_name,
