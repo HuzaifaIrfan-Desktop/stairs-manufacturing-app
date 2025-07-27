@@ -48,15 +48,3 @@ class TopFloorOpening(Part):
         cq_part = cq_part.translate((0, 0, inch_to_mm(self.part_params.opening_top_position - self.part_params.opening_thickness)))
 
         return cq_part
-
-    def export_dxf_right_view(self) -> str:
-        dxf_file_path = f'{self.part_output_dir}/{self.part_params.part_name}_right.dxf'
-        # Get a 2D projection for DXF
-        right_wires = self.cq_part.faces("-X").wires()
-
-        # --- Step 3: Flatten wires onto YZ plane as sketch is drawn on YZ for DXF ---
-        flattened = cq.Workplane("YZ").add(right_wires)
-
-        # --- Step 4: Export to DXF ---
-        cq.exporters.export(flattened, dxf_file_path, 'DXF')
-        return dxf_file_path

@@ -72,23 +72,37 @@ class Part:
     def export_dxf_top_view(self) -> str:
         dxf_file_path = f'{self.part_output_dir}/{self.part_params.part_name}_top.dxf'
         # Get a 2D projection for DXF
-        top_view = self.cq_part.faces(">Z").wires()
-        cq.exporters.export(top_view, dxf_file_path, 'DXF')
+        top_view = self.cq_part.faces("-Z").wires()
+        # --- Step 3: Flatten wires onto XY plane as sketch is drawn on XY for DXF ---
+        flattened = cq.Workplane("XY").add(top_view)
+
+        # --- Step 4: Export to DXF ---
+        cq.exporters.export(flattened, dxf_file_path, 'DXF')
         return dxf_file_path
 
     def export_dxf_front_view(self) -> str:
         dxf_file_path = f'{self.part_output_dir}/{self.part_params.part_name}_front.dxf'
         # Get a 2D projection for DXF
-        front_view = self.cq_part.faces(">Y").wires()
-        cq.exporters.export(front_view, dxf_file_path, 'DXF')
+        front_view = self.cq_part.faces("-Y").wires()
+
+        # --- Step 3: Flatten wires onto XZ plane as sketch is drawn on XZ for DXF ---
+        flattened = cq.Workplane("XZ").add(front_view)
+
+        # --- Step 4: Export to DXF ---
+        cq.exporters.export(flattened, dxf_file_path, 'DXF')
         return dxf_file_path
+
 
     def export_dxf_right_view(self) -> str:
         dxf_file_path = f'{self.part_output_dir}/{self.part_params.part_name}_right.dxf'
         # Get a 2D projection for DXF
-        right_view = self.cq_part.faces(">X").wires()
-        cq.exporters.export(right_view, dxf_file_path, 'DXF')
-        
+        right_wires = self.cq_part.faces("-X").wires()
+
+        # --- Step 3: Flatten wires onto YZ plane as sketch is drawn on YZ for DXF ---
+        flattened = cq.Workplane("YZ").add(right_wires)
+
+        # --- Step 4: Export to DXF ---
+        cq.exporters.export(flattened, dxf_file_path, 'DXF')
         return dxf_file_path
 
 
