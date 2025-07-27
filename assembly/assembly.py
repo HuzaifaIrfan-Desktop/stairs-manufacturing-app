@@ -82,15 +82,24 @@ class Assembly:
     def export_dxf_top_view(self) -> str:
         file_path = f'{self.assembly_output_dir}/{self.assembly_params.assembly_name}_top.dxf'
         # Get a 2D projection for DXF
-        top_view = self.cq_assembly.faces(">Z").wires()
-        cq.exporters.export(top_view, file_path, 'DXF')
+        top_view = self.cq_assembly.faces("-Z").wires()
+        # --- Step 3: Flatten wires onto XY plane as sketch is drawn on XY for DXF ---
+        flattened = cq.Workplane("XY").add(top_view)
+
+        # --- Step 4: Export to DXF ---
+        cq.exporters.export(flattened, file_path, 'DXF')
         return file_path
 
     def export_dxf_front_view(self) -> str:
         file_path = f'{self.assembly_output_dir}/{self.assembly_params.assembly_name}_front.dxf'
         # Get a 2D projection for DXF
-        front_view = self.cq_assembly.faces(">Y").wires()
-        cq.exporters.export(front_view, file_path, 'DXF')
+        front_view = self.cq_assembly.faces("-Y").wires()
+
+        # --- Step 3: Flatten wires onto XZ plane as sketch is drawn on XZ for DXF ---
+        flattened = cq.Workplane("XZ").add(front_view)
+
+        # --- Step 4: Export to DXF ---
+        cq.exporters.export(flattened, file_path, 'DXF')
         return file_path
 
     def export_dxf_right_view(self) -> str:

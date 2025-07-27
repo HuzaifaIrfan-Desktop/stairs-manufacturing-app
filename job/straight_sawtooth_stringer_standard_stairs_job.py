@@ -13,6 +13,11 @@ from utils.math import inch_to_mm
 
 from logger import job_logger
 
+
+from part.top_floor_opening import TopFloorOpening
+from models.part.top_floor_opening_params import TopFloorOpeningParams
+
+
 class StraightSawtoothStringerStandardStairsJob(Job):
     def __init__(self, straight_sawtooth_stringer_standard_stairs_job_input_params:StraightSawtoothStringerStandardStairsJobInputParams):
         self.job_input_params = straight_sawtooth_stringer_standard_stairs_job_input_params
@@ -29,9 +34,19 @@ class StraightSawtoothStringerStandardStairsJob(Job):
 
 
     def _assemble(self):
-        assembly = self.standard_stairs_assembly.get().val()
+        assembly_object = self.standard_stairs_assembly.get().val()
 
-        compound = cq.Compound.makeCompound([assembly])
+        # Add top floor opening if specified
+        top_floor_opening_params = TopFloorOpeningParams(
+            job_name=self.job_input_params.job_name, part_name="top_floor_opening",
+            opening_length=self.standard_stairs_assembly_params.total_assembly_run_depth,
+            opening_width=self.job_input_params.stairway_width,
+            opening_top_position=self.job_input_params.total_rise_height
+        )
+        top_floor_opening = TopFloorOpening(top_floor_opening_params)
+        top_floor_opening_object = top_floor_opening.get().val()
+
+        compound = cq.Compound.makeCompound([assembly_object, top_floor_opening_object])
         self.cq_job_assembly = cq.Workplane(obj=compound)
 
     def export(self) -> str:
