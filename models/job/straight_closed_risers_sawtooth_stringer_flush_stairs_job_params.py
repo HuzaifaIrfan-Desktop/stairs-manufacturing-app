@@ -16,33 +16,35 @@ class StraightClosedRisersSawtoothStringerFlushStairsJobInputParams(JobInputPara
 
     total_rise_height: float = Field(default=122.0, description="Total Rise Height (in)")
     number_of_steps: int = Field(default=16,description="Number of Steps")
-
-
-    tread_depth: float = Field(default=10.78, description="Tread Depth (in)")
-
     stairway_width: float = Field(default=36.75,description="Stairway Width (in)")
-    number_of_stringers: int = Field(default=2, description="Number of Stringers")
 
+    tread_form_spacer: str = Field(default="Tread Form Spacer", description="Tread Inputs", exclude=True)
+    tread_depth: float = Field(default=10.78, description="Tread Depth (in)")
     tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread Overhang Nosing Depth (in)")
     tread_overhang_side_depth: float = Field(default=0.0, description="Tread Overhang Side Depth (in)")
-
-    stringer_material_name: str = Field(
-        default='2x12 LSL',
-        description="Stringer Material",
-        json_schema_extra={"enum": list(available_lumbers.keys())}
+    tread_material_name: str = Field(
+        default='1" Plywood',
+        description="Tread Material",
+        json_schema_extra={"enum": list(available_materials.keys())}
     )
 
+
+    riser_form_spacer: str = Field(default="Riser Form Spacer", description="Riser Inputs", exclude=True)
+    open_riser: bool = Field(default=False, description="Open Riser")
     riser_material_name: str = Field(
         default='3/8" Plywood',
         description="Riser Material",
         json_schema_extra={"enum": list(available_plywoods.keys())}
     )
 
-    tread_material_name: str = Field(
-        default='1" Plywood',
-        description="Tread Material",
-        json_schema_extra={"enum": list(available_materials.keys())}
+    stringer_form_spacer: str = Field(default="Stringer Form Spacer", description="Stringer Inputs", exclude=True)
+    number_of_stringers: int = Field(default=2, description="Number of Stringers")
+    stringer_material_name: str = Field(
+        default='2x12 LSL',
+        description="Stringer Material",
+        json_schema_extra={"enum": list(available_lumbers.keys())}
     )
+
 
 class StraightClosedRisersSawtoothStringerFlushStairsJobOutputParams(StraightClosedRisersSawtoothStringerFlushStairsJobInputParams):
 

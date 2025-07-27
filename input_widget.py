@@ -20,7 +20,29 @@ from PySide6.QtGui import QFont
 
 from job import available_job_classes
 from PySide6.QtWidgets import QComboBox
-from PySide6.QtWidgets import QScrollArea, QWidget
+from PySide6.QtWidgets import QScrollArea, QWidget, QFrame
+
+
+
+def spacer_widget_for_field(title: str = "", tooltip: str = "") -> QWidget:
+    """Creates a widget with a label and a horizontal line under it."""
+    container = QWidget()
+    layout = QVBoxLayout(container)
+    layout.setContentsMargins(0, 0, 0, 0)
+    
+    label = QLabel(title)
+    label.setStyleSheet("font-weight: bold;")
+    label.setToolTip(tooltip)
+    label.setAlignment(Qt.AlignCenter)
+    layout.addWidget(label)
+
+    line = QFrame()
+    line.setFrameShape(QFrame.HLine)
+    line.setFrameShadow(QFrame.Sunken)
+    line.setStyleSheet("color: #888; background-color: #888;")  # Set line color
+    layout.addWidget(line)
+
+    return container
 
 
 def widget_for_field(field_type):
@@ -54,6 +76,8 @@ def widget_for_field(field_type):
         line_edit.setMaxLength(100)
         # line_edit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         return line_edit
+    
+
 from backend import Backend
 
 
@@ -166,6 +190,12 @@ class InputWidget(QWidget):
             
             if name == 'job_class_name':
                 continue
+
+            if "spacer" in name:
+                widget = spacer_widget_for_field(title=f"{field.description}", tooltip=name)
+                self.form_layout.addRow(widget)
+                continue
+
 
             # print(f"Adding field {field.json_schema_extra}")
             if field.json_schema_extra:
