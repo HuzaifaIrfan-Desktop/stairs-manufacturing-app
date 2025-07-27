@@ -105,28 +105,61 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
         )
 
 
-        self.sawtooth_stringer_params = SawtoothStringerParams(
-            job_name=self.job_name,
-            part_name="sawtooth_stringer",
+        if not self.open_riser:
+            # closed Riser Stringer
 
-            first_stringer_rise_height=self.first_riser_params.riser_height,
-            last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth-self.typical_riser_params.riser_thickness,
+            self.sawtooth_stringer_params = SawtoothStringerParams(
+                job_name=self.job_name,
+                part_name="sawtooth_stringer",
 
-            typical_stringer_rise_height=self.typical_riser_params.riser_height,
-            typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth ,
+                first_stringer_rise_height=self.first_riser_params.riser_height,
+                last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth-self.typical_riser_params.riser_thickness,
 
-
-            number_of_stringer_rise=self.number_of_steps,
-
-            stringer_kicker_height=self.kicker_params.kicker_height,
-            stringer_kicker_depth=self.kicker_params.kicker_depth,
-
-            stringer_material=self.stringer_material
-
-        )
+                typical_stringer_rise_height=self.typical_riser_params.riser_height,
+                typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth ,
 
 
-        self.total_assembly_run_depth = self.first_riser_params.riser_thickness + self.sawtooth_stringer_params.total_stringer_run_depth
+                number_of_stringer_rise=self.number_of_steps,
+
+                stringer_kicker_height=self.kicker_params.kicker_height,
+                stringer_kicker_depth=self.kicker_params.kicker_depth,
+
+                stringer_material=self.stringer_material
+
+            )
+
+        else: 
+
+            # open Riser Stringer
+            self.sawtooth_stringer_params = SawtoothStringerParams(
+                job_name=self.job_name,
+                part_name="sawtooth_stringer",
+
+                first_stringer_rise_height=self.first_riser_params.riser_height,
+                last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth,
+
+                typical_stringer_rise_height=self.typical_riser_params.riser_height,
+                typical_stringer_run_depth=self.typical_tread_params.tread_depth - self.tread_overhang_nosing_depth ,
+
+
+                number_of_stringer_rise=self.number_of_steps,
+
+                stringer_kicker_height=self.kicker_params.kicker_height,
+                stringer_kicker_depth=self.kicker_params.kicker_depth,
+
+                stringer_material=self.stringer_material
+
+            )
+
+
+
+
+        if not self.open_riser:
+            # closed Riser
+            self.total_assembly_run_depth = self.first_riser_params.riser_thickness + self.sawtooth_stringer_params.total_stringer_run_depth
+        else:
+            # open Riser
+            self.total_assembly_run_depth = self.sawtooth_stringer_params.total_stringer_run_depth
 
         self.total_assembly_rise_height = self.first_riser_params.riser_height + (self.typical_riser_params.riser_height*(self.number_of_steps-1)) + self.last_tread_params.tread_thickness
 

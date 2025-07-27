@@ -16,11 +16,14 @@ class SawtoothStringerParams(PartParams):
     total_stringer_rise_height: float = Field(init=False, default=None, validate_default=False)
     total_stringer_run_depth: float = Field(init=False, default=None, validate_default=False)
 
-    first_stringer_rise_height: float
+
+    typical_stringer_run_depth: float
     last_stringer_run_depth: float
 
     typical_stringer_rise_height: float
-    typical_stringer_run_depth: float
+    first_stringer_rise_height: float
+
+
 
     # number_of_stringer_run: int = Field(init=False, default=None, validate_default=False) # Same as rise and not used in calculations
     number_of_stringer_rise: int # This is the number of rise, not the number of risers
