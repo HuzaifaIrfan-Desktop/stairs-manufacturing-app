@@ -64,42 +64,10 @@ class StraightSawtoothStringerFlushStairsJobOutputParams(StraightSawtoothStringe
         last_tread_depth: float = self.tread_depth
         typical_tread_depth: float = self.tread_depth
 
-        # Calculate riser heights from total rise and number of steps
-        def calculate_flush_stair_riser_heights(
-            total_rise: float,
-            num_steps: int,
-            tread_thickness: float
-        ) -> dict:
-            """
-            Calculate first and typical riser heights for flush-mounted stairs.
 
-            Args:
-                total_rise: Total vertical height between floors (inches)
-                num_steps: Total number of risers/steps
-                tread_thickness: Thickness of each tread (inches)
-
-            Returns:
-                Dictionary with first_riser_height and typical_riser_height
-            """
-
-            typical_riser_height = total_rise / num_steps
-            first_riser_height = typical_riser_height - tread_thickness
-
-            return {
-                "typical_riser_height": round(typical_riser_height, 2),
-                "first_riser_height": round(first_riser_height, 2)
-            }
+        typical_riser_height: float = self.total_rise_height / self.number_of_steps
+        first_riser_height: float = typical_riser_height - available_materials[self.tread_material_name].thickness
         
-        risers_heights_calculations = calculate_flush_stair_riser_heights(
-            total_rise=self.total_rise_height,
-            num_steps=self.number_of_steps,
-            tread_thickness= available_materials[self.tread_material_name].thickness
-        )
-
-        typical_riser_height: float = risers_heights_calculations["typical_riser_height"]
-        first_riser_height: float = risers_heights_calculations["first_riser_height"]
-
-
         if typical_riser_height >= 7.875:
             raise ValueError("Maximum allowed riser height is 7.875 inches. Please adjust the number of steps.")
 
