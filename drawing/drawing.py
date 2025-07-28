@@ -18,11 +18,14 @@ from models.drawing.drawing_params import DrawingParams
 from logger import drawing_logger
 
 class Drawing:
-    def __init__(self, job_name:str, part_name:str, dxf_file_path:str, text_scale:float):
+    def __init__(self, job_name:str, part_name:str, dxf_file_path:str, text_scale:float, center_text:str = ""):
+
         self.job_name = job_name
         self.part_name = part_name
         self.dxf_file_path = dxf_file_path
         self.text_scale = text_scale
+
+        self.center_text=center_text
         
         self.drawing_params= DrawingParams(
             job_name=self.job_name,
@@ -125,16 +128,26 @@ class Drawing:
 
                 
         
-        # Insert text annotation at the center of the image
-        # text = f"{self.part_name} - {self.job_name}"
-        # text_x = x0 + (new_width / 2)
-        # text_y = y0 + (new_height / 2) -100
-        # page.insert_text(
-        #     fitz.Point(text_x, text_y),
-        #     text,
-        #     fontsize=24,
-        #     color=(0, 0, 0),
-        # )
+        # Insert centered text annotation over the image
+        if self.center_text:
+            text_fontsize = 24
+
+            # Calculate text width for centering using PIL
+            from PIL import ImageFont
+            font = ImageFont.truetype("arial.ttf", text_fontsize)
+            bbox = font.getbbox(self.center_text)
+            text_width = bbox[2] - bbox[0]
+
+            # Center text horizontally over the image
+            text_x = x0 + (new_width - text_width) / 2
+            text_y = y0 + (new_height / 2) - (text_fontsize / 2)
+
+            page.insert_text(
+                fitz.Point(text_x, text_y),
+                self.center_text,
+                fontsize=text_fontsize,
+                color=(0, 0, 0),
+            )
 
         # Save to output PDF
         template_pdf.save(self.drawing_pdf_file_path)

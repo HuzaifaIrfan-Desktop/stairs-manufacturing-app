@@ -42,3 +42,12 @@ class Landing(Part):
         cq_part = cq_part.translate((0, 0, inch_to_mm(self.part_params.landing_top_position - self.part_params.landing_thickness)))
 
         return cq_part
+
+
+
+    def export_drawing(self) -> str:
+        dxf_file_path = self.export_dxf_top_view()
+
+        drawing_pdf_file_path = self.export_drawing_from_dxf(dxf_file_path, text_scale=7.0)
+
+        return drawing_pdf_file_path

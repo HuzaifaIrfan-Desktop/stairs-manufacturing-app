@@ -1,5 +1,6 @@
 
 
+import math
 from pydantic import BaseModel, Field, model_validator
 
 from models.assembly.assembly_params import AssemblyParams
@@ -37,6 +38,8 @@ class UStandardStairsAssemblyParams(AssemblyParams):
     stairway_width: float = Field(init=False, default=None, validate_default=False, description="Width of the stairway")
     tread_depth: float = Field( description="Depth of the tread")
 
+
+    open_riser: bool = Field(default=False, description="Open Riser")
     last_riser_hanger_height: float = Field(default=13.25, description="Height of the last riser hanger")
 
 
@@ -45,11 +48,28 @@ class UStandardStairsAssemblyParams(AssemblyParams):
     lower_standard_stairs_assembly_params: StraightSawtoothStringerStandardStairsAssemblyParams = Field(init=False, default=None, validate_default=False, description="Parameters for the sawtooth stringer")
 
 
+    tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread overhang nosing depth")
+    tread_overhang_side_depth: float = Field(default=0.0, description="Tread overhang side depth")
+
+    tread_material: Plywood = Field(default=plywood_1, description="Material of the tread, e.g., Plywood, etc.")
+    riser_material: Plywood = Field(default=plywood_3_8, description="Material of the riser, e.g., Plywood, etc.")
+    last_riser_hanger_material: Plywood = Field(default=plywood_5_8, description="Material of the last riser hanger, e.g., Plywood, etc.")
+    stringer_material: Lumber = Field(default=lsl_2x12, description="Material of the stringer, e.g., Lumber, etc.")
+
+    number_of_stringers: int = Field(default=2, description="Number of stringers")
 
     @model_validator(mode='after')
     def compute(self) -> 'UStandardStairsAssemblyParams':
 
         total_number_of_steps = self.number_of_upper_steps + self.number_of_lower_steps
+
+        typical_riser_height: float = self.total_opening_rise_height / total_number_of_steps
+
+        if typical_riser_height >= 7.875:
+            minimum_number_of_steps = math.ceil(self.total_opening_rise_height / 7.875)
+            raise ValueError("Maximum allowed riser height is 7.875 inches. Please adjust the number of steps. Minimum number of steps required is: {}".format(minimum_number_of_steps))
+       
+      
 
         upper_rise_height = self.total_opening_rise_height * (self.number_of_upper_steps / total_number_of_steps)
         lower_rise_height = self.total_opening_rise_height * (self.number_of_lower_steps / total_number_of_steps)
@@ -68,10 +88,15 @@ class UStandardStairsAssemblyParams(AssemblyParams):
             number_of_steps=self.number_of_upper_steps,
             last_riser_hanger_height=self.last_riser_hanger_height,
             stairway_width=self.stairway_width,
-            tread_depth=self.tread_depth,  # Tread depth will be calculated later
-            stringer_material=lumber_2x12,  # Example material
-            riser_material=plywood_3_8,  # Example material
-            tread_material=plywood_5_8,  # Example material
+            tread_depth=self.tread_depth,
+            open_riser=self.open_riser,
+            tread_overhang_nosing_depth=self.tread_overhang_nosing_depth,
+            tread_overhang_side_depth=self.tread_overhang_side_depth,
+            tread_material=self.tread_material,
+            riser_material=self.riser_material,
+            last_riser_hanger_material=self.last_riser_hanger_material,
+            stringer_material=self.stringer_material,
+            number_of_stringers=self.number_of_stringers
         )
 
         self.lower_standard_stairs_assembly_params = StraightSawtoothStringerStandardStairsAssemblyParams(
@@ -82,10 +107,15 @@ class UStandardStairsAssemblyParams(AssemblyParams):
             number_of_steps=self.number_of_lower_steps,
             last_riser_hanger_height=self.last_riser_hanger_height,
             stairway_width=self.stairway_width,
-            tread_depth=self.tread_depth,  # Tread depth will be calculated later
-            stringer_material=lumber_2x12,  # Example material
-            riser_material=plywood_3_8,  # Example material
-            tread_material=plywood_5_8,  # Example material
+            tread_depth=self.tread_depth,
+            open_riser=self.open_riser,
+            tread_overhang_nosing_depth=self.tread_overhang_nosing_depth,
+            tread_overhang_side_depth=self.tread_overhang_side_depth,
+            tread_material=self.tread_material,
+            riser_material=self.riser_material,
+            last_riser_hanger_material=self.last_riser_hanger_material,
+            stringer_material=self.stringer_material,
+            number_of_stringers=self.number_of_stringers
         )
 
 
