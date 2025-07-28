@@ -21,15 +21,12 @@ def test_straight_sawtooth_stringer_flush_stairs_assembly():
         job_name=job_name,
         assembly_name="test_straight_sawtooth_stringer_flush_stairs_assembly",
         builder_name="Test Builder",
-        # total_assembly_rise_height= 122.0,
+        total_opening_rise_height= 122.0,
 
         stairway_width= 36.75,
         number_of_steps=16,
 
-        first_riser_height=6.63,
-        last_tread_depth=10.78,
-        typical_riser_height=7.63,
-        typical_tread_depth=10.78,
+        tread_depth=10.78,
 
         tread_overhang_nosing_depth=1.0,
         tread_overhang_side_depth=1.0,
@@ -48,8 +45,8 @@ def test_straight_sawtooth_stringer_flush_stairs_assembly():
     assert assembly.export_assembly_params() is not None
     assert assembly.export_step() is not None
     assert assembly.export_stl() is not None
-    # assert assembly.export_dxf_top_view() is not None
-    # assert assembly.export_dxf_front_view() is not None
+    assert assembly.export_dxf_top_view() is not None
+    assert assembly.export_dxf_front_view() is not None
     assert assembly.export_dxf_right_view() is not None
     assert assembly.export_cut_list() is not None
         

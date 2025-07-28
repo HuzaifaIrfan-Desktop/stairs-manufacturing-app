@@ -1,6 +1,7 @@
 
 
 import math
+
 from pydantic import BaseModel, Field, model_validator
 
 from models.assembly.assembly_params import AssemblyParams
@@ -18,31 +19,32 @@ from typing import Union as union
 
 class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
+    total_opening_rise_height: float = Field( description="Total opening rise height")
     total_assembly_rise_height: float = Field(init=False, default=None, validate_default=False, description="Total rise height")
     total_assembly_run_depth: float = Field(init=False, default=None, validate_default=False, description="Total run depth")
 
     stairway_width: float = Field(description="Stairway width")
     number_of_steps: int = Field(description="Number of steps")
 
-    typical_tread_depth: float = Field(description="Tread depth")
+
+    tread_depth: float = Field(description="Tread depth")
+    typical_tread_depth: float = Field(init=False, default=None, validate_default=False, description="Tread depth")
     tread_overhang_nosing_depth: float = Field(default=0.0, description="Tread overhang nosing depth")
     tread_overhang_side_depth: float = Field(default=0.0, description="Tread overhang side depth")
-    typical_tread_material : Plywood = Field(default=plywood_1, description="Material of the tread, e.g., Plywood, etc.")
+    tread_material : Plywood = Field(default=plywood_1, description="Material of the tread, e.g., Plywood, etc.")
     typical_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the treads")
 
-    last_tread_depth: float = Field( description="Last tread depth")
-    last_tread_material : Plywood = Field(default=plywood_1, description="Material of the last tread, e.g., Plywood, etc.")
+    last_tread_depth: float = Field(init=False, default=None, validate_default=False, description="Last tread depth")
     last_tread_params: TreadParams = Field(init=False, default=None, validate_default=False, description="Parameters for the last tread")
     
 
 
     open_riser: bool = Field(default=False, description="Open Riser")
-    typical_riser_height: float = Field( description="Riser height")
-    typical_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the riser, e.g., Plywood, etc.")  
+    typical_riser_height: float = Field(init=False, default=None, validate_default=False, description="Riser height")
+    riser_material : Plywood = Field(default=plywood_3_8, description="Material of the riser, e.g., Plywood, etc.")  
     typical_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the risers")
 
-    first_riser_height: float = Field( description="First riser height")
-    first_riser_material : Plywood = Field(default=plywood_3_8, description="Material of the first riser, e.g., Plywood, etc.")
+    first_riser_height: float = Field(init=False, default=None, validate_default=False, description="First riser height")
     first_riser_params: RiserParams = Field(init=False, default=None, validate_default=False, description="Parameters for the first riser")  
 
 
@@ -58,6 +60,16 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
     @model_validator(mode='after')
     def compute(self) -> 'StraightSawtoothStringerFlushStairsAssemblyParams':
 
+        self.typical_tread_depth = self.tread_depth
+        self.last_tread_depth = self.tread_depth
+
+        self.typical_riser_height: float = self.total_opening_rise_height / self.number_of_steps
+        self.first_riser_height: float = self.typical_riser_height - self.tread_material.thickness
+
+        if self.typical_riser_height >= 7.875:
+            minimum_number_of_steps = math.ceil(self.total_opening_rise_height / 7.875)
+            raise ValueError("Maximum allowed riser height is 7.875 inches. Please adjust the number of steps. Minimum number of steps required is: {}".format(minimum_number_of_steps))
+       
 
         self.kicker_params = KickerParams(
             job_name=self.job_name,
@@ -73,7 +85,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
             part_name="riser",
             riser_height=self.typical_riser_height,
             riser_length=self.stairway_width,
-            riser_material=self.typical_riser_material
+            riser_material=self.riser_material
         )
 
 
@@ -83,7 +95,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
             part_name="tread",
             tread_depth=self.typical_tread_depth,
             tread_length=self.stairway_width,
-            tread_material=self.typical_tread_material
+            tread_material=self.tread_material
         )
 
 
@@ -92,7 +104,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
             part_name="first_riser",
             riser_height=self.first_riser_height,
             riser_length=self.stairway_width,
-            riser_material=self.first_riser_material
+            riser_material=self.riser_material
         )
 
 
@@ -101,7 +113,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
             part_name="last_tread",
             tread_depth=self.last_tread_depth,
             tread_length=self.stairway_width,
-            tread_material=self.last_tread_material
+            tread_material=self.tread_material
         )
 
 

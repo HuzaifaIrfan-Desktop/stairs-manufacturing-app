@@ -40,7 +40,9 @@ def test_sawtooth_stringer():
 
     # Test DXF export
     stringer.export_dxf_right_view()
-
+    stringer.export_dxf_front_view()
+    stringer.export_dxf_top_view()
+    
     stringer.export_cam()
 
     # stringer.export_drawing()

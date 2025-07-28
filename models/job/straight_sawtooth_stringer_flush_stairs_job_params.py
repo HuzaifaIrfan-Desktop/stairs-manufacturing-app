@@ -55,37 +55,35 @@ class StraightSawtoothStringerFlushStairsJobOutputParams(StraightSawtoothStringe
     @model_validator(mode='after')
     def compute(self) -> 'StraightSawtoothStringerFlushStairsJobOutputParams':
 
-        typical_tread_material= available_materials[self.tread_material_name].model_dump()
-        last_tread_material= available_materials[self.tread_material_name].model_dump()
-        first_riser_material= available_materials[self.riser_material_name].model_dump()
-        typical_riser_material = available_materials[self.riser_material_name].model_dump()
+        tread_material= available_materials[self.tread_material_name].model_dump()
+        riser_material = available_materials[self.riser_material_name].model_dump()
+    
         stringer_material = available_materials[self.stringer_material_name].model_dump()
 
-        last_tread_depth: float = self.tread_depth
-        typical_tread_depth: float = self.tread_depth
 
-
-        typical_riser_height: float = self.total_rise_height / self.number_of_steps
-        first_riser_height: float = typical_riser_height - available_materials[self.tread_material_name].thickness
-        
-        if typical_riser_height >= 7.875:
-            raise ValueError("Maximum allowed riser height is 7.875 inches. Please adjust the number of steps.")
 
         
 
         self.flush_stairs_assembly_params = StraightSawtoothStringerFlushStairsAssemblyParams(
-            **self.model_dump(),
+            job_name=self.job_name,
+            builder_name=self.builder_name,
             assembly_name="FlushStairsAssembly",
 
-            last_tread_depth=last_tread_depth,
-            typical_tread_depth=typical_tread_depth,
-            first_riser_height=first_riser_height,
-            typical_riser_height=typical_riser_height,
+            stairway_width=self.stairway_width,
+            number_of_steps=self.number_of_steps,
 
-            typical_tread_material=typical_tread_material,
-            last_tread_material=last_tread_material,
-            first_riser_material=first_riser_material,
-            typical_riser_material=typical_riser_material,
+            total_opening_rise_height= self.total_rise_height,
+
+
+            tread_depth=self.tread_depth,
+            tread_overhang_nosing_depth=self.tread_overhang_nosing_depth,
+            tread_overhang_side_depth=self.tread_overhang_side_depth,
+            tread_material=tread_material,
+
+            open_riser=self.open_riser,
+            riser_material=riser_material,
+
+            number_of_stringers=self.number_of_stringers,
             stringer_material=stringer_material
 
         )

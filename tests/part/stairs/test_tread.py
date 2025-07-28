@@ -24,6 +24,8 @@ def test_tread():
 
     # Test DXF export
     tread.export_dxf_right_view()
+    tread.export_dxf_front_view()
+    tread.export_dxf_top_view()
 
     # tread.export_drawing()
 

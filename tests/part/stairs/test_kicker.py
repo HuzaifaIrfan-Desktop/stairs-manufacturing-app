@@ -21,7 +21,8 @@ def test_kicker():
 
     # Test DXF export
     kicker.export_dxf_right_view()
-
+    kicker.export_dxf_front_view()
+    kicker.export_dxf_top_view()
     # kicker.export_drawing()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)

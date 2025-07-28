@@ -73,6 +73,7 @@ class StraightSawtoothStringerStandardStairsAssembly(Assembly):
 
 
         four_steps_assembly_params=self.assembly_params.model_copy()
+        four_steps_assembly_params.total_opening_rise_height*=(4/self.assembly_params.number_of_steps)
         four_steps_assembly_params.assembly_name = f"four_steps_{self.assembly_params.assembly_name}"
         four_steps_assembly_params.number_of_steps=4
         four_steps_assembly_params.compute()

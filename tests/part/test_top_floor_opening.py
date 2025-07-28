@@ -25,6 +25,7 @@ def test_top_floor_opening():
     # Test DXF export
     opening.export_dxf_top_view()
     opening.export_dxf_right_view()
+    opening.export_dxf_front_view()
 
     # opening.export_drawing()
 

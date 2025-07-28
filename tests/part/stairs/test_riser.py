@@ -23,7 +23,8 @@ def test_riser():
 
     # Test DXF export
     riser.export_dxf_right_view()
-
+    riser.export_dxf_front_view()
+    riser.export_dxf_top_view()
 
     # riser.export_drawing()
 
