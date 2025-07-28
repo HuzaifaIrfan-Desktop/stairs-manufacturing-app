@@ -101,7 +101,7 @@ class SawtoothStringer(Part):
 
         return dxf_file_path
     
-    def export_drawing(self) -> str:
+    def export_drawings(self) -> str:
         file_path = self.export_dxf_right_view()
 
         self.export_drawing_from_dxf(file_path, text_scale=7.0)

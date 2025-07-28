@@ -100,3 +100,13 @@ class Job:
         # Export the assembly to a file
         file_path = self.export_stl()
         return file_path
+    
+    def export_drawings(self) -> str:
+        # Export the assembly to a file
+        file_path =""
+        return file_path
+    
+    def export_reports(self) -> str:
+        # Export the assembly to a file
+        file_path = ""
+        return file_path

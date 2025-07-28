@@ -27,7 +27,7 @@ def test_top_floor_opening():
     opening.export_dxf_right_view()
     opening.export_dxf_front_view()
 
-    # opening.export_drawing()
+    # opening.export_drawings()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks

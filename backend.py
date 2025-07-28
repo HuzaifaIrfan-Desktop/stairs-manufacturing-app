@@ -76,29 +76,68 @@ class Backend(QObject):
         self.append_to_console(f"\nStarting Job Export {self.job_input_params.job_name}.\n")
         self.input_widget.set_info_label(f"Exporting {self.job_input_params.job_name}...")
 
-        thread = threading.Thread(target=self.run_job)
+        thread = threading.Thread(target=self.calculate_job_thread)
         thread.start()
 
-    def run_job(self):
+    def calculate_job_thread(self):
 
         try:
             self.job = self.job_class(self.job_input_params)
-            
-
             output_params_model_dump=self.job.get_job_output_params().model_dump_json(indent=4)
             self.append_to_console(f"{output_params_model_dump}.\n\n")
-            
-
             self.job.export()
             self.assembly_model_file_path = self.job.export_assembly()
+            self.input_widget.enable_export_buttons()
         except Exception as e:
             print(f"Error during job execution: {str(e)}")
             self.job_error.emit(str(e))
+            self.input_widget.disable_export_buttons()
             
             return
             
         # print("Job completed signal emit.")
         self.job_completed.emit(f"{self.job_input_params.job_name} Job Export successfully.")
+
+    def export_drawings(self):
+        self.append_to_console(f"\nStarting drawings Export {self.job_input_params.job_name}.\n")
+        self.input_widget.set_info_label(f"Exporting drawings {self.job_input_params.job_name}...")
+
+        thread = threading.Thread(target=self.export_drawings_thread)
+        thread.start()
+
+    def export_reports(self):
+        self.append_to_console(f"\nStarting reports Export {self.job_input_params.job_name}.\n")
+        self.input_widget.set_info_label(f"Exporting reports {self.job_input_params.job_name}...")
+
+        thread = threading.Thread(target=self.export_reports_thread)
+        thread.start()
+
+
+    def export_drawings_thread(self):
+
+        try:
+            self.job.export_drawings()
+        except Exception as e:
+            print(f"Error during job execution: {str(e)}")
+            self.job_error.emit(str(e))
+            self.input_widget.disable_export_buttons()
+            
+            return
+        # print("Job completed signal emit.")
+        self.job_completed.emit(f"{self.job_input_params.job_name} Drawings Export Successfully.")
+    
+    def export_reports_thread(self):
+        try:
+            self.job.export_reports()
+        except Exception as e:
+            print(f"Error during job execution: {str(e)}")
+            self.job_error.emit(str(e))
+            self.input_widget.disable_export_buttons()
+            
+            return
+        # print("Job completed signal emit.")
+        self.job_completed.emit(f"{self.job_input_params.job_name} Reports Export Successfully.")
+
 
     def on_job_error(self, error_message: str):
         # Handle job error

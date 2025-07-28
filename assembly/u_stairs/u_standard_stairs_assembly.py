@@ -57,12 +57,17 @@ class UStandardStairsAssembly(Assembly):
 
 
 
-    def export_drawing(self) -> str:
+    def export_drawings(self) -> str:
         # Placeholder for drawing export logic
         file_path = ""
 
         file_path = self.export_dxf_right_view()
         self.export_drawing_from_dxf(file_path, text_scale=4.0)
+
+        
+        self.u_landing.export_drawings()
+        self.upper_standard_stairs_assembly.export_drawings()
+        self.lower_standard_stairs_assembly.export_drawings()
 
         return file_path
     

@@ -105,19 +105,32 @@ class InputWidget(QWidget):
 
         # Add buttons for loading and calculating and saving job
         button_layout = QHBoxLayout()
-        self.load_button = QPushButton("Load Job")
+        self.load_button = QPushButton("Load")
         self.load_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.load_button.clicked.connect(self.load_job)
-        self.calculate_and_save_button = QPushButton("Calculate and Save Job")
+        self.calculate_and_save_button = QPushButton("Calculate and Save")
         self.calculate_and_save_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.calculate_and_save_button.clicked.connect(self.calculate_and_save_job)
-        self.open_output_dir_button = QPushButton("Open Output Directory")
+        self.open_output_dir_button = QPushButton("Open Outputs")
         self.open_output_dir_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.open_output_dir_button.clicked.connect(self.open_output_directory)
         button_layout.addWidget(self.load_button)
         button_layout.addWidget(self.calculate_and_save_button)
         button_layout.addWidget(self.open_output_dir_button)
         layout.addLayout(button_layout)
+
+
+
+        export_button_layout = QHBoxLayout()
+        self.export_drawings_button = QPushButton("Export Drawings")
+        self.export_drawings_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.export_drawings_button.clicked.connect(self.export_drawings)
+        self.export_reports_button = QPushButton("Export Reports")
+        self.export_reports_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.export_reports_button.clicked.connect(self.export_reports)
+        export_button_layout.addWidget(self.export_drawings_button)
+        export_button_layout.addWidget(self.export_reports_button)
+        layout.addLayout(export_button_layout)
 
         # Add a label and a combo box for selecting the job class
 
@@ -161,6 +174,7 @@ class InputWidget(QWidget):
         layout.addWidget(self.info_label)
 
         self.on_job_class_changed(self.job_class_selector.currentText())
+        self.disable_export_buttons()
 
 
     def on_job_class_changed(self, job_class_name):
@@ -177,6 +191,7 @@ class InputWidget(QWidget):
         if self.job_params.job_name:
             loaded_3d_model_path = os.path.join(os.getcwd(), 'output', self.job_params.job_name , f"{self.job_params.job_name}.stl")
             self.backend.display_3d_model(loaded_3d_model_path)
+
 
     def build_form_from_job_params(self):
           # Clear existing rows
@@ -232,6 +247,7 @@ class InputWidget(QWidget):
                     index = widget.findText(str(value))
                     if index != -1:
                         widget.setCurrentIndex(index)
+        self.disable_export_buttons()              
 
     def build_job_params_from_form(self):
         data = {}
@@ -282,9 +298,27 @@ class InputWidget(QWidget):
     def set_info_label(self, text):
         self.info_label.setText(text)
 
+    def disable_export_buttons(self):
+        self.export_drawings_button.setEnabled(False)
+        self.export_reports_button.setEnabled(False)
+
+    def enable_export_buttons(self):
+        self.export_drawings_button.setEnabled(True)
+        self.export_reports_button.setEnabled(True)
+
+
+
+
+    def export_drawings(self):
+        self.backend.export_drawings()
+
+    def export_reports(self):
+        self.backend.export_reports()
+
     def calculate_and_save_job(self):
         self.build_job_params_from_form()
         self.backend.calculate_and_save_job(self.job_params)
+
 
 
     def open_output_directory(self):

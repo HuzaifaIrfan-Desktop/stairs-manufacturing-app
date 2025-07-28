@@ -56,7 +56,7 @@ exe = EXE(
 )
 
 
-dir_name='stairs_app-v_0_1_2'
+dir_name='stairs_app-v_0_2_0'
 
 coll = COLLECT(
     exe,

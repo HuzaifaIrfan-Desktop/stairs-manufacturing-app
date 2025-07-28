@@ -45,7 +45,7 @@ class Landing(Part):
 
 
 
-    def export_drawing(self) -> str:
+    def export_drawings(self) -> str:
         dxf_file_path = self.export_dxf_top_view()
 
         drawing_pdf_file_path = self.export_drawing_from_dxf(dxf_file_path, text_scale=7.0)

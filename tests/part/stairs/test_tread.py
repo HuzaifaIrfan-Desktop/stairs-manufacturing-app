@@ -27,7 +27,7 @@ def test_tread():
     tread.export_dxf_front_view()
     tread.export_dxf_top_view()
 
-    # tread.export_drawing()
+    # tread.export_drawings()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks

@@ -45,7 +45,7 @@ def test_sawtooth_stringer():
     
     stringer.export_cam()
 
-    # stringer.export_drawing()
+    # stringer.export_drawings()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks

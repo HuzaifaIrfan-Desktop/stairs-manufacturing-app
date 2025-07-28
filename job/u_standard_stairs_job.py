@@ -53,5 +53,15 @@ class UStandardStairsJob(Job):
         # Export the job parameters to a file
         file_path = self.export_job_params()
         self.u_standard_stairs_assembly.export()
-        # self.u_standard_stairs_assembly.export_cam()
+
+        return file_path
+    
+    def export_drawings(self) -> str:
+        # Export the assembly to a file
+        file_path = self.u_standard_stairs_assembly.export_drawings()
+        return file_path
+    
+    def export_reports(self) -> str:
+        # Export the assembly to a file
+        file_path = self.u_standard_stairs_assembly.export_reports()
         return file_path

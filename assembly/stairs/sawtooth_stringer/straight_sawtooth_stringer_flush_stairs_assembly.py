@@ -66,7 +66,7 @@ class StraightSawtoothStringerFlushStairsAssembly(Assembly):
         self.sawtooth_stringer.export_cam()
 
 
-    def export_drawing(self) -> str:
+    def export_drawings(self) -> str:
         # Placeholder for drawing export logic
         file_path = ""
 
@@ -88,12 +88,12 @@ class StraightSawtoothStringerFlushStairsAssembly(Assembly):
         four_steps_assembly.sawtooth_stringer.export_drawing_from_dxf(four_steps_assembly_stringer_dxf_file_path, text_scale=4.0)
 
 
-        self.kicker.export_drawing()
-        self.typical_riser.export_drawing()
-        self.typical_tread.export_drawing()
-        self.first_riser.export_drawing()
-        self.last_tread.export_drawing()
-        self.sawtooth_stringer.export_drawing()
+        self.kicker.export_drawings()
+        self.typical_riser.export_drawings()
+        self.typical_tread.export_drawings()
+        self.first_riser.export_drawings()
+        self.last_tread.export_drawings()
+        self.sawtooth_stringer.export_drawings()
 
         return file_path
     

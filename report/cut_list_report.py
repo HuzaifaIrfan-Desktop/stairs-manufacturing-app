@@ -19,7 +19,7 @@ class CutListReport:
 
         self.cut_list_params = cut_list_params
 
-        self.output_dir = os.path.join(os.getcwd(), f'output/{self.cut_list_params.job_name}/assembly/{self.cut_list_params.assembly_name}')
+        self.output_dir = os.path.join(os.getcwd(), f'output/{self.cut_list_params.job_name}/reports/')
 
         os.makedirs(self.output_dir, exist_ok=True)
 

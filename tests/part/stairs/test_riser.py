@@ -26,7 +26,7 @@ def test_riser():
     riser.export_dxf_front_view()
     riser.export_dxf_top_view()
 
-    # riser.export_drawing()
+    # riser.export_drawings()
 
     # Check if files are created (this is a simple check, in real tests you might want to check file existence)
     assert True  # Placeholder for actual file existence checks

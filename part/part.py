@@ -16,7 +16,7 @@ class Part:
         # part_logger.info(f"Creating Part with params: {part_params}")
         self.part_params = part_params
 
-        self.part_output_dir = os.path.join(os.getcwd(), f'output/{self.part_params.job_name}/part/{self.part_params.part_name}')
+        self.part_output_dir = os.path.join(os.getcwd(), f'output/{self.part_params.job_name}/parts/{self.part_params.part_name}')
         
         # Ensure the output directory exists
         os.makedirs(self.part_output_dir, exist_ok=True)
@@ -44,8 +44,6 @@ class Part:
         self.export_dxf_top_view()
         self.export_dxf_front_view()
         self.export_dxf_right_view()
-        
-        self.export_drawing()
 
         return stl_file_path
 
@@ -113,7 +111,7 @@ class Part:
         return drawing_pdf_file_path
 
 
-    def export_drawing(self) -> str:
+    def export_drawings(self) -> str:
         dxf_file_path = self.export_dxf_right_view()
 
         drawing_pdf_file_path = self.export_drawing_from_dxf(dxf_file_path, text_scale=1.0)
