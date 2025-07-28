@@ -73,7 +73,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
         self.kicker_params = KickerParams(
             job_name=self.job_name,
-            part_name="kicker",
+            part_name=f"{self.assembly_name}_kicker",
             kicker_height=0,
             kicker_depth=0,
             kicker_length=self.stairway_width
@@ -82,7 +82,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
         self.typical_riser_params = RiserParams(
             job_name=self.job_name,
-            part_name="riser",
+            part_name=f"{self.assembly_name}_riser",
             riser_height=self.typical_riser_height,
             riser_length=self.stairway_width,
             riser_material=self.riser_material
@@ -92,7 +92,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
         self.typical_tread_params = TreadParams(
             job_name=self.job_name,
-            part_name="tread",
+            part_name=f"{self.assembly_name}_tread",
             tread_depth=self.typical_tread_depth,
             tread_length=self.stairway_width,
             tread_material=self.tread_material
@@ -101,7 +101,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
         self.first_riser_params = RiserParams(
             job_name=self.job_name,
-            part_name="first_riser",
+            part_name=f"{self.assembly_name}_first_riser",
             riser_height=self.first_riser_height,
             riser_length=self.stairway_width,
             riser_material=self.riser_material
@@ -110,7 +110,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
         self.last_tread_params = TreadParams(
             job_name=self.job_name,
-            part_name="last_tread",
+            part_name=f"{self.assembly_name}_last_tread",
             tread_depth=self.last_tread_depth,
             tread_length=self.stairway_width,
             tread_material=self.tread_material
@@ -122,7 +122,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
 
             self.sawtooth_stringer_params = SawtoothStringerParams(
                 job_name=self.job_name,
-                part_name="sawtooth_stringer",
+                part_name=f"{self.assembly_name}_sawtooth_stringer",
 
                 first_stringer_rise_height=self.first_riser_params.riser_height,
                 last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth-self.typical_riser_params.riser_thickness,
@@ -145,7 +145,7 @@ class StraightSawtoothStringerFlushStairsAssemblyParams(AssemblyParams):
             # open Riser Stringer
             self.sawtooth_stringer_params = SawtoothStringerParams(
                 job_name=self.job_name,
-                part_name="sawtooth_stringer",
+                part_name=f"{self.assembly_name}_sawtooth_stringer",
 
                 first_stringer_rise_height=self.first_riser_params.riser_height,
                 last_stringer_run_depth=self.last_tread_params.tread_depth - self.tread_overhang_nosing_depth,

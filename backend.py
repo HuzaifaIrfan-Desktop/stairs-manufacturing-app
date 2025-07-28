@@ -112,6 +112,13 @@ class Backend(QObject):
         thread = threading.Thread(target=self.export_reports_thread)
         thread.start()
 
+    def export_cam(self):
+        self.append_to_console(f"\nStarting CAM Export {self.job_input_params.job_name}.\n")
+        self.input_widget.set_info_label(f"Exporting CAM {self.job_input_params.job_name}...")
+
+        thread = threading.Thread(target=self.export_cam_thread)
+        thread.start()
+
 
     def export_drawings_thread(self):
 
@@ -137,6 +144,18 @@ class Backend(QObject):
             return
         # print("Job completed signal emit.")
         self.job_completed.emit(f"{self.job_input_params.job_name} Reports Export Successfully.")
+
+    def export_cam_thread(self):
+        try:
+            self.job.export_cam()
+        except Exception as e:
+            print(f"Error during job execution: {str(e)}")
+            self.job_error.emit(str(e))
+            self.input_widget.disable_export_buttons()
+
+            return
+        # print("Job completed signal emit.")
+        self.job_completed.emit(f"{self.job_input_params.job_name} CAM Export Successfully.")
 
 
     def on_job_error(self, error_message: str):

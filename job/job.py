@@ -110,3 +110,8 @@ class Job:
         # Export the assembly to a file
         file_path = ""
         return file_path
+
+    def export_cam(self) -> str:
+        # Export the assembly to a file
+        file_path = ""
+        return file_path

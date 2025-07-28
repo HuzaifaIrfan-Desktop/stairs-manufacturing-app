@@ -70,7 +70,17 @@ class UStandardStairsAssembly(Assembly):
         self.lower_standard_stairs_assembly.export_drawings()
 
         return file_path
-    
+
+
+    def export_cam(self) -> str:
+
+        # Placeholder for CAM export logic
+        file_path = ""
+        self.upper_standard_stairs_assembly.export_cam()
+        self.lower_standard_stairs_assembly.export_cam()
+
+        return file_path
+
     def _assemble(self):
         # Logic to assemble the components based on the parameters
         
@@ -107,3 +117,11 @@ class UStandardStairsAssembly(Assembly):
         self.cq_assembly = cq.Workplane(obj=compound)
 
 
+
+    def export_reports(self) -> str:
+        self.upper_standard_stairs_assembly.export_reports()
+        self.lower_standard_stairs_assembly.export_reports()
+
+
+        # return self.export_cut_list()
+    

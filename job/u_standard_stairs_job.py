@@ -65,3 +65,9 @@ class UStandardStairsJob(Job):
         # Export the assembly to a file
         file_path = self.u_standard_stairs_assembly.export_reports()
         return file_path
+    
+
+    def export_cam(self) -> str:
+        # Export the assembly to a file
+        file_path = self.u_standard_stairs_assembly.export_cam()
+        return file_path

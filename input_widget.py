@@ -128,8 +128,12 @@ class InputWidget(QWidget):
         self.export_reports_button = QPushButton("Export Reports")
         self.export_reports_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.export_reports_button.clicked.connect(self.export_reports)
+        self.export_cam_button = QPushButton("Export CAM")
+        self.export_cam_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        self.export_cam_button.clicked.connect(self.export_cam)
         export_button_layout.addWidget(self.export_drawings_button)
         export_button_layout.addWidget(self.export_reports_button)
+        export_button_layout.addWidget(self.export_cam_button)
         layout.addLayout(export_button_layout)
 
         # Add a label and a combo box for selecting the job class
@@ -301,10 +305,12 @@ class InputWidget(QWidget):
     def disable_export_buttons(self):
         self.export_drawings_button.setEnabled(False)
         self.export_reports_button.setEnabled(False)
+        self.export_cam_button.setEnabled(False)
 
     def enable_export_buttons(self):
         self.export_drawings_button.setEnabled(True)
         self.export_reports_button.setEnabled(True)
+        self.export_cam_button.setEnabled(True)
 
 
 
@@ -314,6 +320,9 @@ class InputWidget(QWidget):
 
     def export_reports(self):
         self.backend.export_reports()
+
+    def export_cam(self):
+        self.backend.export_cam()
 
     def calculate_and_save_job(self):
         self.build_job_params_from_form()

@@ -135,7 +135,7 @@ class Assembly:
         return drawing_pdf_file_path
 
 
-    def export_drawing(self) -> str:
+    def export_drawings(self) -> str:
         # Placeholder for drawing export logic
         file_path = ""
 
@@ -143,5 +143,26 @@ class Assembly:
 
     def export_parts(self) -> str:
         file_path=""
+
+        return file_path
+    
+
+
+    def export_drawings(self) -> str:
+        # Placeholder for drawing export logic
+        file_path = ""
+
+        return file_path
+    
+    
+    def export_reports(self) -> str:
+        # Placeholder for drawing export logic
+        file_path = ""
+
+        return file_path
+    
+    def export_cam(self) -> str:
+        # Placeholder for CAM export logic
+        file_path = ""
 
         return file_path

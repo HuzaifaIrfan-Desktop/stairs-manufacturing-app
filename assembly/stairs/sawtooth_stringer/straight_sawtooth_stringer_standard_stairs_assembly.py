@@ -197,6 +197,14 @@ class StraightSawtoothStringerStandardStairsAssembly(Assembly):
 
 
 
+    def export_reports(self) -> str:
+
+        return self.export_cut_list()
+
+
+
+
+
     def export_cut_list(self) -> str:
 
         cut_list_data=[["Part", "Qty", "Material", "Dimension"]]

@@ -11,7 +11,7 @@ from logger import part_logger
 from part.part import Part
 from models.part.stairs.sawtooth_stringer_params import SawtoothStringerParams
 import math
-
+import os
 
 class SawtoothStringer(Part):
     def __init__(self, stringer_params: SawtoothStringerParams):
@@ -75,6 +75,9 @@ class SawtoothStringer(Part):
        
     def export_cam(self) -> str:
 
+        cam_output_dir = os.path.join(os.getcwd(), f'output/{self.part_params.job_name}/cam')
+        os.makedirs(cam_output_dir, exist_ok=True)
+
         cq_part = self.get()
         # Translate the stringer for rotation
         cq_part = cq_part.translate((0, -inch_to_mm(self.part_params.bottom_stringer_placement_depth), 0))
@@ -82,17 +85,17 @@ class SawtoothStringer(Part):
         reverse_translate_y = inch_to_mm(self.part_params.bottom_stringer_placement_depth * math.cos(self.part_params.angle_of_stringer_rad))
         cq_part = cq_part.translate((0, reverse_translate_y, 0))
 
-        step_file_path = f'{self.part_output_dir}/CAM_{self.part_params.part_name}.step'
+        step_file_path = f'{cam_output_dir}/CAM_{self.part_params.part_name}.step'
         # Export the part to a file STEP
         cq.exporters.export(cq_part, step_file_path, 'STEP')
 
 
-        stl_file_path = f'{self.part_output_dir}/CAM_{self.part_params.part_name}.stl'
+        stl_file_path = f'{cam_output_dir}/CAM_{self.part_params.part_name}.stl'
         # Export the part to a file STL
         cq.exporters.export(cq_part, stl_file_path, 'STL')
 
 
-        dxf_file_path = f'{self.part_output_dir}/CAM_{self.part_params.part_name}_right.dxf'
+        dxf_file_path = f'{cam_output_dir}/CAM_{self.part_params.part_name}_right.dxf'
         # Get a 2D projection for DXF
         right_view = cq_part.faces(">X").wires()
         cq.exporters.export(right_view, dxf_file_path, 'DXF')
