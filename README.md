@@ -4,13 +4,13 @@
 </div>
 
 
-•[stairs_app-v_0_1_2.zip](https://www.dropbox.com/scl/fi/ads1786tieo5zwb0uwibg/stairs_app-v_0_1_2.zip?rlkey=lpa6hyhmgrr2d6vn6wmtvc2oj&st=g8gr90xw&dl=0)
+<!-- •[stairs_app-v_0_1_2.zip]() -->
 
 <hr>
 
 ## Demo Video
 
-[![Demo Video](https://img.youtube.com/vi/kxjiuA9pOGE/0.jpg)](https://www.youtube.com/watch?v=kxjiuA9pOGE)
+[![Demo Video](https://img.youtube.com/vi/phJr-eCjHw4/0.jpg)](https://www.youtube.com/watch?v=phJr-eCjHw4)
 
 
 ![overview](overview.drawio.png)
