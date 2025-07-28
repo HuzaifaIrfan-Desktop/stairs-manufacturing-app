@@ -128,7 +128,7 @@ class InputWidget(QWidget):
         self.export_reports_button = QPushButton("Export Reports")
         self.export_reports_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.export_reports_button.clicked.connect(self.export_reports)
-        self.export_cam_button = QPushButton("Export CAM")
+        self.export_cam_button = QPushButton("Export CAM (DXF)")
         self.export_cam_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.export_cam_button.clicked.connect(self.export_cam)
         export_button_layout.addWidget(self.export_drawings_button)

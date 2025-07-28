@@ -12,7 +12,7 @@ from models.material import available_materials
 class StraightSawtoothStringerStandardStairsJobInputParams(JobInputParams):
     job_name: str  = Field(default="Default Standard Stairs Job", description="Job Name")
 
-   
+    assembly_form_spacer: str = Field(default="Assembly Form Spacer", description="Assembly Inputs", exclude=True)
     total_rise_height: float = Field(default=122.0, description="Total Rise Height (in)")
     number_of_steps: int = Field(default=16,description="Number of Steps")
     stairway_width: float = Field(default=36.75, description="Stairway Width (in)")

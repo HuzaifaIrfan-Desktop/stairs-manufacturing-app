@@ -130,7 +130,7 @@ class Drawing:
         
         # Insert centered text annotation over the image
         if self.center_text:
-            text_fontsize = 24
+            text_fontsize = 12
 
             # Calculate text width for centering using PIL
             from PIL import ImageFont

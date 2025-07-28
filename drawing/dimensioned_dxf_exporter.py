@@ -14,7 +14,7 @@ from ezdxf.addons.drawing.properties import Properties
 
 import pathlib
 
-from utils.math import inch_to_mm, mm_to_inch
+from utils.math import inch_to_mm, mm_to_inch, float_to_mixed_fraction
 
 from models.drawing.drawing_params import DrawingParams
 
@@ -84,7 +84,7 @@ class DimensionedDXFExporter:
             offset_dir = direction.orthogonal().normalize() 
             dim_line_pos = (start + end) * 0.5 + offset_dir
 
-            dimension_value= f'{mm_to_inch((end - start).magnitude)}"'
+            dimension_value= f'{float_to_mixed_fraction(mm_to_inch((end - start).magnitude))}"'
             # print(f"Adding dimension from {start} to {end} at {dim_line_pos} with value {dimension_value}")
 
             # Add the dimension

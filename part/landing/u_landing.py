@@ -2,10 +2,9 @@
 
 
 import cadquery as cq
-from utils.math import inch_to_mm
+from utils.math import inch_to_mm, float_to_mixed_fraction
 
 from drawing.drawing import Drawing
-from utils.math import inch_to_mm
 
 from logger import part_logger
 # part_logger.info("Loading Tread class from part.stairs.tread module")
@@ -81,7 +80,7 @@ class ULanding(Part):
 
 
     def export_drawing_from_dxf(self, dxf_file_path: str, text_scale: float = 1.0) -> str:
-        center_text= f"{self.part_params.landing_top_position} (in) UP "
+        center_text= f"{float_to_mixed_fraction(self.part_params.landing_top_position)} (in) UP "
         drawing = Drawing(job_name=self.part_params.job_name, part_name=self.part_params.part_name, dxf_file_path=dxf_file_path, text_scale=text_scale, center_text=center_text)
         drawing_pdf_file_path = drawing.export()
 
@@ -92,6 +91,6 @@ class ULanding(Part):
     def export_drawings(self) -> str:
         dxf_file_path = self.export_dxf_top_view()
 
-        drawing_pdf_file_path = self.export_drawing_from_dxf(dxf_file_path, text_scale=7.0)
+        drawing_pdf_file_path = self.export_drawing_from_dxf(dxf_file_path, text_scale=10.0)
 
         return drawing_pdf_file_path

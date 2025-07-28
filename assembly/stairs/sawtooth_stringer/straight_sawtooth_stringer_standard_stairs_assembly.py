@@ -1,6 +1,6 @@
 
 import cadquery as cq
-from utils.math import inch_to_mm
+from utils.math import inch_to_mm, float_to_mixed_fraction
 
 
 from assembly.assembly import Assembly
@@ -210,23 +210,23 @@ class StraightSawtoothStringerStandardStairsAssembly(Assembly):
 
         cut_list_data=[["Part", "Qty", "Material", "Dimension"]]
 
-        cut_list_data.append( ["Typical Treads", self.assembly_params.number_of_steps-2, self.typical_tread_params.tread_material.material_name, f"{self.typical_tread_params.tread_depth} x {self.typical_tread_params.tread_length}"])
-        cut_list_data.append( ["Last Tread", "1", self.last_tread_params.tread_material.material_name, f"{self.last_tread_params.tread_depth} x {self.last_tread_params.tread_length}"])
+        cut_list_data.append( ["Typical Treads", self.assembly_params.number_of_steps-2, self.typical_tread_params.tread_material.material_name, f"{float_to_mixed_fraction(self.typical_tread_params.tread_depth)} x {float_to_mixed_fraction(self.typical_tread_params.tread_length)}"])
+        cut_list_data.append( ["Last Tread", "1", self.last_tread_params.tread_material.material_name, f"{float_to_mixed_fraction(self.last_tread_params.tread_depth)} x {float_to_mixed_fraction(self.last_tread_params.tread_length)}"])
         if not self.assembly_params.open_riser:
             # closed Riser assembly add riser parts in list
-            cut_list_data.append( ["Typical Risers", self.assembly_params.number_of_steps-2, self.typical_riser_params.riser_material.material_name, f"{self.typical_riser_params.riser_height} x {self.typical_riser_params.riser_length}"])
-            cut_list_data.append( ["First Riser", "1", self.first_riser_params.riser_material.material_name, f"{self.first_riser_params.riser_height} x {self.first_riser_params.riser_length}"])
-        cut_list_data.append( ["Last Riser/Hanger", "1", self.last_riser_hanger_params.riser_material.material_name, f"{self.last_riser_hanger_params.riser_height} x {self.last_riser_hanger_params.riser_length}"])
-        cut_list_data.append( ["Stringers", self.assembly_params.number_of_stringers, self.sawtooth_stringer_params.stringer_material.material_name, self.sawtooth_stringer_params.stringer_length])
+            cut_list_data.append( ["Typical Risers", self.assembly_params.number_of_steps-2, self.typical_riser_params.riser_material.material_name, f"{float_to_mixed_fraction(self.typical_riser_params.riser_height)} x {float_to_mixed_fraction(self.typical_riser_params.riser_length)}"])
+            cut_list_data.append( ["First Riser", "1", self.first_riser_params.riser_material.material_name, f"{float_to_mixed_fraction(self.first_riser_params.riser_height)} x {float_to_mixed_fraction(self.first_riser_params.riser_length)}"])
+        cut_list_data.append( ["Last Riser/Hanger", "1", self.last_riser_hanger_params.riser_material.material_name, f"{float_to_mixed_fraction(self.last_riser_hanger_params.riser_height)} x {float_to_mixed_fraction(self.last_riser_hanger_params.riser_length)}"])
+        cut_list_data.append( ["Stringers", self.assembly_params.number_of_stringers, self.sawtooth_stringer_params.stringer_material.material_name, float_to_mixed_fraction(self.sawtooth_stringer_params.stringer_length)])
 
-        summary_items=[("Total Rise", self.assembly_params.total_assembly_rise_height),
-                           ("Total Run", self.assembly_params.total_assembly_run_depth),
-                           ("Stair Width", self.assembly_params.stairway_width),
-                           ("First Riser Height", self.first_riser_params.riser_height),
-                           ("Typical Riser Height", self.typical_riser_params.riser_height),
-                           ("Last Riser/Hanger Height", self.last_riser_hanger_params.riser_height),
-                           ("Typical Run Tread Depth", self.typical_tread_params.tread_depth),
-                           ("Last Run Tread Depth", self.last_tread_params.tread_depth),
+        summary_items=[("Total Rise", float_to_mixed_fraction(self.assembly_params.total_assembly_rise_height)),
+                           ("Total Run", float_to_mixed_fraction(self.assembly_params.total_assembly_run_depth)),
+                           ("Stair Width", float_to_mixed_fraction(self.assembly_params.stairway_width)),
+                           ("First Riser Height", float_to_mixed_fraction(self.first_riser_params.riser_height)),
+                           ("Typical Riser Height", float_to_mixed_fraction(self.typical_riser_params.riser_height)),
+                           ("Last Riser/Hanger Height", float_to_mixed_fraction(self.last_riser_hanger_params.riser_height)),
+                           ("Typical Run Tread Depth", float_to_mixed_fraction(self.typical_tread_params.tread_depth)),
+                           ("Last Run Tread Depth", float_to_mixed_fraction(self.last_tread_params.tread_depth)),
                            ("Number of Risers", self.assembly_params.number_of_steps),
                            ("Number of Treads", self.assembly_params.number_of_steps - 1),]
 
