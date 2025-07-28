@@ -29,8 +29,8 @@ def test_u_standard_stairs_assembly():
 
         center_wall_thickness=3.5,
 
-        number_of_upper_steps=10,
-        number_of_lower_steps=10,
+        number_of_upper_steps=9,
+        number_of_lower_steps=9,
 
     )
 

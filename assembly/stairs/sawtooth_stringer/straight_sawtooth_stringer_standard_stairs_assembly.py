@@ -70,7 +70,8 @@ class StraightSawtoothStringerStandardStairsAssembly(Assembly):
 
         file_path = self.export_dxf_right_view()
         self.export_drawing_from_dxf(file_path, text_scale=4.0)
-
+        file_path = self.export_dxf_top_view()
+        self.export_drawing_from_dxf(file_path, text_scale=4.0)
 
         four_steps_assembly_params=self.assembly_params.model_copy()
         four_steps_assembly_params.total_opening_rise_height*=(4/self.assembly_params.number_of_steps)

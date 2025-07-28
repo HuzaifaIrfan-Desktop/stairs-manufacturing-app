@@ -18,8 +18,8 @@ class UStandardStairsJobInputParams(JobInputParams):
 
 
 
-    number_of_upper_steps: int = Field(default=10,description="Number of Upper Steps")
-    number_of_lower_steps: int = Field(default=10,description="Number of Lower Steps")
+    number_of_upper_steps: int = Field(default=9,description="Number of Upper Steps")
+    number_of_lower_steps: int = Field(default=9,description="Number of Lower Steps")
     center_wall_thickness: float = Field(default=3.5, description="Center Wall Thickness (in)")
 
 
