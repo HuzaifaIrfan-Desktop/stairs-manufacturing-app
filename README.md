@@ -28,9 +28,9 @@
 
 
 
-![overview](overview.drawio.png)
+![overview](docs/overview.drawio.png)
 
-![code_structure](code_structure.drawio.png)
+![code_structure](docs/code_structure.drawio.png)
 
 
 
