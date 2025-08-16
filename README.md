@@ -1,10 +1,24 @@
-<div align="center">
-  <h1>Stairs App</h1>
-  <p><h3 align="center">Wooden Stairs Computer Aided Manufacturing App - QT Based Desktop App, Drawings (DXF/PDF), Cut Lists (PDF) , and CNC CAM (G-Code) 🚀</h3></p>
-</div>
+# Stairs App
+**`Wooden Stairs Computer Aided Manufacturing App - QT Based Desktop App, Drawings (DXF/PDF), Cut Lists (PDF) , and CNC CAM (G-Code) 🚀`**
+
+<!-- •[Link](#)
+
+<hr>
+
+## 🎬 Demo
+
+[![Demo](https://img.youtube.com/vi/video_id/0.jpg)](https://www.youtube.com/watch?v=video_id)
+
+![overview](overview.drawio.png)
+
+-->
 
 
-<!-- •[stairs_app-v_0_1_2.zip]() -->
+# 📦 Release
+- [v0.2.0](https://github.com/HuzaifaIrfan-CADCAM/stairs_app/releases)
+
+
+
 
 <hr>
 
@@ -13,8 +27,25 @@
 [![Demo Video](https://img.youtube.com/vi/phJr-eCjHw4/0.jpg)](https://www.youtube.com/watch?v=phJr-eCjHw4)
 
 
+
 ![overview](overview.drawio.png)
 
+![code_structure](code_structure.drawio.png)
+
+
+
+
+
+
+# 🛠️ Development
+
+## Target
+- Linux/Windows Desktop (x86_64)
+
+## Development Environment
+- **OS**: Ubuntu 24.04 (x86_64)
+- **IDE**: Visual Studio Code
+- **Framework**: pyside6
 
 ## Conda Installation
 
@@ -34,11 +65,6 @@ mamba create --name stairs_app_env --file environment.yml
 conda activate stairs_app_env
 ```
 
-## Run
-
-```sh
-python main.py
-```
 
 ## Build
 
@@ -53,16 +79,27 @@ signtool sign /a /fd SHA256 /td SHA256 /tr http://timestamp.digicert.com stairs_
 ```
 
 
+# 🚀 Usage
 
-## 🤝🏻 &nbsp;Connect with Me
+## Run
 
-<p align="center">
-<a href="https://www.huzaifairfan.com"><img src="https://img.shields.io/badge/-huzaifairfan.com-1aa260?style=flat&logo=Google-Chrome&logoColor=white"/></a>
-<a href="https://github.com/HuzaifaIrfan/"><img src="https://img.shields.io/badge/-Github-4078c0?style=flat&logo=Github&logoColor=white"/></a>
-<a href="mailto:hi@huzaifairfan.com"><img src="https://img.shields.io/badge/-hi@huzaifairfan.com-c71610?style=flat&logo=Gmail&logoColor=white"/></a>
-<a href="https://www.upwork.com/freelancers/huzaifairfan2001"><img src="https://img.shields.io/badge/-Upwork-14a800?style=flat&logo=Upwork&logoColor=white"/></a>
-</p>
+```sh
+python main.py
+```
 
-## License
 
-Licensed under the MIT License, Copyright 2025 Huzaifa Irfan. [LICENSE](LICENSE)
+
+# 📝 Documentation
+
+# 📚 References
+- 
+
+# 🤝🏻 Connect with Me
+
+[![GitHub ](https://img.shields.io/badge/Github-%23222.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HuzaifaIrfan/)
+[![Website](https://img.shields.io/badge/Website-%23222.svg?style=for-the-badge&logo=google-chrome&logoColor==%234285F4)](https://www.huzaifairfan.com)
+[![Email](https://img.shields.io/badge/Email-%23222.svg?style=for-the-badge&logo=gmail&logoColor=%23D14836)](mailto:hi@huzaifairfan.com)
+
+# 📜 License
+
+Licensed under the GPL3 License, Copyright 2025 Huzaifa Irfan. [LICENSE](LICENSE)

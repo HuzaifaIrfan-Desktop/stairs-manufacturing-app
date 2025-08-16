@@ -1,0 +1,21 @@
+We can complete straight stairs—from drawing to cut list to CNC—in just a few minutes. However jobs involving landings & winders (pie-shaped treads) take significantly more time. I need to streamline this process and make it more user-friendly.
+
+Ideally, I want a program where we can start by defining the stairwell opening, a straight run an L shape a u shape switchback stair Like this Thompson job for example, 96" wide by 128-1/2" long. We’d then be able to “plot” two stair runs, each at 44.75" wide by the correct run, accounting for a center wall (3.5") with 3/4" drywall on both sides, as well as 3/4" drywall on either side of each stair. Stairs have
+
+From there, we’d be able to add landings and “stretch” them to fit the space. Once everything is laid out, the program would automatically calculate all measurements, generate the cut list, and send G-code directly to the CNC machine for cutting and a 2 d rendering so my guys can install
+
+something like this where we can see in real time if we change parameters for stairs and landing and it calculates all the parts list in the back ground also it figure the material needed as it 16 treads at 12 inches 8 treads per 1 sheet equals 2 full sheets
+
+How long would it take I can also send in fusion I want something that automates lets say I increase the opening to 98 inches both stairs will add 1" to them if I make the opening 130" long the landing would grow by 1.5" Does this make sense ? or if I change the height to 122 we would need a total of 16 rise
+
+I want to get away from fusion or cad I need a program that spits this out when I change the parameters
+
+it’s more the staircase opening where you add landings and winders that I think would benefit us
+
+And yes we use 1" plywood for stair treads and 5/8 plywood for sheets on top of our landings and winders
+
+We can complete straight stairs—from drawing to cut list to CNC—in just a few minutes. However jobs involving landings & winders (pie-shaped treads) take significantly more time. I need to streamline this process and make it more user-friendly.
+
+Ideally, I want a program where we can start by defining the stairwell opening, a straight run an L shape a u shape switchback stair Like this Thompson job for example, 96" wide by 128-1/2" long. We’d then be able to “plot” two stair runs, each at 44.75" wide by the correct run, accounting for a center wall (3.5") with 3/4" drywall on both sides, as well as 3/4" drywall on either side of each stair. Stairs have
+
+What I want is a program you can take a stair 48 inches wide x 122 high then we decide if we want a 16 rise stair at 7.6325 and we can add a center stringer if needed or change to dimensional lumber (2x12= 1.5 x 11.25) or lsl material (1.25x 11-7/8) 1" plywood treads or 1.5" material. Or we can take 122' total height add 2 stairs and a landing

@@ -1,0 +1,19 @@
+The app should accept simple stair inputs (total rise, width, nosing toggle, etc.) and generate:
+
+📄 Branded 8.5x11 PDF cut lists
+
+📐 DXF framing layout
+
+🧰 G-code for CNC (RichAuto controller, ½" compression bit)
+
+The app must include:
+
+PyQt (or Tkinter) GUI
+
+1/16" precision output
+
+PDF stamping with our company logo and job name
+
+Material cost estimator (with markup and waste buffer)
+
+All assets are ready (mockups, specs, sample PDFs, cut list logic). We’re starting with a basic prototype and expanding from there.
